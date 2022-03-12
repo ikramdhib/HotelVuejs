@@ -2,6 +2,7 @@
     <Landing v-if="$route.path === '/landing'" @change-theme="changeTheme" />
     <Login v-else-if="$route.path === '/login'" />
     <Error v-else-if="$route.path === '/error'" />
+    <EmptyOne v-else-if="$route.path === '/emptyOne'" />
     <NotFound v-else-if="$route.path === '/notfound'" />
     <Access v-else-if="$route.path === '/access'" />
     <App v-else @change-theme="changeTheme" />
@@ -13,6 +14,7 @@ import App from './App';
 import Landing from './pages/LandingDemo';
 import Login from './pages/Login';
 import Error from './pages/Error';
+import EmptyOne from './components/EmptyOne'
 import NotFound from './pages/NotFound';
 import Access from './pages/Access';
 
@@ -35,6 +37,7 @@ export default {
         Landing,
         Login,
         Error,
+        EmptyOne,
         NotFound,
         Access
     }
