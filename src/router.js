@@ -32,6 +32,11 @@ const routes = [
         component: () => import('./components/FloatLabelDemo.vue')
     },
     {
+        path: '/Type',
+        name: 'Type',
+        component: () => import('./components/Type.vue')
+    },
+    {
         path: '/invalidstate',
         name: 'invalidstate',
         component: () => import('./components/InvalidStateDemo.vue')
