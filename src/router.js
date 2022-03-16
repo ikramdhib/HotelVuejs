@@ -16,6 +16,12 @@ const routes = [
         component: () => import('./components/FormLayoutDemo.vue')
     },
     {
+        path: '/Option',
+        name: 'Option',
+        component: () => import('./components/Option.vue')
+    },
+    
+    {
         path: '/input',
         name: 'input',
         component: () => import('./components/InputDemo.vue')

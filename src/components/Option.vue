@@ -2,14 +2,14 @@
 	<div class="grid">
 		<div class="col-12">
 			<div class="card">
-				<h5>Type</h5>
+				<h5>Option</h5>
 				<div class="p-fluid formgrid grid">
 		<div class="field col-12 md:col-6">
-						<label for="city">nom_type</label>
+						<label for="city">nom_Option</label>
 						<InputText id="city" type="text" />
 					</div>
 					<div class="field col-12 md:col-6">
-						<label for="zip">prix_type</label>
+						<label for="zip">prix_Option</label>
 						<InputText id="zip" type="text"/>
 					</div>
           <div class="field col-12 md:col-3">

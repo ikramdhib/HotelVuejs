@@ -60,6 +60,7 @@ export default {
 						{label: 'File', icon: 'pi pi-fw pi-file', to: '/file'},
 						{label: 'Chart', icon: 'pi pi-fw pi-chart-bar', to: '/chart'},
 						{label: 'Misc', icon: 'pi pi-fw pi-circle-off', to: '/misc'},
+                         {label: 'Option', icon: 'pi pi-fw pi-circle-off', to: '/option'},
 					]
 				},
                 {
@@ -87,6 +88,7 @@ export default {
                         {label: 'Not Found', icon: 'pi pi-fw pi-exclamation-circle', to: '/notfound'},
                         {label: 'Access Denied', icon: 'pi pi-fw pi-lock', to: '/access'},
 						{label: 'Empty', icon: 'pi pi-fw pi-circle-off', to: '/empty'},
+                       
 					]
 				},
                 {
