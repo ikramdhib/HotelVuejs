@@ -32,8 +32,13 @@
 						<InputText id="adresse" type="text" v-model="users.country"/>
 					</div>
 					<div class="field col-12 md:col-6">
+<<<<<<< HEAD:src/components/Register.vue
 						<label for="code postal">Code Postal</label>
 						<InputText id="code postal" type="text" v-model="users.zipcode"/>
+=======
+						<label for="codepostal">Code Postal</label>
+						<InputText id="code postal" type="text"/>
+>>>>>>> 28c21c9c33abc01e2c575c13f8f7af04585e5285:src/components/EmptyOne.vue
 					</div>
 					<div class="field col-12 md:col-6">
 						<label for="email"> Email</label>

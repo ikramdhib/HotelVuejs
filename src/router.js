@@ -29,6 +29,12 @@ const routes = [
           }
     },
     {
+        path: '/Option',
+        name: 'Option',
+        component: () => import('./components/Option.vue')
+    },
+    
+    {
         path: '/input',
         name: 'input',
         component: () => import('./components/InputDemo.vue'),
@@ -51,6 +57,11 @@ const routes = [
               next();
             }
           }
+    },
+    {
+        path: '/Type',
+        name: 'Type',
+        component: () => import('./components/Type.vue')
     },
     {
         path: '/invalidstate',
