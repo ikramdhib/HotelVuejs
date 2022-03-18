@@ -80,8 +80,10 @@ export default {
 						{label: 'Crud', icon: 'pi pi-fw pi-user-edit', to: '/crud'},
 						{label: 'Timeline', icon: 'pi pi-fw pi-calendar', to: '/timeline'},
                         {label: 'Landing', icon: 'pi pi-fw pi-globe', to: '/landing'},
-                        {label: 'Login', icon: 'pi pi-fw pi-sign-in', to: '/login'},
                         {label: 'Error', icon: 'pi pi-fw pi-times-circle', to: '/error'},
+                        {label: 'Register', icon: 'pi pi-fw pi-times-circle', to: '/register'},
+                        
+                        {label: 'Profile', icon: 'pi pi-fw pi-times-circle', to: '/profile'},
                         {label: 'Not Found', icon: 'pi pi-fw pi-exclamation-circle', to: '/notfound'},
                         {label: 'Access Denied', icon: 'pi pi-fw pi-lock', to: '/access'},
 						{label: 'Empty', icon: 'pi pi-fw pi-circle-off', to: '/empty'},

@@ -1,69 +1,152 @@
+
 import { createRouter, createWebHashHistory } from 'vue-router';
-
-
 
 
 const routes = [
     {
         path: '/',
         name: 'dashboard',
-        component: () => import('./components/FormLayoutDemo.vue')
-    
+        component: () => import('./components/FormLayoutDemo.vue'),
+        beforeEnter: (to, from, next) => {
+            if (!localStorage.getItem("token")) {
+              next("login");
+            } else {
+              next();
+            }
+          }
+
     },
     {
         path: '/formlayout',
         name: 'formlayout',
-        component: () => import('./components/FormLayoutDemo.vue')
+        component: () => import('./components/FormLayoutDemo.vue'),
+        beforeEnter: (to, from, next) => {
+            if (!localStorage.getItem("token")) {
+              next("login");
+            } else {
+              next();
+            }
+          }
     },
     {
         path: '/input',
         name: 'input',
-        component: () => import('./components/InputDemo.vue')
+        component: () => import('./components/InputDemo.vue'),
+        beforeEnter: (to, from, next) => {
+            if (!localStorage.getItem("token")) {
+              next("login");
+            } else {
+              next();
+            }
+          }
     },
     {
         path: '/floatlabel',
         name: 'floatlabel',
-        component: () => import('./components/FloatLabelDemo.vue')
+        component: () => import('./components/FloatLabelDemo.vue'),
+        beforeEnter: (to, from, next) => {
+            if (!localStorage.getItem("token")) {
+              next("login");
+            } else {
+              next();
+            }
+          }
     },
     {
         path: '/invalidstate',
         name: 'invalidstate',
-        component: () => import('./components/InvalidStateDemo.vue')
+        component: () => import('./components/InvalidStateDemo.vue'),
+        beforeEnter: (to, from, next) => {
+            if (!localStorage.getItem("token")) {
+              next("login");
+            } else {
+              next();
+            }
+          }
     },
     {
         path: '/button',
         name: 'button',
-        component: () => import('./components/ButtonDemo.vue')
+        component: () => import('./components/ButtonDemo.vue'),
+        beforeEnter: (to, from, next) => {
+            if (!localStorage.getItem("token")) {
+              next("login");
+            } else {
+              next();
+            }
+          }
     },
     {
         path: '/table',
         name: 'table',
-        component: () => import('./components/TableDemo.vue')
+        component: () => import('./components/TableDemo.vue'),
+        beforeEnter: (to, from, next) => {
+            if (!localStorage.getItem("token")) {
+              next("login");
+            } else {
+              next();
+            }
+          }
     },
     {
         path: '/list',
         name: 'list',
-        component: () => import('./components/ListDemo.vue')
+        component: () => import('./components/ListDemo.vue'),
+        beforeEnter: (to, from, next) => {
+            if (!localStorage.getItem("token")) {
+              next("login");
+            } else {
+              next();
+            }
+          }
     },
     {
         path: '/tree',
         name: 'tree',
-        component: () => import('./components/TreeDemo.vue')
+        component: () => import('./components/TreeDemo.vue'),
+        beforeEnter: (to, from, next) => {
+            if (!localStorage.getItem("token")) {
+              next("login");
+            } else {
+              next();
+            }
+          }
     },
     {
         path: '/panel',
         name: 'panel',
-        component: () => import('./components/PanelsDemo.vue')
+        component: () => import('./components/PanelsDemo.vue'),
+        beforeEnter: (to, from, next) => {
+            if (!localStorage.getItem("token")) {
+              next("login");
+            } else {
+              next();
+            }
+          }
     },
     {
         path: '/overlay',
         name: 'overlay',
-        component: () => import('./components/OverlayDemo.vue')
+        component: () => import('./components/OverlayDemo.vue'),
+        beforeEnter: (to, from, next) => {
+            if (!localStorage.getItem("token")) {
+              next("login");
+            } else {
+              next();
+            }
+          }
     },
     {
         path: '/media',
         name: 'media',
-        component: () => import('./components/MediaDemo.vue')
+        component: () => import('./components/MediaDemo.vue'),
+        beforeEnter: (to, from, next) => {
+            if (!localStorage.getItem("token")) {
+              next("login");
+            } else {
+              next();
+            }
+          }
     },
     {
         path: '/menu',
@@ -71,107 +154,247 @@ const routes = [
         children: [
             {
                 path: '',
-                component: () => import('./components/menu/PersonalDemo.vue')
+                component: () => import('./components/menu/PersonalDemo.vue'),
+                beforeEnter: (to, from, next) => {
+                    if (!localStorage.getItem("token")) {
+                      next("login");
+                    } else {
+                      next();
+                    }
+                  }
             },
             {
                 path: '/menu/seat',
-                component: () => import('./components/menu/SeatDemo.vue')
+                component: () => import('./components/menu/SeatDemo.vue'),
+                beforeEnter: (to, from, next) => {
+                    if (!localStorage.getItem("token")) {
+                      next("login");
+                    } else {
+                      next();
+                    }
+                  }
             },
             {
                 path: '/menu/payment',
-                component: () => import('./components/menu/PaymentDemo.vue')
+                component: () => import('./components/menu/PaymentDemo.vue'),
+                beforeEnter: (to, from, next) => {
+                    if (!localStorage.getItem("token")) {
+                      next("login");
+                    } else {
+                      next();
+                    }
+                  }
             },
             {
                 path: '/menu/confirmation',
-                component: () => import('./components/menu/ConfirmationDemo.vue')
+                component: () => import('./components/menu/ConfirmationDemo.vue'),
+                beforeEnter: (to, from, next) => {
+                    if (!localStorage.getItem("token")) {
+                      next("login");
+                    } else {
+                      next();
+                    }
+                  }
             },
         ],
     },
     {
         path: '/messages',
         name: 'messages',
-        component: () => import('./components/MessagesDemo.vue')
+        component: () => import('./components/MessagesDemo.vue'),
+        beforeEnter: (to, from, next) => {
+            if (!localStorage.getItem("token")) {
+              next("login");
+            } else {
+              next();
+            }
+          }
     },
     {
         path: '/file',
         name: 'file',
-        component: () => import('./components/FileDemo.vue')
+        component: () => import('./components/FileDemo.vue'),
+        beforeEnter: (to, from, next) => {
+            if (!localStorage.getItem("token")) {
+              next("login");
+            } else {
+              next();
+            }
+          }
     },
     {
         path: '/chart',
         name: 'chart',
-        component: () => import('./components/ChartDemo.vue')
+        component: () => import('./components/ChartDemo.vue'),
+        beforeEnter: (to, from, next) => {
+            if (!localStorage.getItem("token")) {
+              next("login");
+            } else {
+              next();
+            }
+          }
     },
     {
         path: '/misc',
         name: 'misc',
-        component: () => import('./components/MiscDemo.vue')
+        component: () => import('./components/MiscDemo.vue'),
+        beforeEnter: (to, from, next) => {
+            if (!localStorage.getItem("token")) {
+              next("login");
+            } else {
+              next();
+            }
+          }
     },
     {
         path: '/crud',
         name: 'crud',
-        component: () => import('./pages/CrudDemo.vue')
+        component: () => import('./pages/CrudDemo.vue'),
+        beforeEnter: (to, from, next) => {
+            if (!localStorage.getItem("token")) {
+              next("login");
+            } else {
+              next();
+            }
+          }
     },
     {
         path: '/timeline',
         name: 'timeline',
-        component: () => import('./pages/TimelineDemo.vue')
+        component: () => import('./pages/TimelineDemo.vue'),
+        beforeEnter: (to, from, next) => {
+            if (!localStorage.getItem("token")) {
+              next("login");
+            } else {
+              next();
+            }
+          }
     },
     {
         path: '/empty',
         name: 'empty',
-        component: () => import('./components/EmptyPage.vue')
+        component: () => import('./components/EmptyPage.vue'),
+        beforeEnter: (to, from, next) => {
+            if (!localStorage.getItem("token")) {
+              next("login");
+            } else {
+              next();
+            }
+          }
+    },
+    {
+        path: '/profile',
+        name: 'profile',
+        component: () => import('./components/Profile.vue'),
+        beforeEnter: (to, from, next) => {
+            if (!localStorage.getItem("token")) {
+              next("login");
+            } else {
+              next();
+            }
+          }
     },
     {
         path: '/documentation',
         name: 'documentation',
-        component: () => import('./components/Documentation.vue')
+        component: () => import('./components/Documentation.vue'),
+        
     },
     {
         path: '/blocks',
         name: 'blocks',
-        component: () => import('./components/BlocksDemo.vue')
+        component: () => import('./components/BlocksDemo.vue'),
+        beforeEnter: (to, from, next) => {
+            if (!localStorage.getItem("token")) {
+              next("login");
+            } else {
+              next();
+            }
+          }
     },
     {
         path: '/icons',
         name: 'icons',
-        component: () => import('./components/IconsDemo.vue')
+        component: () => import('./components/IconsDemo.vue'),
+        beforeEnter: (to, from, next) => {
+            if (!localStorage.getItem("token")) {
+              next("login");
+            } else {
+              next();
+            }
+          }
     },
     {
         path: '/landing',
         name: 'landing',
-        component: () => import('./pages/LandingDemo.vue')
+        component: () => import('./pages/LandingDemo.vue'),
+        beforeEnter: (to, from, next) => {
+            if (!localStorage.getItem("token")) {
+              next("login");
+            } else {
+              next();
+            }
+          }
     },
     {
         path: '/login',
         name: 'login',
-        component: () => import('./pages/Login.vue')
+        component: () => import('./pages/Login.vue'),
+       
     },
     {
-        path: '/emptyOne',
-        name: 'emptyOne',
-        component: () => import('./components/EmptyOne.vue')
+        path: '/register',
+        name: 'register',
+        component: () => import('./components/Register.vue'),
+        
     },
     {
         path: '/error',
         name: 'error',
-        component: () => import('./pages/Error.vue')
+        component: () => import('./pages/Error.vue'),
+       
     },
     {
         path: '/notfound',
         name: 'notfound',
-        component: () => import('./pages/NotFound.vue')
+        component: () => import('./pages/NotFound.vue'),
+        
     },
     {
         path: '/access',
         name: 'access',
-        component: () => import('./pages/Access.vue')
+        component: () => import('./pages/Access.vue'),
+        beforeEnter: (to, from, next) => {
+            if (!localStorage.getItem("token")) {
+              next("login");
+            } else {
+              next();
+            }
+          }
     }
 ];
 
 const router = createRouter({
     history: createWebHashHistory(),
     routes,
+});
+
+
+router.beforeEach(async(to, from, next)=>{
+    if(to.matched.some(record => record.meta.auth) && to.meta.auth){
+        let token = localStorage.getItem('token');
+        if(token){
+            next()
+        }else{
+            next({
+                path:'/login',
+                query:{
+                    redirect: to.fullPath
+                }
+            })
+        }
+    }
+    next();
 });
 
 export default router;
