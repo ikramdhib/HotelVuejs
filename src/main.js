@@ -97,6 +97,14 @@ import TriStateCheckbox from 'primevue/tristatecheckbox';
 import CodeHighlight from './AppCodeHighlight';
 import BlockViewer from './BlockViewer';
 
+
+
+
+
+
+
+
+
 router.beforeEach(function(to, from, next) {
     window.scrollTo(0, 0);
     next();
@@ -199,3 +207,7 @@ app.component('TriStateCheckbox', TriStateCheckbox);
 app.component('BlockViewer', BlockViewer);
 
 app.mount('#app');
+
+ 
+
+ 

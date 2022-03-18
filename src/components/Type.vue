@@ -1,42 +1,56 @@
 <template>
-		<div class="col-12">
-			<div class="card">
-<<<<<<< HEAD
+     <div class="col-12">
+	    <div class="card">
+		
 				<h5>Type</h5>
 				<div class="p-fluid formgrid grid">
-		<div class="field col-12 md:col-6">
-						<label for="city">nom_type</label>
-						<InputText id="city" type="text" />
+					
+             <div class="field col-12 md:col-6">
+						<label for="nom">nom_type</label>
+					<InputText id="nom" type="text" v-model="type.nom_type"/>
 					</div>
 					<div class="field col-12 md:col-6">
-						<label for="zip">prix_type</label>
-						<InputText id="zip" type="text"/>
+						<label for="prix">prix_type</label>
+						<InputText id="prix" type="text" v-model="type.price_Type"/>
 					</div>
-          <div class="field col-12 md:col-3">
-						<label for="address">intitulé</label>
-						<Textarea id="address" rows="4" cols="60"/>
+                     <div class="field col-12 md:col-3">
+						<label for="desc">discription</label>
+						<Textarea id="desc" rows="4" cols="60" v-model="type.intitule"/>
 					</div>
-      
-        <div class="field col-12 md:col-6">
-                        
-       <span class="text-black-700">Disponibilité</span>           
-       <div class="mt-2">
-                     
-    <label class="inline-flex items-center ml-4">
-      <input type="radio" class="form-radio" name="accountType" value="OUI">
-      <span class="ml-2">Oui</span>
-    </label>
-    <label class="inline-flex items-center ml-4">
-      <input type="radio" class="form-radio" name="accountType" value="NON">
-      <span class="ml-2">Non</span>
-    </label>
-    </div>
-  </div>
-        </div>
-	<Button label="ajouter" class="p-button-secondary mr-2 mb-2" />
+				<Button label="ajouter" v-on:click="addType()" class="p-button-secondary mr-2 mb-2" />
                             
+         
 	
-</div>	
-</div>	
-</div>	
-=======
+	</div>
+</div>
+</div>
+	
+</template>
+
+<script>
+import axios from 'axios';
+    export default {
+        data() {
+            return {
+                type: {
+					nom_type:"",
+					price_type:0,
+					intitule:""
+				}
+            }
+        },
+        methods: {
+           async addType() {
+               await axios
+                .post('http://localhost:8000/api/user/type', this.type).then((res) => {
+                console.log(res.status)
+                this.$router.push({name:'type'})
+            })
+
+                    
+                   
+            }
+        }
+        
+    }
+</script>

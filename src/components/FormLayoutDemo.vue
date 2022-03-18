@@ -86,8 +86,9 @@
 					{name: 'Option 3', code: 'Option 3'}
 				],
 				dropdownItem: null
-			}
-		}
-	}
+			};},
+		
+			};
+	
 	
 </script>

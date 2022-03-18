@@ -1,38 +1,32 @@
-
-				<h5>Advanced</h5>
-				<div class="p-fluid formgrid grid">
-					<div class="field col-12 md:col-6">
-						<label for="firstname2">Firstname</label>
-						<InputText id="firstname2" type="text"/>
+<template>
+    <div class="surface-0 flex align-items-center justify-content-center min-h-screen min-w-screen overflow-hidden">
+        <div class="grid justify-content-center p-2 lg:p-0" style="min-width:80%">
+		<div class="col-6">
+			<div class="text-center mb-5">
+                        <img src="layout/images/avatar.png" alt="Image" height="50" class="mb-3">
+                        <div class="text-900 text-3xl font-medium mb-3">Bienvenue</div>
+                        <span class="text-600 font-medium">S'inscrire maintenant</span>
+                    </div>
+			<div class="card">
+		<h5>Sign Up</h5>
+		<div class="field col-12 md:col-6">
+						<label for="email"> Email</label>
+						<InputText id="email" type="text"/>
 					</div>
 					<div class="field col-12 md:col-6">
-						<label for="lastname2">Lastname</label>
-						<InputText id="lastname2" type="text"/>
+					<label for="mdp"> Mot de Passe</label>
+                        <Password id="password1" v-model="password"  :toggleMask="true" ></Password>
 					</div>
-					<div class="field col-12">
-						<label for="address">Address</label>
-						<Textarea id="address" rows="4"/>
-					</div>
-					<div class="field col-12 md:col-6">
-						<label for="city">City</label>
-						<InputText id="city" type="text" />
-					</div>
-					<div class="field col-12 md:col-3">
-						<label for="state">State</label>
-						<Dropdown id="state" v-model="dropdownItem" :options="dropdownItems" optionLabel="name" placeholder="Select One"></Dropdown>
-					</div>
-					<div class="field col-12 md:col-3">
-						<label for="zip">Zip</label>
-						<InputText id="zip" type="text"/>
+                    <div class="field col-12 md:col-4">
+					<Button label="Submit"></Button>
 					</div>
 				</div>
 			</div>
+	</div>
 		</div>
->>>>>>> ba92950e81c413397aadb034be8f33b9a3b21fa7
+
+
 </template>
 
-<script>
-export default {
 
-}
-</script>
+

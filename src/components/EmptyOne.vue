@@ -31,7 +31,7 @@
 						<InputText id="adresse" type="text"/>
 					</div>
 					<div class="field col-12 md:col-6">
-						<label for="code postal">Code Postal</label>
+						<label for="codepostal">Code Postal</label>
 						<InputText id="code postal" type="text"/>
 					</div>
 					<div class="field col-12 md:col-6">
