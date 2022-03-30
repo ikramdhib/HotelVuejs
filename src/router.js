@@ -282,18 +282,6 @@ const routes = [
           }
     },
     {
-        path: '/empty',
-        name: 'empty',
-        component: () => import('./components/EmptyPage.vue'),
-        beforeEnter: (to, from, next) => {
-            if (!localStorage.getItem("token")) {
-              next("login");
-            } else {
-              next();
-            }
-          }
-    },
-    {
         path: '/profile',
         name: 'profile',
         component: () => import('./components/Profile.vue'),
@@ -354,6 +342,12 @@ const routes = [
        
     },
     {
+      path: '/forgetpassword',
+      name: 'forgetpassword',
+      component: () => import('./pages/Login.vue'),
+     
+  },
+    {
         path: '/register',
         name: 'register',
         component: () => import('./components/Register.vue'),
@@ -366,11 +360,18 @@ const routes = [
        
     },
     {
+      path: '/done',
+      name: 'done',
+      component: () => import('./pages/Done.vue'),
+     
+  },
+    {
         path: '/notfound',
         name: 'notfound',
         component: () => import('./pages/NotFound.vue'),
         
     },
+  
     {
         path: '/access',
         name: 'access',

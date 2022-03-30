@@ -1,36 +1,49 @@
 <template>
-		<div class="col-4">
-			<div class="card">
-             <div class="py-4 px-2 max-w-sm mx-auto bg-white rounded-xl shadow-lg space-y-2 sm:py-6 sm:flex sm:items-center sm:space-y-0 sm:space-x-6">
-                <img class="block mx-auto h-24  sm:mx-0 sm:shrink-0" src="layout/images/image.png" alt="Admin">
-                <div class="pl-8 pt-8  "  >
-                     <h4 > {{ user.firstname}}   {{ user.lastname }}   </h4>
-                     <span> {{ user.role }} </span>
-                </div>
+  <div class="container ">
+
+<div style='background-color:	rgb(255,255,255)'>
+<div class="space-y-4 lg:grid lg:grid-cols-3 lg:items-start lg:gap-6 lg:space-y-0" style="cursor: auto;">
+ 
+    
+  <div class="sm:col-span-2" style="cursor: auto;">
+    <div class="mt-2" style="cursor: auto;">
+        
+      <div class="mt-3 flex items-center font-sans" style="cursor: auto;">
                 
-             </div>
+        <div class="shrink-0">          
+            <img class="h-10 w-10 rounded-full" src="layout/images/image.png" alt="Admin" style="cursor: auto;">
+        </div>
+        <div class="ml-3">
+                    
+          <div class="text-sm font-medium text-skin-inverted">
+                        
+            <h5 class="hover:underline" style="cursor: auto;">
+               {{ user.firstname }} {{ user.lastname }}
+            </h5>
+                    
+          </div>
+                    
+          <div class="flex space-x-1 text-sm text-skin-muted" style="cursor: auto;">
+                        
+                        
+            <span aria-hidden="true"> <i class='pi pi-tags'></i></span>
+                        
+            <span style="cursor: auto;"> {{ user.role }} </span>
+                    
+          </div>
                 
-            </div>
-			</div>
-            <div class="card">
-				<h5>TabView</h5>
-				<TabView>
-					<TabPanel header="Mes Informations ">
-                        <div class="row">
-                            <div class="col">
-                            <h6 >Nom</h6>
-                            </div>
-                        </div>
-                            </TabPanel>
-					<TabPanel header="Paramétre">
-						<p class="line-height-3 m-0">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque
-							ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia
-							voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
-							Consectetur, adipisci velit, sed quia non numquam eius modi.</p>
-					</TabPanel>
-					
-				</TabView>
-			</div>
+        </div>
+            
+      </div>
+        
+    </div>
+    
+  </div>
+
+</div>
+</div>
+</div>
+
 </template>
 <script>
 export default {
@@ -52,3 +65,14 @@ export default {
     }
 
 </script>
+<style >
+.container {
+  margin-top:5rem;
+  max-width:50%;
+}
+
+.space-y-4 {
+    padding:35px;
+}
+</style>
+

@@ -6,7 +6,7 @@
 				<FileUpload name="demo[]" url="./upload.php" @upload="onUpload" :multiple="true" accept="image/*" :maxFileSize="1000000"/>
 
 				<h5>Basic</h5>
-				<FileUpload mode="basic" name="demo[]" url="./upload.php" accept="image/*" :maxFileSize="1000000" @upload="onUpload" />
+				<FileUpload  name="basic"  mode="basic" url="./upload.php" accept="image/*" :maxFileSize="1000000"  />
 			</div>
 		</div>
 	</div>

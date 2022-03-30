@@ -27,12 +27,8 @@
 	"dependencies": {
 		"axios": "^0.26.1",
 		"chart.js": "3.3.2",
-<<<<<<< HEAD
-		"core-js": "^3.21.1",
-=======
 		"core-js": "^3.6.5",
 		"dist": "^0.1.2",
->>>>>>> 28c21c9c33abc01e2c575c13f8f7af04585e5285
 		"primeflex": "^3.1.2",
 		"primeicons": "^5.0.0",
 		"primevue": "^3.11.0",

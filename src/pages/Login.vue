@@ -18,7 +18,7 @@
                 
                         <div class="flex align-items-center justify-content-center mb-5">
                            
-                            <a class="font-medium no-underline ml-2 text-right cursor-pointer" style="color: var(--primary-color)">Mot de passe oublié?</a>
+                            <a class="font-medium no-underline ml-2 text-right cursor-pointer" style="color: var(--primary-color)" ><router-link to="forgetpassword"> Mots de passe oublié?</router-link></a>
                         </div>
                         <Button label="Connecter" class="w-full p-3 text-xl" v-on:click="login()"></button>
                     </div>
@@ -62,7 +62,7 @@ export default {
                 this.$router.push("profile")
                 console.log(response)
             }else{
-                this.$router.push("error")
+                this.$router.push("notfound")
             }
         })        
     }

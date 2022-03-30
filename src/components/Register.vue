@@ -1,4 +1,5 @@
 <template>
+<from>
     <div class="surface-0 flex align-items-center justify-content-center min-h-screen min-w-screen overflow-hidden">
         <div class="grid justify-content-center p-2 lg:p-0" style="min-width:80%">
 		<div class="col-6">
@@ -10,7 +11,6 @@
 			<div class="card">
 		<h5>Sign Up</h5>
 			<div class="p-fluid formgrid grid">
-				<form >
 					<div class="field col-12 md:col-6">
 						<label for="nom">Nom</label>
 						<InputText id="nom" type="text" v-model="users.firstname" />
@@ -32,13 +32,8 @@
 						<InputText id="adresse" type="text" v-model="users.country"/>
 					</div>
 					<div class="field col-12 md:col-6">
-<<<<<<< HEAD:src/components/Register.vue
 						<label for="code postal">Code Postal</label>
 						<InputText id="code postal" type="text" v-model="users.zipcode"/>
-=======
-						<label for="codepostal">Code Postal</label>
-						<InputText id="code postal" type="text"/>
->>>>>>> 28c21c9c33abc01e2c575c13f8f7af04585e5285:src/components/EmptyOne.vue
 					</div>
 					<div class="field col-12 md:col-6">
 						<label for="email"> Email</label>
@@ -51,13 +46,12 @@
                     <div class="field col-12 md:col-4">
 					<Button label="Submit" v-on:click="addUser()"></Button>
 					</div>
-				</form>
 				</div>
 			</div>
 	</div>
 		</div>
 </div>
-
+</from>
 </template>
 
 <script>

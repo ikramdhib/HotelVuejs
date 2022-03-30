@@ -206,18 +206,6 @@ app.component('TriStateCheckbox', TriStateCheckbox);
 
 app.component('BlockViewer', BlockViewer);
 
-<<<<<<< HEAD
-
 
 
 app.mount('#app');
-
-
-
-=======
-app.mount('#app');
-
- 
-
- 
->>>>>>> 28c21c9c33abc01e2c575c13f8f7af04585e5285

@@ -57,6 +57,7 @@
 			</div>
 			<div class="field col-12 md:col-4">
 				<span class="p-float-label">
+					
 					<MultiSelect id="multiselect" :options="cities" v-model="value9" optionLabel="name" :filter="false"></MultiSelect>
 					<label for="multiselect">MultiSelect</label>
 				</span>
