@@ -1,17 +1,17 @@
 <template>
-  <div class="container ">
-
-<div style='background-color:	rgb(255,255,255)'>
-<div class="space-y-4 lg:grid lg:grid-cols-3 lg:items-start lg:gap-6 lg:space-y-0" style="cursor: auto;">
+<div class="grid p-fluid">
+  <div class="col-12 md:col-4">
+  	<div  class="card ">
+			<div class="space-y-4 lg:grid lg:grid-cols-6 lg:items-start lg:gap- lg:space-y-0" style="cursor: auto;">
  
     
-  <div class="sm:col-span-2" style="cursor: auto;">
+  <div class="sm:col-span-4" style="cursor: auto;">
     <div class="mt-2" style="cursor: auto;">
         
       <div class="mt-3 flex items-center font-sans" style="cursor: auto;">
                 
         <div class="shrink-0">          
-            <img class="h-10 w-10 rounded-full" src="layout/images/image.png" alt="Admin" style="cursor: auto;">
+            <img id="img" class="h-10 w-10 rounded-full" v-bind:src="user.img" alt="Admin" style="cursor: auto;">
         </div>
         <div class="ml-3">
                     
@@ -29,21 +29,71 @@
             <span aria-hidden="true"> <i class='pi pi-tags'></i></span>
                         
             <span style="cursor: auto;"> {{ user.role }} </span>
-                    
           </div>
-                
+        </div> 
+        </div> 
+				<Button id="btn" label="Changer" class="p-button-rounded mr-2 mb-2" />
+      </div>
+      </div>
+			</div>
+</div>
+  </div>
+	<div id="space" class="card">
+    <div class="flex flex-col">
+  <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
+    <div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
+      <div class="overflow-hidden">
+        <table class="min-w-full">
+          <tbody>
+            <tr class="border-b">
+              <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Nom & Prénom</td>
+              <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                {{ user.firstname }} {{ user.lastname }}
+              </td>
+            </tr>
+            <tr class="bg-white border-b">
+              <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Téléphone</td>
+              <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+               {{ user.phone }}
+              </td>
+            </tr>
+            <tr class="bg-white border-b">
+              <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Adresse</td>
+              <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+               {{ user.country }}
+              </td>
+            </tr>
+            <tr class="bg-white border-b">
+              <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Code Postal</td>
+              <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+               {{ user.zipcode }}
+              </td>
+            </tr>
+            <tr class="bg-white border-b">
+              <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Carte d'Identité</td>
+              <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+               {{ user.cin }}
+              </td>
+            </tr>
+            <tr class="bg-white border-b">
+              <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Email</td>
+              <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+               {{ user.email }}
+              </td>
+            </tr>
+             <tr class="bg-white border-b">
+              <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+				      <Button label="Editer" class="mr-2 mb-2"/></td>
+            </tr>
+          </tbody>
+        </table>
+            </div>
+          </div>       
         </div>
             
       </div>
-        
-    </div>
-    
-  </div>
-
+	</div>
 </div>
-</div>
-</div>
-
 </template>
 <script>
 export default {
@@ -68,11 +118,24 @@ export default {
 <style >
 .container {
   margin-top:5rem;
-  max-width:50%;
+  max-width:30%;
+}
+#btn{
+ margin-top: 10px;
+ max-width: 40%;
+ padding: 10px;
 }
 
 .space-y-4 {
     padding:35px;
+}
+
+#img {
+border-radius: 50%;
+}
+#space{
+  margin-left: 10px;
+  max-width: 70%;
 }
 </style>
 
