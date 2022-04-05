@@ -1,36 +1,99 @@
 <template>
-		<div class="col-4">
-			<div class="card">
-             <div class="py-4 px-2 max-w-sm mx-auto bg-white rounded-xl shadow-lg space-y-2 sm:py-6 sm:flex sm:items-center sm:space-y-0 sm:space-x-6">
-                <img class="block mx-auto h-24  sm:mx-0 sm:shrink-0" src="layout/images/image.png" alt="Admin">
-                <div class="pl-8 pt-8  "  >
-                     <h4 > {{ user.firstname}}   {{ user.lastname }}   </h4>
-                     <span> {{ user.role }} </span>
-                </div>
+<div class="grid p-fluid">
+  <div class="col-12 md:col-4">
+  	<div  class="card ">
+			<div class="space-y-4 lg:grid lg:grid-cols-6 lg:items-start lg:gap- lg:space-y-0" style="cursor: auto;">
+ 
+    
+  <div class="sm:col-span-4" style="cursor: auto;">
+    <div class="mt-2" style="cursor: auto;">
+        
+      <div class="mt-3 flex items-center font-sans" style="cursor: auto;">
                 
-             </div>
-                
+        <div class="shrink-0">          
+            <img id="img" class="h-10 w-10 rounded-full" v-bind:src="user.img" alt="Admin" style="cursor: auto;">
+        </div>
+        <div class="ml-3">
+                    
+          <div class="text-sm font-medium text-skin-inverted">
+                        
+            <h5 class="hover:underline" style="cursor: auto;">
+               {{ user.firstname }} {{ user.lastname }}
+            </h5>
+                    
+          </div>
+                    
+          <div class="flex space-x-1 text-sm text-skin-muted" style="cursor: auto;">
+                        
+                        
+            <span aria-hidden="true"> <i class='pi pi-tags'></i></span>
+                        
+            <span style="cursor: auto;"> {{ user.role }} </span>
+          </div>
+        </div> 
+        </div> 
+				<Button id="btn" label="Changer" class="p-button-rounded mr-2 mb-2" />
+      </div>
+      </div>
+			</div>
+</div>
+  </div>
+	<div id="space" class="card">
+    <div class="flex flex-col">
+  <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
+    <div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
+      <div class="overflow-hidden">
+        <table class="min-w-full">
+          <tbody>
+            <tr class="border-b">
+              <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Nom & Prénom</td>
+              <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                {{ user.firstname }} {{ user.lastname }}
+              </td>
+            </tr>
+            <tr class="bg-white border-b">
+              <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Téléphone</td>
+              <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+               {{ user.phone }}
+              </td>
+            </tr>
+            <tr class="bg-white border-b">
+              <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Adresse</td>
+              <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+               {{ user.country }}
+              </td>
+            </tr>
+            <tr class="bg-white border-b">
+              <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Code Postal</td>
+              <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+               {{ user.zipcode }}
+              </td>
+            </tr>
+            <tr class="bg-white border-b">
+              <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Carte d'Identité</td>
+              <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+               {{ user.cin }}
+              </td>
+            </tr>
+            <tr class="bg-white border-b">
+              <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Email</td>
+              <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+               {{ user.email }}
+              </td>
+            </tr>
+             <tr class="bg-white border-b">
+              <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+				      <Button label="Editer" class="mr-2 mb-2"/></td>
+            </tr>
+          </tbody>
+        </table>
             </div>
-			</div>
-            <div class="card">
-				<h5>TabView</h5>
-				<TabView>
-					<TabPanel header="Mes Informations ">
-                        <div class="row">
-                            <div class="col">
-                            <h6 >Nom</h6>
-                            </div>
-                        </div>
-                            </TabPanel>
-					<TabPanel header="Paramétre">
-						<p class="line-height-3 m-0">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque
-							ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia
-							voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
-							Consectetur, adipisci velit, sed quia non numquam eius modi.</p>
-					</TabPanel>
-					
-				</TabView>
-			</div>
+          </div>       
+        </div>
+            
+      </div>
+	</div>
+</div>
 </template>
 <script>
 export default {
@@ -52,3 +115,27 @@ export default {
     }
 
 </script>
+<style >
+.container {
+  margin-top:5rem;
+  max-width:30%;
+}
+#btn{
+ margin-top: 10px;
+ max-width: 40%;
+ padding: 10px;
+}
+
+.space-y-4 {
+    padding:35px;
+}
+
+#img {
+border-radius: 50%;
+}
+#space{
+  margin-left: 10px;
+  max-width: 70%;
+}
+</style>
+

@@ -21,43 +21,53 @@
 				</button>
 			</li>
 			<li>
-				<button class="p-link layout-topbar-button">
-					<i class="pi pi-cog"></i>
-					 <select class="form-select appearance-none
-      block
-      w-full
-      px-3
-      py-1.5
-      text-base
-      font-normal
-      text-gray-700
-      bg-white bg-clip-padding bg-no-repeat
-      border border-solid border-gray-300
-      rounded
-      transition
-      ease-in-out
-      m-0
-      focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" aria-label="Default select example">
-        <option>Open this select menu</option>
-        <option value="1">One</option>
-        <option value="2">Two</option>
-        <option value="3">Three</option>
-					 </select>
-					<span>Settings</span>
-				</button>
-			</li>
-			<li>
-				<button class="p-link layout-topbar-button">
-					<i class="pi pi-user"></i>
-					<span>Profile</span>
-				</button>
+				<div class="ml-3 relative">
+  <div v-on:click="isActive = !isActive">
+    <button
+      class="flex bg-white text-sm border-2 p-link layout-topbar-button border-transparent rounded-full focus:outline-none focus:border-white transition duration-150 ease-in-out"
+      id="user-menu"
+      aria-label="User menu"
+      aria-haspopup="true"
+    >
+    <i class="pi pi-user"></i>
+    </button>
+  </div>
+    <div v-show="isActive" class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg">
+    <div
+      class="py-1 w-12 rounded-md bg-white shadow-xs"
+      role="menu"
+      aria-orientation="vertical"
+      aria-labelledby="user-menu"
+    >
+      <router-link
+	  to="profile"
+        href="#"
+        class="block px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out"
+        role="menuitem"
+      > Profile</router-link>
+      
+      <a
+        href="#"
+        class="block px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out"
+        role="menuitem"
+		v-on:click="logout()"
+      >Quiter</a>
+    </div>
+  </div>
+</div>
 			</li>
 		</ul>
 	</div>
 </template>
 
 <script>
+import axios from 'axios';
 export default {
+data: function () {
+        return {
+            isActive: false,
+        }
+    },
     methods: {
         onMenuToggle(event) {
             this.$emit('menu-toggle', event);
@@ -67,6 +77,29 @@ export default {
         },
 		topbarImage() {
 			return this.$appState.darkTheme ? 'images/logo-white.svg' : 'images/logo-dark.svg';
+		},
+		logg(){
+			if(localStorage.getItem('token')){
+				localStorage.removeItem('token');
+				this.$router.push("login");
+				console.log("hh",localStorage.getItem('token'))
+			}
+		},
+
+	    async logout(){
+			if(localStorage.getItem('token')){
+			await axios.get('http://localhost:8000/api/user/logout',
+				{ headers: { Authorization: 'Bearer ' + localStorage.getItem('token')}})
+				.then(Response=>{
+					localStorage.removeItem('token')
+					localStorage.removeItem('user')
+					this.$router.push("login")
+					
+					console.log(Response) 
+				}).catch(e=>{
+					console.warn(e)
+				})
+			}
 		}
     },
 	computed: {

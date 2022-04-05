@@ -1,7 +1,10 @@
 <template>
     <Landing v-if="$route.path === '/landing'" @change-theme="changeTheme" />
     <Login v-else-if="$route.path === '/login'" />
+    <ForgetPassword v-else-if="$route.path === '/forgetpassword'" />
+    <UpdatePassword v-else-if="$route.path === '/updatepassword'" />
     <Error v-else-if="$route.path === '/error'" />
+    <Done v-else-if="$route.path === '/done'" />
     <Register v-else-if="$route.path === '/register'" />
     <NotFound v-else-if="$route.path === '/notfound'" />
     <Access v-else-if="$route.path === '/access'" />
@@ -13,7 +16,10 @@ import EventBus from './AppEventBus';
 import App from './App';
 import Landing from './pages/LandingDemo';
 import Login from './pages/Login';
+import ForgetPassword from './pages/ForgetPassword';
+import UpdatePassword from './pages/UpdatePassword';
 import Error from './pages/Error';
+import Done from './pages/Done';
 import Register from './components/Register'
 import NotFound from './pages/NotFound';
 import Access from './pages/Access';
@@ -36,7 +42,10 @@ export default {
         App,
         Landing,
         Login,
+        ForgetPassword,
+        UpdatePassword,
         Error,
+        Done,
         Register,
         NotFound,
         Access

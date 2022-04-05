@@ -1,5 +1,6 @@
 import axios from 'axios';
 
+export default function request(){
 axios.interceptors.request.use(
     config => {
       const token = localStorage.getItem("token");
@@ -12,9 +13,8 @@ axios.interceptors.request.use(
       return Promise.reject(error);
     }
   );
-  
-  
-  
+  }
+  export default function respense(){
   axios.interceptors.response.use(
       response => {
         //Not logged in or session expired
@@ -34,3 +34,4 @@ axios.interceptors.request.use(
         return  Promise.reject (error) // returns the error information returned by the interface
       }
     );
+  }
