@@ -294,6 +294,30 @@ const routes = [
           }
     },
     {
+      path: '/profileEdit',
+      name: 'profileEdit',
+      component: () => import('./components/ProfileEdit.vue'),
+      beforeEnter: (to, from, next) => {
+          if (!localStorage.getItem("token")) {
+            next("login");
+          } else {
+            next();
+          }
+        }
+  },
+    {
+      path: '/calendrier',
+      name: 'calendrier',
+      component: () => import('./components/Calender.vue'),
+      beforeEnter: (to, from, next) => {
+          if (!localStorage.getItem("token")) {
+            next("login");
+          } else {
+            next();
+          }
+        }
+  },
+    {
         path: '/documentation',
         name: 'documentation',
         component: () => import('./components/Documentation.vue'),

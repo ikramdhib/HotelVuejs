@@ -9,7 +9,14 @@
                         <span class="text-600 font-medium">S'inscrire maintenant</span>
                     </div>
 			<div class="card">
-		<h5>Sign Up</h5>
+		<h5>S'inscrire</h5>
+		<div class="text-center mb-5">
+                        <div v-if="errors.length > 0">
+                            <ul style="list-style-type:none;">
+                                <li class="li" style="color:red" v-for="error in errors" :key="error"><InlineMessage>{{ error }}</InlineMessage> </li>
+                            </ul>
+                        </div>
+                    </div>
 			<div class="p-fluid formgrid grid">
 					<div class="field col-12 md:col-6">
 						<label for="nom">Nom</label>
@@ -25,7 +32,7 @@
 					</div>
 					<div class="field col-12 md:col-6">
 						<label for="cin">CIN</label>
-						<InputText id=cin type="text"  v-model="users.role" />
+						<InputText id=cin type="text"  v-model="users.cin" />
 					</div>
 					<div class="field col-12 md:col-6">
 						<label for="adresse">Adresse</label>
@@ -66,20 +73,27 @@ export default {
 				country:"",
 				zipcode:"",
 				role:"",
+				cin:"",
+				img:"",
 				email:"",
 				password:""
-			}
+			},
+			errors:[],
 		}
 	},
 	methods:{
 	async  addUser(){
+		if(this.users.firstname && this.users.lastname && this.users.phone && this.users.country &&
+		this.users.zipcode && this.users.cin && this.users.password && this.users.email){
 		 await axios.post("http://localhost:8000/api/user/register",{
 				firstname:this.users.firstname,
 				lastname:this.users.lastname,
 				phone:this.users.phone,
 				country:this.users.country,
 				zipcode:this.users.zipcode,
-				role:this.users.role,
+				role:"admin",
+				img:"layout/images/image.png",
+				cin:this.users.cin,
 				email:this.users.email,
 				password:this.users.password
 		}).then((response)=>{
@@ -87,6 +101,31 @@ export default {
 				this.$router.push("login")
 				console.log(res)
 		})
-	}}
+		}
+	if(!this.users.lastname){
+		this.errors.push("Le Nom est requis")
+	}if(!this.users.firstname){
+		this.errors.push("Le Prénom est requis")
+	}if(!this.users.password){
+		this.errors.push("Le Mot de passe est requis")
+	}if(!this.users.phone){
+		this.errors.push("Le Téléphone est requis")
+	}if(!this.users.country){
+		this.errors.push("L'Adresse est requis")
+	}if(!this.users.zipcode){
+		this.errors.push("Le Code Postal est requis")
+	}if(!this.users.email){
+		this.errors.push("L'Email est requis")
+	}
+	if(!this.users.cin){
+		this.errors.push("La Carte d'Identité  est requis")
+	}
+	}
+	}
 }
 </script>
+<style scoped>
+.li{
+ margin-top: 15px;
+}
+</style>

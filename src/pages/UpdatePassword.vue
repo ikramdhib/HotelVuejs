@@ -6,6 +6,9 @@
                     <div class="text-center mb-5">
                         <div class="text-900 text-3xl font-medium mb-3">Accéder a votre compte</div>
                         <span class="text-600 font-medium">Réinitialiser votre mot de passe</span>
+                         <div class="li" v-if="errors">
+                             <InlineMessage>{{ errors }}</InlineMessage> 
+                        </div>
                     </div>
                 <form>
                     <div class="w-full md:w-10 mx-auto">
@@ -20,7 +23,7 @@
                             <div class="mx-2 w-4 p-2 ">
                            <Button label="Rechercher"  v-on:click="updatepass()"></button></div>
                            <div class=" w-2 p-2">
-                           <Button label="Annuler" class="p-button-secondary mr-2 mb-2" to="login"></button></div>
+                           <Button label="Annuler" class="p-button-secondary mr-2 mb-2" @click="backForgetPassword()"></button></div>
                         </div>
                     </div>
                 </form>
@@ -39,14 +42,12 @@ export default {
            password:"",
            password_confirmation:"",
            token:"",
+       errors:"",
        }
     },
     methods:{
         async updatepass(){
-            console.log(localStorage.getItem('email'))
-            console.log("gog",this.$route.query.token)
-            console.log("gog",this.password)
-            console.log("gog",this.password_confirmation)
+            if(this.password_confirmation && this.password){
           await axios.post('http://localhost:8000/api/user/update-password',
          {
              email:(localStorage.getItem("email")),
@@ -58,8 +59,16 @@ export default {
              let res = response.data;
             console.log(res)
             this.$router.push("login")
-		})
+		}).catch(error=>{
+            if(error.response.status==422){
+            this.errors="Les deux Mot de Passe ne sont compatible"
+            }
+        })
+        }
         },
+        backForgetPassword(){
+            this.$router.push("forgetpassword")
+        }
         
     }
 }
@@ -74,5 +83,8 @@ export default {
 .pi-eye-slash {
     transform:scale(1.6);
     margin-right: 1rem;
+}
+.li{
+ margin-top: 15px;
 }
 </style>
