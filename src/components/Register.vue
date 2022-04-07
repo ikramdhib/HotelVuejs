@@ -39,17 +39,8 @@
 						<InputText id="adresse" type="text" v-model="users.country"/>
 					</div>
 					<div class="field col-12 md:col-6">
-<<<<<<< HEAD
-
 						<label for="code postal">Code Postal</label>
 						<InputText id="code postal" type="text" v-model="users.zipcode"/>
-
-						
-
-=======
-						<label for="code postal">Code Postal</label>
-						<InputText id="code postal" type="text" v-model="users.zipcode"/>
->>>>>>> f95760132f8b49e31385963c2e26ad0b8bd4de2e
 					</div>
 					<div class="field col-12 md:col-6">
 						<label for="email"> Email</label>
