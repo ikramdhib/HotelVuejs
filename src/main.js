@@ -5,8 +5,11 @@ import 'prismjs/themes/prism-coy.css';
 import './assets/styles/layout.scss';
 import './assets/demo/flags/flags.css';
 
+
+
 import { createApp, reactive } from 'vue';
 import router from './router';
+
 import AppWrapper from './AppWrapper.vue';
 import PrimeVue from 'primevue/config';
 import AutoComplete from 'primevue/autocomplete';
@@ -96,7 +99,6 @@ import TriStateCheckbox from 'primevue/tristatecheckbox';
 
 import CodeHighlight from './AppCodeHighlight';
 import BlockViewer from './BlockViewer';
-
 
 
 
@@ -206,6 +208,13 @@ app.component('TriStateCheckbox', TriStateCheckbox);
 
 app.component('BlockViewer', BlockViewer);
 
+<<<<<<< HEAD
+
+app.mount('#app');
+
+
+=======
 
 
 app.mount('#app');
+>>>>>>> f95760132f8b49e31385963c2e26ad0b8bd4de2e

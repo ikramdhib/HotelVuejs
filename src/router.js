@@ -3,7 +3,9 @@ import { createRouter, createWebHashHistory } from 'vue-router';
 
 
 const routes = [
-    {
+    
+
+      {
         path: '/',
         name: 'dashboard',
         component: () => import('./components/FormLayoutDemo.vue'),
@@ -16,10 +18,12 @@ const routes = [
           }
 
     },
-    {
-        path: '/formlayout',
-        name: 'formlayout',
-        component: () => import('./components/FormLayoutDemo.vue'),
+    
+      
+      {
+        path: '/image',
+        name: 'Image',
+        component: () => import('./components/image.vue'),
         beforeEnter: (to, from, next) => {
             if (!localStorage.getItem("token")) {
               next("login");
@@ -27,12 +31,83 @@ const routes = [
               next();
             }
           }
+    
     },
+        {
+            path: '/AddRoom',
+            name: 'AddRoom',
+           component: () => import('./components/AddRoom.vue'),
+            beforeEnter: (to, from, next) => {
+                if (!localStorage.getItem("token")) {
+                  next("login");
+                } else {
+                  next();
+                }
+              }
+        },
+        {
+          path: '/Option',
+          name: 'Option',
+         component: () => import('./components/Option.vue'),
+          beforeEnter: (to, from, next) => {
+              if (!localStorage.getItem("token")) {
+                next("login");
+              } else {
+                next();
+              }
+            }
+      },
+
+  
     {
-        path: '/Option',
-        name: 'Option',
-        component: () => import('./components/Option.vue')
-    },
+      path: '/TableType/',
+      name: 'TableType',
+      component: () => import('./components/TableType.vue'),
+      beforeEnter: (to, from, next) => {
+          if (!localStorage.getItem("token")) {
+            next("login");
+          } else {
+            next();
+          }
+        }},
+        {
+          path: '/TableOption',
+          name: 'TableOption',
+          component: () => import('./components/TableOption.vue'),
+          beforeEnter: (to, from, next) => {
+              if (!localStorage.getItem("token")) {
+                next("login");
+              } else {
+                next();
+              }
+            }},
+           
+      
+            {
+              path: '/UpdateType:id',
+              name: 'UpdateType',
+              component: () => import('./components/UpdateType.vue'),
+              beforeEnter: (to, from, next) => {
+                  if (!localStorage.getItem("token")) {
+                    next("login");
+                  } else {
+                    next();
+                  }
+                }},
+            {
+              path: '/TableRoom',
+              name: 'TableRoom',
+              component: () => import('./components/TableRoom.vue'),
+              beforeEnter: (to, from, next) => {
+                  if (!localStorage.getItem("token")) {
+                    next("login");
+                  } else {
+                    next();
+                  }
+                }},
+  
+  
+
     
     {
         path: '/input',
@@ -62,19 +137,9 @@ const routes = [
         path: '/Type',
         name: 'Type',
         component: () => import('./components/Type.vue')
+      
     },
-    {
-        path: '/invalidstate',
-        name: 'invalidstate',
-        component: () => import('./components/InvalidStateDemo.vue'),
-        beforeEnter: (to, from, next) => {
-            if (!localStorage.getItem("token")) {
-              next("login");
-            } else {
-              next();
-            }
-          }
-    },
+    
     {
         path: '/button',
         name: 'button',
@@ -407,7 +472,9 @@ const routes = [
               next();
             }
           }
-    }
+    },
+   
+   
 ];
 
 const router = createRouter({

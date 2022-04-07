@@ -17,7 +17,7 @@
 						<label for="desc">discription</label>
 						<Textarea id="desc" rows="4" cols="60" v-model="type.intitule"/>
 					</div>
-				<Button label="ajouter" @click="addType()" class="p-button-secondary mr-2 mb-2" />
+				<Button label="ajouter" @click="update()" class="p-button-secondary mr-2 mb-2" />
                             
          
 	
@@ -41,9 +41,9 @@ export default {
         },
 		
         methods: {	
-			 async addType() {
+			 async update() {
 			 await axios
-			    .post('http://localhost:8000/api/user/type',{nom_type:this.type.nom_type,
+			    .put('http://localhost:8000/api/user/type',{nom_type:this.type.nom_type,
 				price_Type:this.type.price_Type,
 				intitule:this.type.intitule},
 				{ headers: {Authorization: 'Bearer ' + localStorage.getItem('token')}}
@@ -51,7 +51,7 @@ export default {
 					console.log(this.headers);
 				     let response = res.data;
 					 console.log(response)
-			         this.$router.push("TableType")
+			         this.$router.push("type")
 					 
 			})}}}
         </script>
