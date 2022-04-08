@@ -8,31 +8,31 @@
 			<div class="p-fluid formgrid grid">
 					<div class="field col-12 md:col-6">
 						<label for="nom">Nom</label>
-						<InputText id="nom" type="text" :value="user.firstname"  />
+						<InputText id="nom" type="text" :placeholder="user.firstname" v-model="userInfo.firstname" />
 					</div>
 					<div class="field col-12 md:col-6">
 						<label for="prenom">Prenom</label>
-						<InputText id="prenom" type="text" :value="user.lastname" />
+						<InputText id="prenom" type="text" :placeholder="user.lastname"  v-model="userInfo.lastname"/>
 					</div>
 					<div class="field col-12 md:col-6">
 						<label for="telephone">Téléphone</label>
-						<InputText id="telephone" type="text" :value="user.phone"/>
+						<InputText id="telephone" type="text" :placeholder="user.phone" v-model="userInfo.phone"/>
 					</div>
 					<div class="field col-12 md:col-6">
 						<label for="cin">CIN</label>
-						<InputText id=cin  type="text" :value="user.cin"  disabled />
+						<InputText id=cin  type="text" :placeholder="user.cin" v-model="userInfo.cin" disabled />
 					</div>
 					<div class="field col-12 md:col-6">
 						<label for="adresse">Adresse</label>
-						<InputText id="adresse" type="text" :value="user.country"/>
+						<InputText id="adresse" type="text" :placeholder="user.country" v-model="userInfo.country"/>
 					</div>
 					<div class="field col-12 md:col-6">
 						<label for="code postal">Code Postal</label>
-						<InputText id="code postal" type="text" :value="user.zipcode"/>
+						<InputText id="code postal" type="text" :placeholder="user.zipcode" v-model="userInfo.zipcode"/>
 					</div>
 					<div class="field col-12 md:col-6">
 						<label for="email"> Email</label>
-						<InputText id="email" type="text" :value="user.email" disabled />
+						<InputText id="email" type="text" :placeholder="user.email" v-model="userInfo.email" disabled />
 					</div>
 					<div class="field col-12 md:col-6">
 				<div id="mdp" class="font-medium no-underline ml-2 cursor-pointer" style="color: var(--primary-color)" v-on:click="passModify()" > <a >Vous devez modifier votre mot de passe ?</a></div>
@@ -43,9 +43,10 @@
           	<div class="field col-12 md:col-6">
 					</div>
            <div class="field col-12 md:col-4">
-					<Button label="Modifer"></Button>
+					<Button @click="updateProfile()" label="Modifer"></Button>
 					</div>
           <div class="field col-12 md:col-4">
+            <Toast />
 					 <Button id="btn" label="Annuler" class="p-button-secondary mr-2 mb-2" @click="backProfile()"></button>
 					</div>
 				</div>
@@ -77,11 +78,13 @@
   </div>   
 </template>
 <script>
+import axios from 'axios';
 export default {
     data(){
         return{
           passIsToModify:false,
            user:{},
+           userInfo:{},
         }
     },
             mounted () {
@@ -99,7 +102,100 @@ export default {
               },
               backProfile(){
                 this.$router.push("profile")
+              },
+                async updateProfile(){
+                  console.log("user to update",this.userInfo);
+                  if(this.userInfo.firstname){
+               await axios.post('http://localhost:8000/api/user/update-profile',{
+                  firstname:this.userInfo.firstname,
+                  email:this.user.email,
+               },
+               { headers: { Authorization: 'Bearer ' + localStorage.getItem('token') }
+               }).then((response)=>{
+                let res = response.data;
+                 localStorage.setItem("user",JSON.stringify(res));
+                  this.$router.push("profile")
+                  console.log(res)
+              })
+                  }
+
+                   if(this.userInfo.lastname){
+               await axios.post('http://localhost:8000/api/user/update-profile',{
+                  lastname:this.userInfo.lastname,
+                  email:this.user.email,
+               },
+               { headers: { Authorization: 'Bearer ' + localStorage.getItem('token') }
+               }).then((response)=>{
+                let res = response.data;
+                 localStorage.setItem("user",JSON.stringify(res));
+                  this.$router.push("profile")
+                  console.log(res)
+              })
               }
+
+               if(this.userInfo.phone){
+               await axios.post('http://localhost:8000/api/user/update-profile',{
+                  phone:this.userInfo.phone,
+                  email:this.user.email,
+               },
+               { headers: { Authorization: 'Bearer ' + localStorage.getItem('token') }
+               }).then((response)=>{
+                let res = response.data;
+                 localStorage.setItem("user",JSON.stringify(res));
+                  this.$router.push("profile")
+                  console.log(res)
+              })
+               }
+                if(this.userInfo.country){
+               await axios.post('http://localhost:8000/api/user/update-profile',{
+                  country:this.userInfo.country,
+                  email:this.user.email,
+               },
+               { headers: { Authorization: 'Bearer ' + localStorage.getItem('token') }
+               }).then((response)=>{
+                let res = response.data;
+                 localStorage.setItem("user",JSON.stringify(res));
+                  this.$router.push("profile")
+                  console.log(res)
+              })
+                }
+                 if(this.userInfo.zipcode){
+               await axios.post('http://localhost:8000/api/user/update-profile',{
+                  zipcode:this.userInfo.zipcode,
+                  email:this.user.email,
+               },
+               { headers: { Authorization: 'Bearer ' + localStorage.getItem('token') }
+               }).then((response)=>{
+                let res = response.data;
+                 localStorage.setItem("user",JSON.stringify(res));
+                  this.$router.push("profile")
+                  console.log(res)
+              })
+                 }
+                  if(this.userInfo.firstname && this.userInfo.lastname && this.user.phone &&
+                  this.userInfo.country && this.userInfo.zipcode){
+               await axios.post('http://localhost:8000/api/user/update-profile',{
+                  firstname:this.userInfo.firstname,
+                  lastname:this.userInfo.lastname,
+                  phone:this.userInfo.phone,
+                  country:this.userInfo.country,
+                  zipcode:this.userInfo.zipcode,
+                  email:this.user.email,
+               },
+               { headers: { Authorization: 'Bearer ' + localStorage.getItem('token') }
+               }).then((response)=>{
+                let res = response.data;
+                  this.$router.push("profile")
+                  console.log(res)
+              })
+                  }
+                   if (!this.userInfo.firstname ){
+                    console.log("hi");
+			           	this.$toast.add({severity:'error', summary: 'Erreur', detail:'Tous les champs sont vides !', life: 3000});
+			
+                 }
+                },
+                
             }
             
         
