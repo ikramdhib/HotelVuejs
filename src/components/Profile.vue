@@ -46,44 +46,44 @@
         <table class="min-w-full">
           <tbody>
             <tr class="border-b">
-              <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Nom & Prénom</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"> <i class="pi pi-user"/> <span id="td"> Nom & Prénom </span></td>
               <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
                 {{ user.firstname }} {{ user.lastname }}
               </td>
             </tr>
             <tr class="bg-white border-b">
-              <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Téléphone</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"><i class="pi pi-phone"/> <span id="td" >Téléphone </span></td>
               <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
                {{ user.phone }}
               </td>
             </tr>
             <tr class="bg-white border-b">
-              <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Adresse</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"><i class="pi pi-map-marker" /> <span id="td"> Adresse </span></td>
               <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
                {{ user.country }}
               </td>
             </tr>
             <tr class="bg-white border-b">
-              <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Code Postal</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"> <i class="pi pi-fw pi-envelope" /> <span id="td"> Code Postal </span></td>
               <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
                {{ user.zipcode }}
               </td>
             </tr>
             <tr class="bg-white border-b">
-              <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Carte d'Identité</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">   <i class="pi pi-id-card" /> <span id="td"> Carte d'Identité</span></td>
               <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
                {{ user.cin }}
               </td>
             </tr>
             <tr class="bg-white border-b">
-              <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Email</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"> <i class="pi pi-fw pi-envelope" /> <span id="td"> Email </span></td>
               <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
                {{ user.email }}
               </td>
             </tr>
              <tr class="bg-white border-b">
               <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-				      <Button label="Editer" class="mr-2 mb-2"/></td>
+				      <Button label="Editer" @click="goEdit()" class="mr-2 mb-2"/></td>
             </tr>
           </tbody>
         </table>
@@ -110,6 +110,11 @@ export default {
                         localStorage.removeItem('user');
                     }
                 }
+            },
+            methods:{
+              goEdit(){
+                this.$router.push("profileEdit");
+              }
             }
         
     }
@@ -136,6 +141,9 @@ border-radius: 50%;
 #space{
   margin-left: 10px;
   max-width: 70%;
+}
+#td{
+  padding-left: 15px;
 }
 </style>
 

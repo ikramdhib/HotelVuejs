@@ -7,6 +7,12 @@
                         <img src="layout/images/avatar.png" alt="Image" height="50" class="mb-3">
                         <div class="text-900 text-3xl font-medium mb-3">Retrouvez votre compte</div>
                         <span class="text-600 font-medium">Veuillez entrer votre adresse e-mail ou votre numéro de mobile pour rechercher votre compte.</span>
+                         <div class="li" v-if="eroor">
+                             <InlineMessage>{{ eroor }}</InlineMessage> 
+                        </div>
+                        <div class="li" v-if="mailerr">
+                             <InlineMessage>{{ mailerr }}</InlineMessage> 
+                        </div>
                     </div>
                 <form>
                     <div class="w-full md:w-10 mx-auto">
@@ -17,7 +23,7 @@
                             <div class="mx-2 w-4 p-2 ">
                            <Button label="Rechercher" class="mr-2 mb-2" v-on:click="forgetpass()"></button></div>
                            <div class="mx-2 w-4 p-2">
-                           <Button label="Annuler" class="p-button-secondary mr-2 mb-2"><router-link to="login"></router-link></button></div>
+                           <Button label="Annuler" class="p-button-secondary mr-2 mb-2" to="login" v-on:click="backLogin()"></button></div>
                         </div>
                     </div>
                 </form>
@@ -32,20 +38,36 @@ export default {
     data() {
        return{
           email:"",
+          eroor:"",
+          mailerr:"",
        }
     },
     methods:{
         async forgetpass(){
+            if(this.email){
           await axios.post('http://localhost:8000/api/user/forget-password',{
              email:this.email
          } ).then(response=>{
-             localStorage.setItem('email', this.email)
              let res = response.data;
-            console.log(res)
-            this.$router.push("done");
-		})
+             console.log(res);
+             localStorage.setItem('email', this.email)
+             this.$router.push("done");
+             
+		}).catch(error=>{
+            if(error.response.status){
+                this.eroor="Le compte est introuvable"
+            }
+           
+        })}
+        if(!this.email){
+            this.mailerr="Qelque chose s'est mal passé"
         }
+        },
+         backLogin(){
+        this.$router.push("login")
     }
+    }
+   
 }
 </script>
 
@@ -58,5 +80,8 @@ export default {
 .pi-eye-slash {
     transform:scale(1.6);
     margin-right: 1rem;
+}
+.li{
+ margin-top: 15px;
 }
 </style>

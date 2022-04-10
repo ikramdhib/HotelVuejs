@@ -7,6 +7,14 @@
                         <img src="layout/images/avatar.png" alt="Image" height="50" class="mb-3">
                         <div class="text-900 text-3xl font-medium mb-3">Bienvenue</div>
                         <span class="text-600 font-medium">Connectez-vous pour continuer</span>
+                        <div v-if="errors.length > 0">
+                            <ul style="list-style-type:none;">
+                                <li class="li" style="color:red" v-for="error in errors" :key="error"><InlineMessage>{{ error }}</InlineMessage> </li>
+                            </ul>
+                        </div>
+                         <div class="li" v-if="auth">
+                             <InlineMessage>{{ auth }}</InlineMessage> 
+                        </div>
                     </div>
                 <form>
                     <div class="w-full md:w-10 mx-auto">
@@ -37,20 +45,33 @@ export default {
            user:{
                email:"",
                password:""
-           }
+           },
+           errors:[],
+           auth:"",
        }
     },
     methods:{
         async login(){
+            if(this.user.email && this.user.password){
           await axios.post('http://localhost:8000/api/user/login',{
              email:this.user.email,
              password:this.user.password
          } ).then(response=>{
-             let res = response.data;
-             localStorage.setItem('token', response.data.token);
-            console.log(res)
+             let res = response.data.error;
+             if(res=="UnAuthorised Access"){
+                 this.auth="Email ou Mot de Passe est incorrect, Ressez! "
+             }else{
+            localStorage.setItem('token', response.data.token);
 			this.profile()
+             }
 		})
+        }
+        if(!this.user.password){
+            this.errors.push("Les champs Mot de Passe est vide !")
+        }
+        if(!this.user.email){
+            this.errors.push("Le champs Email est vide !")
+        }
         },
           async profile(){
             await axios.get('http://localhost:8000/api/user/user-profile',
@@ -79,5 +100,8 @@ export default {
 .pi-eye-slash {
     transform:scale(1.6);
     margin-right: 1rem;
+}
+.li{
+ margin-top: 15px;
 }
 </style>
