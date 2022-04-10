@@ -92,7 +92,7 @@
                     </Dialog>
                   </td> 
                       <td>   
-           <router-link  tag="button"  :to="{ path: 'UpdateType', params: { id:type.id }}" >
+           <router-link  tag="button"  :to="{ name: 'UpdateType', params: {id:type.id}}">
 		            <Button label="Modifier"  icon="pi pi-refresh"   style="width: auto" class="p-button-success " />
           </router-link>
                   </td>
@@ -125,8 +125,20 @@ export default {
    
   },
   created(){
-  
-  },
+  const id=this.$route.params.id;
+     axios.get("http://127.0.0.1:8000/api/user/type/"+id, {
+        headers: { Authorization: "Bearer " + localStorage.getItem("token") },
+      })
+      .then((res) => {
+       
+       this.type=res.data.data;
+        
+      
+       console.log(res.data);
+           this.getType();
+       })},
+
+ 
   
   
   methods: {

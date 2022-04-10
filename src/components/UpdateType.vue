@@ -17,7 +17,7 @@
 						<label for="desc">discription</label>
 						<Textarea id="desc" rows="4" cols="60" v-model="type.intitule"/>
 					</div>
-				<Button label="ajouter" @click="update()" class="p-button-secondary mr-2 mb-2" />
+				<Button label="modifier" @click="update()" class="p-button-secondary mr-2 mb-2" />
                             
          
 	
@@ -39,11 +39,26 @@ export default {
 				}
             }
         },
+			mounted(){
+			 const id=this.$route.params.id;
+     axios.get("http://127.0.0.1:8000/api/user/type/"+id, {
+        headers: { Authorization: "Bearer " + localStorage.getItem("token") },
+      })
+      .then((res) => {
+       
+       this.type.nom_type=res.data.data.nom_type;
+        this.type.price_Type=res.data.data.price_Type;
+         this.type.intitule=res.data.data.intitule;
+   
+       console.log(res.data);
+         
+       })},
 		
         methods: {	
 			 async update() {
+				  const id=this.$route.params.id;
 			 await axios
-			    .put('http://localhost:8000/api/user/type',{nom_type:this.type.nom_type,
+			    .put('http://localhost:8000/api/user/type/'+id,{nom_type:this.type.nom_type,
 				price_Type:this.type.price_Type,
 				intitule:this.type.intitule},
 				{ headers: {Authorization: 'Bearer ' + localStorage.getItem('token')}}
@@ -51,7 +66,7 @@ export default {
 					console.log(this.headers);
 				     let response = res.data;
 					 console.log(response)
-			         this.$router.push("type")
+			         this.$router.push("TableType")
 					 
 			})}}}
         </script>

@@ -56,7 +56,7 @@
                       icon="pi pi-trash"
                       class="p-button-danger"
                       style="width: auto"
-                      @click="openConfirmation();to={ name: 'EditOption', params: {id: option.id }}"
+                      @click="openConfirmation();"
                     />
                     <Dialog
                       header="Confirmation"
@@ -89,8 +89,11 @@
                     </Dialog>
                   </td> 
                       <td>   
-                 				<ConfirmPopup></ConfirmPopup>
-				<Button ref="popup" @click="confirm($event)" icon="pi pi-check" label="Confirm" class="p-button-success mr-2 mb-2"></Button>
+                 		
+		 <router-link :to="{ name: 'OptionUpdate', params: {id:option.id}}">
+         <Button label="Modifier"  icon="pi pi-refresh"   style="width: auto" class="p-button-success " /></router-link> 
+       
+      
                   </td>
                 </tr>
               </template>
@@ -103,12 +106,15 @@
 </template>
 <script>
 import axios from "axios";
+
+
 export default {
   data() {
     return {
       displayConfirmation: false,
       display: false,
       options: [],
+     
     };
   },
   mounted() {
@@ -121,7 +127,10 @@ export default {
         headers: { Authorization: "Bearer " + localStorage.getItem("token") },
       })
       .then((res) => {
-this.options=res.data.data;
+       
+       this.option=res.data.data;
+        
+      
        console.log(res.data);
            this.getOption();
        })},
@@ -136,6 +145,7 @@ this.options=res.data.data;
       .then((res) => {
           
         this.options = res.data.data;
+        
         console.log(res.data);
       })
       .catch((error) =>{ console.log(error)
@@ -168,24 +178,9 @@ this.options=res.data.data;
     closeConfirmation() {
       this.displayConfirmation = false;
     },
-    confirm(event) {
-				this.$confirm.require({
-					target: event.currentTarget,
-					message: 'vous avver vraiment modifier?',
-					icon: 'pi pi-exclamation-triangle',
-					  accept: () => {
-
-            
-           	this.$router.push("");
-
-      },
-					
-					
-					reject: () => {
-						this.$toast.add({severity:'error', summary:'Rejected', detail:'You have rejected', life: 3000});
-					}
-				});
-			}
+    
+		
+			
     
   }}
 </script>

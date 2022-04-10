@@ -70,7 +70,7 @@
 						<InputText id="prix4" type="text" v-model="price.price_booking3"/>
 					</div>
 	               <div class="field col-12 md:col-3">
-					<Button label="Ajouter"  @click="addroom();addPrice()" ></Button>
+					<Button label="Ajouter"  @click="updateroom();updatePrice()" ></Button>
 		</div>
 		</div>
 			</div>
@@ -118,20 +118,52 @@ import axios from 'axios';
 	
 		
 			mounted(){
+                this.gettype();
+	const id=this.$route.params.id;
+     axios.get("http://127.0.0.1:8000/api/user/room/"+id, {
+        headers: { Authorization: "Bearer " + localStorage.getItem("token") },
+      })
+      .then((res) => {
+       
+          this.room.nbBed=res.data.data.nbBed;
+          this.room.description=res.data.data.description;
+          this.room.num_room=res.data.data.num_room;
+          this.room.numEtage=res.data.data.numEtage;
+          this.room.nbAdult=res.data.data.nbAdult;
+          this.room.nbEnfant=res.data.data.nbEnfant;
+          this.room.avaibility=res.data.data.avaibility;
+           let pric=  this.room.price_id=res.data.data.price_id
+      localStorage.setItem("r",pric);
+               
 				
-	
+      
+       console.log(res.data);
          
-		this.gettype();
-	
+       })
+       axios.get("http://127.0.0.1:8000/api/user/price/"+id, {
+        headers: { Authorization: "Bearer " + localStorage.getItem("token") },
+      })
+      .then((res) => {
+       
+          this.price.price_hotel=res.data.data.price_hotel;
+          this.price.price_booking1=res.data.data.price_booking1;
+          this.price.price_booking2=res.data.data.price_booking2;
+          this.price.price_booking3=res.data.data.price_booking3;
+       })
+        axios.get("http://127.0.0.1:8000/api/user/type/"+id, {
+        headers: { Authorization: "Bearer " + localStorage.getItem("token") },
+      })
+      .then((res) => {
+       
+          this.type.nom_type=res.data.data.nom_type;
+          
+       })
 		
-		
-			},
-		
-     
+		 },
 		 methods: {	
-		
+		 
 			 async gettype(){
-            await axios.get('http://localhost:8000/api/user/type',
+            await axios.get('http://localhost:8000/api/user/type/',
             { headers: { Authorization: 'Bearer ' + localStorage.getItem('token') }
         }).then(res=>{
 
@@ -143,11 +175,11 @@ import axios from 'axios';
           
         })
 			
-		} ,  async addPrice() {
-		 
+		} ,  async updatePrice() {
+		
 			 await axios
 			 
-			    .post('http://localhost:8000/api/user/price',
+			    .put('http://localhost:8000/api/user/price/'+id,
 				{price_booking1:this.price.price_booking1,
                 price_booking2:this.price.price_booking2,
                 price_booking3:this.price.price_booking3,
@@ -161,10 +193,11 @@ import axios from 'axios';
 					  
 					 console.log(response)})},
 					 
-			   async addroom(){
+			   async updateroom(){
+                   const id1=this.$route.params.id;
 			 await axios
 			
-			    .post('http://localhost:8000/api/user/room',
+			    .put('http://localhost:8000/api/user/room/'+id1,
 				{nbBed:this.room.nbBed,
                 description:this.room.description,
 				num_room:this.room.num_room,
@@ -173,7 +206,7 @@ import axios from 'axios';
                 nbEnfant:this.room.nbEnfant,
                 avaibility:this.room.avaibility,
 				type_id:this.types.type_id.id,
-				price_id:(localStorage.getItem('price_id')),
+				price_id:(localStorage.getItem('r')),
 				
 			 
 				
@@ -186,7 +219,7 @@ import axios from 'axios';
 					 console.log(response);
                         id =response
 					 localStorage.setItem("room_id", id);
-					 this.$router.push('option');
+					 this.$router.push('TableRoom');
 			      
 					 
 				})

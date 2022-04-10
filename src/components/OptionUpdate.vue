@@ -32,7 +32,7 @@
     </div>
   
         </div>  </div>
-	<Button label="ajouter"   @click="addOption()" class="p-button-secondary mr-2 mb-2"  />
+	<Button label="modifier"  v-on:click="updateOption" class="p-button-secondary mr-2 mb-2"  />
                             
 	
 </div>	
@@ -43,9 +43,9 @@
 import axios from 'axios';
 
 export default {
- data() {
+ data() {	 
             return {
-				
+			
             option:  {
              avaibility:"",
 			 price_option:0,
@@ -55,18 +55,33 @@ export default {
 				}
             }
         },
+		mounted(){
+			 const id=this.$route.params.id;
+     axios.get("http://127.0.0.1:8000/api/user/option/"+id, {
+        headers: { Authorization: "Bearer " + localStorage.getItem("token") },
+      })
+      .then((res) => {
+       
+       this.option.nom_option=res.data.data.nom_option;
+        this.option.price_option=res.data.data.price_option;
+         this.option.avaibility=res.data.data.avaibility;
+        let room=  this.option.room_id=res.data.data.room_id
+      localStorage.setItem("ro",room);
+       console.log(res.data);
+         
+       })},
 		
 		
 			methods:{
 	
-			 async addOption() {
-			
-			 await axios
-			    .post('http://localhost:8000/api/user/option',
+			 async updateOption() {
+				 const id=this.$route.params.id;
+			await axios
+			    .put('http://localhost:8000/api/user/option/'+id,
 				{avaibility:this.option.avaibility,
                 price_option:this.option.price_option,
                 nom_option:this.option.nom_option,
-	           room_id:(localStorage.getItem('room_id')),
+	           room_id:(localStorage.getItem('ro')),
 				},
 				{ headers: { Authorization: 'Bearer ' + localStorage.getItem('token')}}
 				).then(res=>{
@@ -74,7 +89,7 @@ export default {
 					console.log(this.headers);
 				     let response = res.data.data;
 					 console.log(response);
-					  this.$router.push('image');
+					  this.$router.push('TableOption');
 			         
 					 
 			})}}}
