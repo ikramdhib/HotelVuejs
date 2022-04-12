@@ -82,6 +82,10 @@ import axios from 'axios';
 export default {
     data(){
         return{
+          email:"",
+           password:"",
+           password_confirmation:"",
+           token:"",
           passIsToModify:false,
            user:{},
            userInfo:{},
@@ -195,7 +199,26 @@ export default {
 			
                  }
                 },
-                
+                 async updatepass(){
+            if(this.password_confirmation && this.password){
+          await axios.post('http://localhost:8000/api/user/update-password',
+         {
+             email:this.user.email,
+             password:this.password,
+             password_confirmation:this.password_confirmation,
+             token:localStorage.getItem('token'),
+              
+         } ).then(response=>{
+             let res = response.data;
+            console.log(res)
+            this.$router.push("login")
+	       	}).catch(error=>{
+            if(error.response.status==422){
+            this.errors="Les deux Mot de Passe ne sont compatible"
+            }
+        })
+        }
+        },
             }
             
         

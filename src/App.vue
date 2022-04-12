@@ -236,4 +236,5 @@ export default {
 <style lang="scss">
 @import './App.scss'; 
 @import url("https://cdn.jsdelivr.net/npm/@tailwindcss/custom-forms@0.2.1/dist/custom-forms.css");
+
 </style>

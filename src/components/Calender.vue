@@ -1,35 +1,66 @@
-<template>
-<div class="grid p-fluid">
-  <div class="col-12 md:col-4">
-  	<div  class="card ">
-   <FileUpload @change="previewFiles" name="basic"  id="up" mode="basic" url="./upload.php" accept="image/*" :maxFileSize="1000000"  />
-   <Button v-on:click="show()" label="hi"/>
-  	</div>
-  </div>
-</div>
-</template>
 <script>
+import '@fullcalendar/core/vdom' // solves problem with Vite
+import FullCalendar from '@fullcalendar/vue3'
+import dayGridPlugin from '@fullcalendar/daygrid'
+import listPlugin from '@fullcalendar/list'
+import timeGridPlugin from '@fullcalendar/timegrid'
+import interactionPlugin from '@fullcalendar/interaction'
+import frLocale from '@fullcalendar/core/locales/fr';
+
+require('@fullcalendar/daygrid/main.min.css')
+require('@fullcalendar/timegrid/main.min.css')
+
+import axios from'axios'
 export default {
-    data(){
-        return{
-        }
-    },
-            methods:{
-              show(){
-                console.log("the img :" , document.getElementById("up").value)
-              },
-                previewFiles(event) {
-
-      // process your files, read as DataUrl or upload...
-                 console.log(event.target.files);
-
-
-   }
-            }
-        
+  components: {
+    FullCalendar // make the <FullCalendar> tag available
+  },
+  data() {
+    return {
+      calendarOptions: {
+        plugins: [ dayGridPlugin, interactionPlugin, listPlugin, timeGridPlugin,  ],
+        initialView: 'dayGridMonth',
+        locale:frLocale,
+         headerToolbar: {
+          left: 'prev today next',
+          center: 'title',
+          right: 'dayGridMonth,timeGridWeek,timeGridDay'
+        },
+        dateClick: this.handleDateClick,
+        events: [],
+        eventDisplay: 'block',
+         dayHeaderFormat: {
+           weekday: 'long',
+             month: 'numeric',
+             day: 'numeric',
+              omitCommas: true
+                    }
+      
+      },
     }
+    
+  },
+  methods: {
+    handleDateClick: function(arg) {
+      alert('date click! ' + arg.dateStr)
+    },
+    getbg(){
+    axios.get('http://localhost:8000/api/All-Bookings-rooms',
+            { headers: { Authorization: 'Bearer ' + localStorage.getItem('token') }})
+                .then(res => {
+                  this.calendarOptions.events= res.data.bookings
+                        });
+    },
+  
+  },
 
+mounted () {
+  this.getbg();
+  }
+
+}
 </script>
-<style >
-</style>
-
+<template>
+  <FullCalendar :options="calendarOptions"
+   />
+</template>
