@@ -17,11 +17,13 @@
 						<label for="desc">discription</label>
 						<Textarea id="desc" rows="4" cols="60" v-model="type.intitule"/>
 					</div>
+					</div>
+					
 				<Button label="ajouter" @click="addType()" class="p-button-secondary mr-2 mb-2" />
                             
          
 	
-	</div>
+	
 </div>
 </div>
 	

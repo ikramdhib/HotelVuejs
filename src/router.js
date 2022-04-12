@@ -84,9 +84,9 @@ const routes = [
            
       
             {
-              path: '/UpdateType:id',
-              name: 'UpdateType',
-              component: () => import('./components/UpdateType.vue'),
+              path: '/OptionUpdate:id',
+              name: 'OptionUpdate',
+              component: () => import('./components/OptionUpdate.vue'),
               beforeEnter: (to, from, next) => {
                   if (!localStorage.getItem("token")) {
                     next("login");
@@ -94,6 +94,28 @@ const routes = [
                     next();
                   }
                 }},
+                {
+                  path: '/UpdateType:id',
+                  name: 'UpdateType',
+                  component: () => import('./components/UpdateType.vue'),
+                  beforeEnter: (to, from, next) => {
+                      if (!localStorage.getItem("token")) {
+                        next("login");
+                      } else {
+                        next();
+                      }
+                    }},
+                    {
+                      path: '/UpdateRoom:id',
+                      name: 'UpdateRoom',
+                      component: () => import('./components/UpdateRoom.vue'),
+                      beforeEnter: (to, from, next) => {
+                          if (!localStorage.getItem("token")) {
+                            next("login");
+                          } else {
+                            next();
+                          }
+                        }},
             {
               path: '/TableRoom',
               name: 'TableRoom',

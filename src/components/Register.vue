@@ -41,6 +41,10 @@
 					<div class="field col-12 md:col-6">
 						<label for="code postal">Code Postal</label>
 						<InputText id="code postal" type="text" v-model="users.zipcode"/>
+<<<<<<< HEAD
+
+=======
+>>>>>>> 240c7c1cbbe26c2f710027b93fda4a79cd984e9b
 					</div>
 					<div class="field col-12 md:col-6">
 						<label for="email"> Email</label>

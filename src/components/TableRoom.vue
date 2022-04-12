@@ -25,6 +25,7 @@
                     <th scope="col" class="px-6 py-3">nombre d'adult</th>
                       <th scope="col" class="px-6 py-3">nombre enfant</th>
                         <th scope="col" class="px-6 py-3">disponibilité</th>
+                         <th scope="col" class="px-6 py-3">supprimer</th>
                 <th scope="col" class="px-6 py-3">
                  
                   <span class="sr-only">modifier</span>
@@ -33,13 +34,15 @@
             </thead>
             <tbody>
               <template v-for="room in rooms" :key="room.id">
+               
+            
                 <tr
                   class="
                     bg-white
                     border-b
                     dark:bg-gray-800 dark:border-gray-700
                   "
-                >
+                >   
                   <th
                     scope="row"
                     class="
@@ -51,8 +54,8 @@
                       whitespace-nowrap
                     "
                   >
-                    {{ room.nom_type }}
-                  </th>
+                    {{ room.type_id }}
+                  </th> 
                   <td class="px-6 py-4">{{ room.nbBed }}</td>
                   <td class="px-6 py-4">{{ room.description }}</td>
                   <td class="px-6 py-4">{{ room.num_room}}</td>
@@ -100,11 +103,15 @@
                     </Dialog>
                   </td> 
                       <td>   
-                 				<ConfirmPopup></ConfirmPopup>
-				<Button ref="popup" @click="confirm($event)" icon="pi pi-check" label="Confirm" class="p-button-success mr-2 mb-2"></Button>
+                 			 <router-link :to="{ name: 'UpdateRoom', params: {id:room.id}}">
+         <Button label="Modifier"  icon="pi pi-refresh"   style="width: auto" class="p-button-success " /></router-link> 
+       
                   </td>
+                 
                 </tr>
+                
               </template>
+             
             </tbody>
           </table>
         </div>
@@ -114,18 +121,36 @@
 </template>
 <script>
 import axios from "axios";
+ let id =0;
+ let idt=0;
 export default {
   data() {
     return {
       displayConfirmation: false,
       display: false,
       rooms: [],
+     
+     
     };
   },
   mounted() {
    this.getRoom();
-     this.get_one();
+   this.getType();
+    
   },
+   created(){
+    const id=this.$route.params.id;
+     axios.get("http://127.0.0.1:8000/api/user/room/"+id, {
+        headers: { Authorization: "Bearer " + localStorage.getItem("token") },
+      })
+      .then((res) => {
+       
+       this.room=res.data.data;
+        
+     
+       console.log(res.data);
+           this.getRoom();
+       })},
   methods: {
   async getRoom(){
  await axios
@@ -135,11 +160,27 @@ export default {
       .then((res) => {
           
         this.rooms = res.data.data;
+      
+      id=res.data.data.type_id
+  console.log(id);
         console.log(res.data);
       })
       .catch((error) =>{ console.log(error)
       });},
-
+ async getType(){
+ await axios
+      .get("http://127.0.0.1:8000/api/user/type", {
+        headers: { Authorization: "Bearer " + localStorage.getItem("token") },
+      })
+      .then((res) => {
+       idt =res.data.data.type_id
+       
+     if(id==idt)
+ this.type = res.data.data.nom_type;
+        console.log(res.data);
+      })
+      .catch((error) =>{ console.log(error)
+      });},
       async delete_room(id){
       await axios
       .delete("http://127.0.0.1:8000/api/user/room/"+id, {
@@ -150,15 +191,7 @@ export default {
            console.log(res.data);
            this.getRoom();
       })},
-       async get_one(id){
-      await axios
-      .get("http://127.0.0.1:8000/api/user/room/"+id, {
-        headers: { Authorization: "Bearer " + localStorage.getItem("token") },
-      })
-      .then((res) => {
-       console.log(res.data);
-           this.getRoom();
-       })},
+      
       
     open() {
       this.display = true;
@@ -174,24 +207,7 @@ export default {
     closeConfirmation() {
       this.displayConfirmation = false;
     },
-    confirm(event) {
-				this.$confirm.require({
-					target: event.currentTarget,
-					message: 'vous avver vraiment modifier?',
-					icon: 'pi pi-exclamation-triangle',
-					  accept: () => {
-
-            
-           	this.$router.push("");
-
-      },
-					
-					
-					reject: () => {
-						this.$toast.add({severity:'error', summary:'Rejected', detail:'You have rejected', life: 3000});
-					}
-				});
-			}
+  
     
   }}
 </script>
