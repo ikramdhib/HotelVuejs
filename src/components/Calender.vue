@@ -17,7 +17,8 @@ export default {
   },
   data() {
     return {
-      calendarOptions: {
+      calendarOptions:  {
+        ch:'',
         plugins: [ dayGridPlugin, interactionPlugin, listPlugin, timeGridPlugin,  ],
         initialView: 'dayGridMonth',
         locale:frLocale,
@@ -34,8 +35,7 @@ export default {
              month: 'numeric',
              day: 'numeric',
               omitCommas: true
-                    }
-      
+            },
       },
     }
     
@@ -48,7 +48,30 @@ export default {
     axios.get('http://localhost:8000/api/All-Bookings-rooms',
             { headers: { Authorization: 'Bearer ' + localStorage.getItem('token') }})
                 .then(res => {
-                  this.calendarOptions.events= res.data.bookings
+                  let reserv = res.data.bookings
+                  let tab=[]
+                  for (let i=0; i<reserv.length ;i++){
+                    if(reserv[i].confirmation==1){
+                      tab.push(reserv[i])
+                      
+                   /*  let id=reserv[i].room_id
+                    axios.get('http://localhost:8000/api/user/room/'+id,
+                      { headers: { Authorization: 'Bearer ' + localStorage.getItem('token') }} 
+                      )
+                      .then(res=>{
+                        console.log("hoo",res.data);
+                         this.ch = res.data.room.num_room;
+                        console.log('gggo',this.ch);
+                         reserv[i].color="h"+this.ch;
+                      })*/
+                      
+                      
+                  console.log("gg",this.ch);
+                    }
+                  }
+                  this.calendarOptions.events=tab.map(enevtnew=>({title: "Room reservation", start: enevtnew.start , end: enevtnew.end}
+                  ));
+                  console.log("hhggf",tab);
                         });
     },
   
@@ -64,3 +87,7 @@ mounted () {
   <FullCalendar :options="calendarOptions"
    />
 </template>
+<style scoped>
+@import '~@fullcalendar/list/main.min.css';
+
+</style>
