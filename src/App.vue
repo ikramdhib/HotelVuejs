@@ -44,7 +44,8 @@ export default {
 				{
 					label: 'UI Components', icon: 'pi pi-fw pi-sitemap',
 					items: [
-						{label: 'Form Layout', icon: 'pi pi-fw pi-id-card', to: '/formlayout'},
+                        {label: 'Form Layout', icon: 'pi pi-fw pi-id-card', to: '/formlayout'},
+						{label: 'Calendrier', icon: 'pi pi-fw pi-calendar', to: '/calendrier'},
 						{label: 'Input', icon: 'pi pi-fw pi-check-square', to: '/input'},
                         {label: "Float Label", icon: "pi pi-fw pi-bookmark", to: "/floatlabel"},
                         {label: "Invalid State", icon: "pi pi-fw pi-exclamation-circle", to: "/invalidstate"},
@@ -236,4 +237,5 @@ export default {
 <style lang="scss">
 @import './App.scss'; 
 @import url("https://cdn.jsdelivr.net/npm/@tailwindcss/custom-forms@0.2.1/dist/custom-forms.css");
+
 </style>

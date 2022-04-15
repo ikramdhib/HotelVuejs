@@ -19,6 +19,7 @@
 		"@vue/cli-service": "~4.5.0",
 		"@vue/compiler-sfc": "^3.0.0",
 		"babel-eslint": "^10.1.0",
+		"babel-preset-stage-2": "^6.24.1",
 		"eslint": "^6.7.2",
 		"eslint-plugin-vue": "^7.0.0",
 		"sass": "^1.45.0",
@@ -27,17 +28,25 @@
 		"scss-loader": "^0.0.1"
 	},
 	"dependencies": {
+		"@fullcalendar/core": "^5.11.0",
+		"@fullcalendar/daygrid": "^5.11.0",
+		"@fullcalendar/interaction": "^5.11.0",
+		"@fullcalendar/list": "^5.11.0",
+		"@fullcalendar/timegrid": "^5.11.0",
+		"@fullcalendar/vue3": "^5.11.0",
 		"axios": "^0.26.1",
-		
+		"babel-runtime": "^6.26.0",
 		"chart.js": "3.3.2",
 		"core-js": "^3.6.5",
 		"dist": "^0.1.2",
+		"moment": "^2.29.2",
 		"primeflex": "^3.1.2",
 		"primeicons": "^5.0.0",
 		"primevue": "^3.11.0",
 		"prismjs": "1.9.0",
 		"vue": "^3.2.31",
 		"vue-axios": "^3.4.1",
+		"vue-full-calendar": "^2.8.1-0",
 		"vue-router": "^4.0.14"
 	}
 }
