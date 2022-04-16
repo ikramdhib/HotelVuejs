@@ -5,7 +5,7 @@
       <div class="card">
          <div class="col-12 mb-2 lg:col-4 lg:mb-0">
 						<span class="p-input-icon-right">
-							<InputText type="text" placeholder="Search" />
+							<InputText type="search" class="search" placeholder="Search" v-model=" search" />
 							<i class="pi pi-search" />
 						</span>
 					</div>
@@ -29,7 +29,7 @@
             </thead>
             <tbody>
              
-              <template v-for="type in types" :key="type.id">
+              <template v-for="type in FilteredList" :key="type.id">
                 <tr
                   class="
                     bg-white
@@ -114,12 +114,18 @@ export default {
     return {
       displayConfirmation: false,
       display: false,
-   
+   search:"",
       types: [],
    
     };
   },
-     
+      computed: {
+    FilteredList() {
+      return this.types.filter((type) => {
+        return this.search.toLowerCase().split(' ').every(v => type.nom_type.toLowerCase().includes(v));
+      });
+    }
+  },
   mounted() {
    this.getType();
    

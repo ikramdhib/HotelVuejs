@@ -4,7 +4,7 @@
       <div class="card">
          <div class="col-12 mb-2 lg:col-4 lg:mb-0">
 						<span class="p-input-icon-right">
-							<InputText type="text" placeholder="Search" />
+							<InputText type="search" class="search" placeholder="Search" v-model=" search" />
 							<i class="pi pi-search" />
 						</span>
 					</div>
@@ -27,7 +27,7 @@
               </tr>
             </thead>
             <tbody>
-              <template v-for="option in options" :key="option.id">
+              <template v-for="option in FilteredList" :key="option.id">
                 <tr
                   class="
                     bg-white
@@ -114,9 +114,20 @@ export default {
       displayConfirmation: false,
       display: false,
       options: [],
+      search:""
      
     };
   },
+  computed: {
+    FilteredList() {
+      return this.options.filter((option) => {
+        return this.search.toLowerCase().split(' ').every(v => option.nom_option.toLowerCase().includes(v));
+      });
+    }
+  },
+    
+
+ 
   mounted() {
    this.getOption();
   

@@ -4,7 +4,7 @@
       <div class="card">
          <div class="col-12 mb-2 lg:col-4 lg:mb-0">
 						<span class="p-input-icon-right">
-							<InputText type="text" placeholder="Search" />
+											<InputText type="search" class="search" placeholder="Search" v-model=" search" />
 							<i class="pi pi-search" />
 						</span>
 					</div>
@@ -33,8 +33,8 @@
               </tr>
             </thead>
             <tbody>
-              <template v-for="room in rooms" :key="room.id">
-               
+              <template v-for="room in  FilteredList" :key="room.id">
+              
             
                 <tr
                   class="
@@ -42,20 +42,10 @@
                     border-b
                     dark:bg-gray-800 dark:border-gray-700
                   "
-                >   
-                  <th
-                    scope="row"
-                    class="
-                      px-6
-                      py-4
-                      font-medium
-                      text-gray-900
-                      dark:text-white
-                      whitespace-nowrap
-                    "
-                  >
-                    {{ room.type_id }}
-                  </th> 
+                >    
+                  <div v-for="type in types" :key="type.id">
+                    <div v-if="type.id == room.type_id">
+                 <td class="px-6 py-4" >{{type.nom_type }}</td> </div>  </div>
                   <td class="px-6 py-4">{{ room.nbBed }}</td>
                   <td class="px-6 py-4">{{ room.description }}</td>
                   <td class="px-6 py-4">{{ room.num_room}}</td>
@@ -107,11 +97,13 @@
          <Button label="Modifier"  icon="pi pi-refresh"   style="width: auto" class="p-button-success " /></router-link> 
        
                   </td>
-                 
-                </tr>
-                
-              </template>
              
+                </tr>
+                     
+            
+            
+              
+              </template>
             </tbody>
           </table>
         </div>
@@ -121,15 +113,16 @@
 </template>
 <script>
 import axios from "axios";
- let id =0;
- let idt=0;
+
 export default {
   data() {
     return {
+      rooms_id:[],
       displayConfirmation: false,
       display: false,
       rooms: [],
-     
+     types:[],
+      search:"",
      
     };
   },
@@ -138,6 +131,11 @@ export default {
    this.getType();
     
   },
+   computed: {
+    FilteredList() {
+      return this.rooms.filter((room) => {
+        return this.search.toLowerCase().split(' ').every(v => room.avaibility.toLowerCase().includes(v));
+      });}},
    created(){
     const id=this.$route.params.id;
      axios.get("http://127.0.0.1:8000/api/user/room/"+id, {
@@ -158,12 +156,12 @@ export default {
         headers: { Authorization: "Bearer " + localStorage.getItem("token") },
       })
       .then((res) => {
-          
         this.rooms = res.data.data;
-      
-      id=res.data.data.type_id
-  console.log(id);
-        console.log(res.data);
+     {
+            for(let i=0; i<this.rooms.length ; i++){
+              this.rooms_id.push(this.rooms[i].type_id)
+            }console.log("tt",this.rooms_id)
+                  }
       })
       .catch((error) =>{ console.log(error)
       });},
@@ -173,14 +171,11 @@ export default {
         headers: { Authorization: "Bearer " + localStorage.getItem("token") },
       })
       .then((res) => {
-       idt =res.data.data.type_id
-       
-     if(id==idt)
- this.type = res.data.data.nom_type;
-        console.log(res.data);
-      })
-      .catch((error) =>{ console.log(error)
-      });},
+        this.types=res.data.data;
+        console.log("types",this.types);
+      }
+           )
+     },
       async delete_room(id){
       await axios
       .delete("http://127.0.0.1:8000/api/user/room/"+id, {
