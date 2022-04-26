@@ -519,6 +519,19 @@ const routes = [
         }
       }
 },
+{
+  path: '/addmenu',
+  name: 'addmenu',
+ component: () => import('./components/AddMenu.vue'),
+  beforeEnter: (to, from, next) => {
+      if (!localStorage.getItem("token")) {
+        next("login");
+      } else {
+        next();
+      }
+    }
+},
+ 
    
    
 ];
