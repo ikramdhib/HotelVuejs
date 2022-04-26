@@ -130,9 +130,9 @@ data: function () {
         }
 	},
 	mounted(){
-		this.interval= setInterval(function(){
+		/*this.interval= setInterval(function(){
 			this.getNotification()
-		}.bind(this), 500);
+		}.bind(this), 500);*/
 	},
     methods: {
         onMenuToggle(event) {

@@ -63,7 +63,7 @@ export default {
                       }
                     }
                   }
-                  this.calendarOptions.events=tab.map(enevtnew=>({title:enevtnew.title, start: enevtnew.start , end: enevtnew.end}
+                this.calendarOptions.events=tab.map(enevtnew=>({title:"Chambre N°12 Etage N°2", start: enevtnew.start , end: enevtnew.end}
                   ));
                  // console.log("hhggf",tab);
                         });
