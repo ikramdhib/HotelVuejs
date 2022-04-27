@@ -16,6 +16,8 @@
 		</div>
 
 		<h4 id="titre">Ajouter Les Plats pour ce menu :</h4>
+		 <div class="p-fluid formgrid grid" v-for="i in pluss" :key="i">
+					<div class="field col-12 md:col-9">
 		 <div class="p-fluid formgrid grid">
 					<div class="field col-12 md:col-4">
 					     <label for="lastname2">Intitulé du Plat</label>
@@ -37,12 +39,18 @@
 						<label for="prix4">Choisir des image :</label>
 						<FileUpload name="file" url="" ref="file" @upload="onUpload" @change="selectFile" :multiple="true" accept="image/png, image/jpeg" :maxFileSize="1000000"/>
 					</div>
-		
+		 </div>
+		 </div>
+		 <div class="field col-12 md:col-2">
+							<Button id="btn" icon="pi pi-plus" @click="clickPluss()" class="mr-2 mb-2" />
+
+					</div>
+		 </div>
 	      <div class="field col-12 md:col-3">
 			   <Toast />
 			<Button label="Ajouter"  @click="addMenu()"></Button>
-		</div>
-		</div>
+		
+		 </div>
 			</div>
 		</div>
 		</div>
@@ -55,6 +63,7 @@ import axios from 'axios';
 		data() {
 			return {
 				dropdownValue:null,
+				pluss:1,
 				menu_id:"",
 				restaurant_id:"",
 				menu:{
@@ -112,6 +121,10 @@ import axios from 'axios';
 					
 				})
 			},
+			clickPluss(){
+				this.pluss++;
+			
+			}
 		}
 	}
 	
@@ -126,5 +139,13 @@ margin-top: 15px;
 }
 #switcher{
 	margin-top: 105px;
+}
+#btn{
+	background-color:transparent;
+	color:grey;
+	border-color: transparent;
+	border-radius: 100%;
+	margin-top: 20px;
+	margin-left: 40px;
 }
 </style>
