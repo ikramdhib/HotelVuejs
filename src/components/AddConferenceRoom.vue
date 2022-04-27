@@ -5,32 +5,48 @@
 				<h4 id="titre">Ajouter Menu pour le restaurant :</h4>
 			      <div class="p-fluid formgrid grid">
 					<div class="field col-12 md:col-3">
-						<label for="num_etage">Titre du menu:</label>
-						<InputText id="num_etage" type="text" />
-					</div>
-
-			<div class="field col-9">
-						<label for="desc">Description</label>
-						<Textarea id="desc" rows="4"/>
-			</div>
-		</div>
-
-		<h4 id="titre">Ajouter Les Plats pour ce menu :</h4>
-		 <div class="p-fluid formgrid grid">
-					<div class="field col-12 md:col-4">
-					     <label for="lastname2">Intitulé du Plat</label>
+					     <label for="lastname2">Décoration</label>
 				     <span class="p-float-label" >
-					<Dropdown id="dropdown"  v-model="dropdownValue" :options="dropdownValues" optionLabel="name"  placeholder="Select" ></Dropdown>
+					<Dropdown id="dropdown"  :options="dropdownValues" optionLabel="name"  placeholder="Select" ></Dropdown>
 					</span>
 			        </div>
 					<div class="field col-12 md:col-3">
-						<label for="num_etage">Non :</label>
+						<label for="num_etage">Prix de résérvation :</label>
 						<InputText id="num_etage" type="text" />
 					</div>
-					
-					<div class="field col-12 md:col-3">
-						<label for="num_etage">Prix :</label>
+			        <div class="field col-6">
+						<label for="desc">Description</label>
+						<Textarea id="desc" rows="4"/>
+						</div>
+					</div>
+		 <div class="p-fluid formgrid grid">
+					<div class="field col-12 md:col-4">
+					  <label for="lastname2">Type :</label>
+				     <span class="p-float-label" >
+					<Dropdown id="dropdown"  :options="dropdownValues" optionLabel="name"  v-model="dropdownValue" ></Dropdown>
+					</span>
+			        </div>
+					<div class="field col-12 md:col-4">
+						<label for="num-ch">Capacité :</label>
+						<InputText id="num-ch" type="number"/>
+					</div>
+					<div class="field col-12 md:col-4">
+							<Button id="btn" icon="pi pi-plus" @click="expandAll" class="mr-2 mb-2" />
+
+					</div>
+		 </div>
+		 <div class="p-fluid formgrid grid">
+					<div class="field col-12 md:col-4">
+						<label for="num_etage">Equipement :</label>
 						<InputText id="num_etage" type="text" />
+					</div>
+					<div class="field col-12 md:col-4">
+						<label for="num_etage">Prix pour un Equipement  :</label>
+						<InputText id="num_etage" type="text" />
+					</div>
+					<div class="field col-12 md:col-4">
+							<Button id="btn" icon="pi pi-plus" @click="expandAll" class="mr-2 mb-2" />
+
 					</div>
 
 					<div class="field col-12 md:col-12">
@@ -78,5 +94,13 @@ margin-top: 15px;
 }
 #switcher{
 	margin-top: 105px;
+}
+#btn{
+	background-color:transparent;
+	color:grey;
+	border-color: transparent;
+	border-radius: 100%;
+	margin-top: 20px;
+	margin-left: 40px;
 }
 </style>
