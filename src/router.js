@@ -543,7 +543,18 @@ const routes = [
       }
     }
 },
- 
+{
+  path: '/rooftop',
+  name: 'rooftop',
+ component: () => import('./components/RoofTopTable.vue'),
+  beforeEnter: (to, from, next) => {
+      if (!localStorage.getItem("token")) {
+        next("login");
+      } else {
+        next();
+      }
+    }
+},
    
    
 ];
