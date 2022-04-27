@@ -6,12 +6,12 @@
 			      <div class="p-fluid formgrid grid">
 					<div class="field col-12 md:col-3">
 						<label for="num_etage">Titre du menu:</label>
-						<InputText id="num_etage" type="text" />
+						<InputText id="num_etage" type="text" v-model="menu.titre" />
 					</div>
 
 			<div class="field col-9">
 						<label for="desc">Description</label>
-						<Textarea id="desc" rows="4"/>
+						<Textarea id="desc" rows="4" v-model="menu.description"/>
 			</div>
 		</div>
 
@@ -20,17 +20,17 @@
 					<div class="field col-12 md:col-4">
 					     <label for="lastname2">Intitulé du Plat</label>
 				     <span class="p-float-label" >
-					<Dropdown id="dropdown"  v-model="dropdownValue" :options="dropdownValues" optionLabel="name"  placeholder="Select" ></Dropdown>
+					<Dropdown id="dropdown"  v-model="plat.intitule" :options="dropdownValues"   placeholder="Select" ></Dropdown>
 					</span>
 			        </div>
 					<div class="field col-12 md:col-3">
-						<label for="num_etage">Non :</label>
-						<InputText id="num_etage" type="text" />
+						<label for="num_etage">Nom :</label>
+						<InputText id="num_etage" type="text" v-model="plat.nom" />
 					</div>
 					
 					<div class="field col-12 md:col-3">
 						<label for="num_etage">Prix :</label>
-						<InputText id="num_etage" type="text" />
+						<InputText id="num_etage" type="text" v-model="plat.prix_plat" />
 					</div>
 
 					<div class="field col-12 md:col-12">
@@ -39,7 +39,8 @@
 					</div>
 		
 	      <div class="field col-12 md:col-3">
-			<Button label="Ajouter" ></Button>
+			   <Toast />
+			<Button label="Ajouter"  @click="addMenu()"></Button>
 		</div>
 		</div>
 			</div>
@@ -48,23 +49,70 @@
 </template>
 
 <script>
+import axios from 'axios';
 
 	export default {
 		data() {
 			return {
-				switchValue: null,
 				dropdownValue:null,
+				menu_id:"",
+				restaurant_id:"",
+				menu:{
+					titre:"",
+					description:""
+				},
+				plat:{
+					nom:"",
+					intitule:"",
+					prix_plat:""
+				},
 				dropdownValues: [
-					{name: 'ENTREES'},
-					{name: 'PLATS PRINCIPAUX',},
-					{name: 'DESSERT'},
-				]
-		}
-          
-		
+					'ENTREES',
+					 'PLATS PRINCIPAUX',
+					'DESSERT',
+				],
+			}
+		},
+
+		mounted (){
+			this.restaurant_id=parseInt(localStorage.getItem('restaurant_id'));
+			console.log(localStorage.getItem('restaurant_id'));
+		},
+
+		methods :{
+			 addMenu(){
+				console.log("menu",this.menu);
+				 axios.post('http://localhost:8000/api/addMenu',
+				{
+					titre:this.menu.titre,
+					description:this.menu.description,
+					restaurant_id:this.restaurant_id
+				},
+				{ headers: { Authorization: 'Bearer ' + localStorage.getItem('token') }}
+				).then(res=>{
+
+					console.log("plat",this.plat);
+				console.log("zzz",this.menu_id);
+				 axios.post('http://localhost:8000/api/addPlat',
+				{
+					nom:this.plat.nom,
+					intitule:this.plat.intitule,
+					prix_plat:parseFloat(this.plat.prix_plat),
+					menu_restaurant_id:res.data.Menu.id,
+				},
+				{ headers: { Authorization: 'Bearer ' + localStorage.getItem('token') }}
+				).then(res=>{
+					if(res){
+			            	this.$toast.add({severity:'success', summary: 'Excellent', detail:'les information a été soumise avec succès', life: 3000});
+			          
+						}else{
+							this.$toast.add({severity:'error', summary: "Message d'erreur", detail:'quelque chose est mal passé', life: 3000});
+						}
+				})
+					
+				})
 			},
-		
-			
+		}
 	}
 	
 	

@@ -73,7 +73,7 @@ import axios from 'axios'
 					await axios.post('http://localhost:8000/api/addRoof-Top',
 					{
 						intitule:this.rooftop.intitule,
-						prix:parseInt(this.rooftop.prix),
+						prix:parseFloat(this.rooftop.prix),
 						description:this.rooftop.description,
 						capacite:parseInt(this.rooftop.capacite),
 						disponibilite:this.rooftop.disponibilite,
