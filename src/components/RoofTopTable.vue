@@ -10,7 +10,7 @@
                         <div class="flex justify-content-between flex-column sm:flex-row">
                             <span class="p-input-icon-left mb-2">
                                 <i class="pi pi-search" />
-                                <InputText v-model="filters1['global'].value" placeholder="Chercher" style="width: 100%"/>
+                                <InputText  placeholder="Chercher" style="width: 100%"/>
                             </span>
                         </div>
                     </template>
@@ -61,9 +61,6 @@
 
 <script>
   import axios from'axios';
-	import {FilterMatchMode,FilterOperator} from 'primevue/api';
-	import CustomerService from "../service/CustomerService";
-	import ProductService from '../service/ProductService';
 	export default {
 		data() {
 			return {
@@ -74,33 +71,10 @@
         table:[],
 			}
 		},
-		created() {
-			this.customerService = new CustomerService();
-			this.productService = new ProductService();
-			this.initFilters1();
-		},
 		mounted() {
       this.getRoofTops();
-      console.log("roof",this.table);
-			this.customerService.getCustomersLarge().then(data => {
-        console.log(data);
-			});
-		
 		},
 		methods: {
-			initFilters1() {
-				this.filters1 = {
-					'global': {value: null, matchMode: FilterMatchMode.CONTAINS},
-					'name': {operator: FilterOperator.AND, constraints: [{value: null, matchMode: FilterMatchMode.STARTS_WITH}]},
-					'country.name': {operator: FilterOperator.AND, constraints: [{value: null, matchMode: FilterMatchMode.STARTS_WITH}]},
-					'representative': {value: null, matchMode: FilterMatchMode.IN},
-					'date': {operator: FilterOperator.AND, constraints: [{value: null, matchMode: FilterMatchMode.DATE_IS}]},
-					'balance': {operator: FilterOperator.AND, constraints: [{value: null, matchMode: FilterMatchMode.EQUALS}]},
-					'status': {operator: FilterOperator.OR, constraints: [{value: null, matchMode: FilterMatchMode.EQUALS}]},
-					'activity': {value: null, matchMode: FilterMatchMode.BETWEEN},
-					'verified': {value: null, matchMode: FilterMatchMode.EQUALS}
-				}
-      },
       async getRoofTops(){
       await axios.get('http://localhost:8000/api/allRoofs-Tops')
       .then(res=>{

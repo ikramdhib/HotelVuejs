@@ -614,7 +614,18 @@ const routes = [
       }
     }
 },
-   
+{
+  path: '/restaurants',
+  name: 'restaurants',
+ component: () => import('./components/RestaurantTable.vue'),
+  beforeEnter: (to, from, next) => {
+      if (!localStorage.getItem("token")) {
+        next("login");
+      } else {
+        next();
+      }
+    }
+},
    
 ];
 
