@@ -18,7 +18,54 @@ const routes = [
           }
 
     },
-    
+    {
+      path: '/pool',
+      name: 'pool',
+      component: () => import('./components/AddPool.vue'),
+      beforeEnter: (to, from, next) => {
+          if (!localStorage.getItem("token")) {
+            next("login");
+          } else {
+            next();
+          }
+        }
+  
+  }, {
+  path: '/updateSpa:id',
+  name: 'updateSpa',
+  component: () => import('./components/updateSpa.vue'),
+  beforeEnter: (to, from, next) => {
+      if (!localStorage.getItem("token")) {
+        next("login");
+      } else {
+        next();
+      }
+    }
+
+}, 
+  {
+    path: '/updatePool:id',
+    name: 'updatePool',
+    component: () => import('./components/updatePool.vue'),
+    beforeEnter: (to, from, next) => {
+        if (!localStorage.getItem("token")) {
+          next("login");
+        } else {
+          next();
+        }
+      }},{
+    path: '/Spa',
+    name: 'Spa',
+    component: () => import('./components/AddSpa.vue'),
+    beforeEnter: (to, from, next) => {
+        if (!localStorage.getItem("token")) {
+          next("login");
+        } else {
+          next();
+        }
+      }
+
+},
       
       {
         path: '/image',
@@ -57,6 +104,18 @@ const routes = [
               }
             }
       },
+      {
+        path: '/tablepool',
+        name: 'tablepool',
+       component: () => import('./components/TablePool.vue'),
+        beforeEnter: (to, from, next) => {
+            if (!localStorage.getItem("token")) {
+              next("login");
+            } else {
+              next();
+            }
+          }
+    },
 
   
     {

@@ -1,55 +1,52 @@
 <template>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                   
+                    <form @submit="formSubmit" enctype="multipart/form-data">
+                            <input type="file" name="path" id="path" class="form-control" v-on:change="onChange">
+                            <button class="btn btn-primary btn-block">Upload</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-    <div class="grid">
-		<div class="col-12">
-			<div class="card">
-<form @submit.prevent="sendImage">
- 	<FileUpload name="file" url="" ref="file" @upload="onUpload" @change="selectFile" :multiple="true" accept="image/png, image/jpeg" :maxFileSize="1000000"/>
-
-</form>    
-   
-    </div>
-</div>
-
-  </div>
- 
 </template>
 <script>
 import axios from 'axios';
-
-export default {
- data() {
+    export default {
+        data() {
             return {
-				
-           image:{
-             url:"",
-			room_id:0,
-           },	
-				
-            }
+              
+                path: '',
+              room_id:0,
+            };
         },
-		methods:{ 
-   
-
-	      selectFile(){
-           this.url=this.$refs.file.files[0];
-          },
-           
-            async sendImage(){
-                const formData =new FormData();
-                formData.append('file',this.url)
-              await axios
-			    .post('http://localhost:8000/api/user/image',
-                {formData,
-                room_id:(localStorage.getItem('room_id')),
-				},
-				{ headers: { Authorization: 'Bearer ' + localStorage.getItem('token')}}
-				).then(res=>{
-		          let response = res.data.data.url;
-					 console.log(response);
-					  this.$router.push('TableRoom');
-			         
-					 
-			})}}}
-
-</script>
+        methods: {
+            onChange(e) {
+                this.path = e.target.files[0];
+                console.log('<<data<<',this.path)
+            },
+            formSubmit(e) {
+                e.preventDefault();
+                let existingObj = this;
+                const config = {
+                    headers: {
+                        'content-type': 'multipart/form-data'
+                    }
+                }
+                
+                let data = new FormData();
+                data.append('path', this.path);
+                data.append(localStorage.getItem('room_id'),this.room_id);
+                axios.post('http://localhost:8000/api/image', data, config)
+                   .then(res=>{
+                        existingObj.success = res.data.file.path;
+                    })
+                   
+            }
+        }
+    }
+    </script>

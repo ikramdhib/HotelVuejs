@@ -2,6 +2,7 @@
   <div>
     <div class="col-12">
       <div class="card">
+        <h5>list chambre</h5>
          <div class="col-12 mb-2 lg:col-4 lg:mb-0">
 						<span class="p-input-icon-right">
 											<InputText type="search" class="search" placeholder="Search" v-model=" search" />
@@ -136,23 +137,11 @@ export default {
       return this.rooms.filter((room) => {
         return this.search.toLowerCase().split(' ').every(v => room.avaibility.toLowerCase().includes(v));
       });}},
-   created(){
-    const id=this.$route.params.id;
-     axios.get("http://127.0.0.1:8000/api/user/room/"+id, {
-        headers: { Authorization: "Bearer " + localStorage.getItem("token") },
-      })
-      .then((res) => {
-       
-       this.room=res.data.data;
-        
-     
-       console.log(res.data);
-           this.getRoom();
-       })},
+  
   methods: {
   async getRoom(){
  await axios
-      .get("http://127.0.0.1:8000/api/user/room", {
+      .get("http://127.0.0.1:8000/api/room", {
         headers: { Authorization: "Bearer " + localStorage.getItem("token") },
       })
       .then((res) => {
@@ -167,7 +156,7 @@ export default {
       });},
  async getType(){
  await axios
-      .get("http://127.0.0.1:8000/api/user/type", {
+      .get("http://127.0.0.1:8000/api/type", {
         headers: { Authorization: "Bearer " + localStorage.getItem("token") },
       })
       .then((res) => {
@@ -178,7 +167,7 @@ export default {
      },
       async delete_room(id){
       await axios
-      .delete("http://127.0.0.1:8000/api/user/room/"+id, {
+      .delete("http://127.0.0.1:8000/api/room/"+id, {
         headers: { Authorization: "Bearer " + localStorage.getItem("token") },
       })
       .then((res) => {

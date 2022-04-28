@@ -45,7 +45,7 @@ export default {
         methods: {	
 			 async addType() {
 			 await axios
-			    .post('http://localhost:8000/api/user/type',{nom_type:this.type.nom_type,
+			    .post('http://localhost:8000/api/type',{nom_type:this.type.nom_type,
 				price_Type:this.type.price_Type,
 				intitule:this.type.intitule},
 				{ headers: {Authorization: 'Bearer ' + localStorage.getItem('token')}}

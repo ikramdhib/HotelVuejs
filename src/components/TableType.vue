@@ -3,6 +3,7 @@
     <div class="col-12">
      
       <div class="card">
+        <h5>list Type</h5>
          <div class="col-12 mb-2 lg:col-4 lg:mb-0">
 						<span class="p-input-icon-right">
 							<InputText type="search" class="search" placeholder="Search" v-model=" search" />
@@ -130,19 +131,7 @@ export default {
    this.getType();
    
   },
-  created(){
-  const id=this.$route.params.id;
-     axios.get("http://127.0.0.1:8000/api/user/type/"+id, {
-        headers: { Authorization: "Bearer " + localStorage.getItem("token") },
-      })
-      .then((res) => {
-       
-       this.type=res.data.data;
-        
-      
-       console.log(res.data);
-           this.getType();
-       })},
+ 
 
  
   
@@ -150,7 +139,7 @@ export default {
   methods: {
   async getType(){
  await axios
-      .get("http://127.0.0.1:8000/api/user/type", {
+      .get("http://127.0.0.1:8000/api/type", {
         headers: { Authorization: "Bearer " + localStorage.getItem("token") },
       })
       .then((res) => {
@@ -163,7 +152,7 @@ export default {
 
       async delete_type(id){
       await axios
-      .delete("http://127.0.0.1:8000/api/user/type/"+id, {
+      .delete("http://127.0.0.1:8000/api/type/"+id, {
         headers: { Authorization: "Bearer " + localStorage.getItem("token") },
       })
       .then((res) => {
