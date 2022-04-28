@@ -2,7 +2,7 @@
      <div class="col-12">
 	    <div class="card">
 		
-				<h5>Type</h5>
+				<h5> Editer Type</h5>
 				<div class="p-fluid formgrid grid">
 					
              <div class="field col-12 md:col-6">
@@ -14,7 +14,7 @@
 						<InputText id="prix" type="text" v-model="type.price_Type"/>
 					</div>
                      <div class="field col-12 md:col-3">
-						<label for="desc">discription</label>
+						<label for="desc">description</label>
 						<Textarea id="desc" rows="4" cols="60" v-model="type.intitule"/>
 					</div>
 				<Button label="modifier" @click="update()" class="p-button-secondary mr-2 mb-2" />
@@ -41,7 +41,7 @@ export default {
         },
 			mounted(){
 			 const id=this.$route.params.id;
-     axios.get("http://127.0.0.1:8000/api/user/type/"+id, {
+     axios.get("http://127.0.0.1:8000/api/type/"+id, {
         headers: { Authorization: "Bearer " + localStorage.getItem("token") },
       })
       .then((res) => {
@@ -58,7 +58,7 @@ export default {
 			 async update() {
 				  const id=this.$route.params.id;
 			 await axios
-			    .put('http://localhost:8000/api/user/type/'+id,{nom_type:this.type.nom_type,
+			    .put('http://localhost:8000/api/type/'+id,{nom_type:this.type.nom_type,
 				price_Type:this.type.price_Type,
 				intitule:this.type.intitule},
 				{ headers: {Authorization: 'Bearer ' + localStorage.getItem('token')}}

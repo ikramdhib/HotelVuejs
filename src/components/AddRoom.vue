@@ -2,7 +2,7 @@
 	<div class="grid">
 		<div class="col-12">
 			<div class="card">
-				<h5> Ajouter Chambre</h5>
+				<h5> Ajouter Chambre :</h5>
 			      <div class="p-fluid formgrid grid">
 					   <div class="field col-12 md:col-4">
 					     <label for="lastname2">Type_chambre</label>
@@ -22,36 +22,40 @@
                    <div class="mt-2">
 						  <label class="inline-flex items-center ml-4">
 		
-                <input type="radio" class="form-radio"  value="oui" v-model="room.avaibility"/>
+            	 <input type="radio"  value="oui"  v-model="room.avaibility">
                 <span class="ml-2">Oui</span>
                  </label>
                <label class="inline-flex items-center ml-4">
-                         <input type="radio" class="form-radio" value="non" v-model="room.avaibility"/>
+                        	 <input type="radio"  value="non"  v-model="room.avaibility">
                 <span class="ml-2">Non</span>
               </label>
 				 
 				</div>
 			</div>
-			<div class="field col-12">
+			<div class="field col-9">
 						<label for="desc">description</label>
 						<Textarea id="desc" rows="4" v-model="room.description"/>
 			</div>
 			<div class="field col-12 md:col-3">
 						<label for="num-ch">numero_chambre</label>
-						<InputText id="num-ch" type="number" v-model="room.num_room"/>
+						<InputText id="num-ch" type="number"  min="0" v-model="room.num_room"/>
 					</div>
 					
 						<div class="field col-12 md:col-3">
 						<label for="nb-bed">Nombre de lit</label>
-						<InputText id="nb-bed" type="number" v-model="room.nbBed"/>
+						<InputText id="nb-bed" type="number"  min="0" v-model="room.nbBed"/>
 					</div>
 					<div class="field col-12 md:col-3">
 						<label for="nb-a">nombre-p-Adult </label>
-						<InputText id="nb-a" type="number" v-model="room.nbAdult" />
+						<InputText id="nb-a" type="number" min="0" v-model="room.nbAdult" />
 					</div>
 					<div class="field col-12 md:col-3">
 						<label for="nb-E">Nombre-p-enfant</label>
-						<InputText id="nb-E" type="number" v-model="room.nbEnfant"/>
+						<InputText id="nb-E" type="number" min="0" v-model="room.nbEnfant"/>
+					</div>
+						<div class="field col-12 md:col-3">
+						<label for="nb-B">Nombre bebe</label>
+						<InputText id="nb-B" type="number" min="0" v-model="room.nbbebe"/>
 					</div>
 					 <div class="field col-12 md:col-3">
 						<label for="prix1">prix_hotel</label>
@@ -85,12 +89,12 @@ import axios from 'axios';
 	export default {
 		data() {
 			return {
-				
+				 user_id:0,
 			price:{
-				price_hotel:0,
-				price_booking1:0,
-				price_booking2:0,
-                price_booking3:0,
+				price_hotel:"",
+				price_booking1:"",
+				price_booking2:"",
+                price_booking3:"",
 			},
 				types:[],
 				type:{type_id:0},
@@ -104,7 +108,8 @@ import axios from 'axios';
                 nbEnfant: 0,
 				type_id:0,
 				price_id:0,
-               
+				nbbebe:0
+              
               
 				},
 				
@@ -131,7 +136,7 @@ import axios from 'axios';
 		 methods: {	
 		
 			 async gettype(){
-            await axios.get('http://localhost:8000/api/user/type',
+            await axios.get('http://localhost:8000/api/type',
             { headers: { Authorization: 'Bearer ' + localStorage.getItem('token') }
         }).then(res=>{
 
@@ -147,11 +152,11 @@ import axios from 'axios';
 		 
 			 await axios
 			 
-			    .post('http://localhost:8000/api/user/price',
-				{price_booking1:this.price.price_booking1,
-                price_booking2:this.price.price_booking2,
-                price_booking3:this.price.price_booking3,
-				price_hotel:this.price.price_hotel,
+			    .post('http://localhost:8000/api/price',
+				{price_booking1:parseFloat(this.price.price_booking1),
+                price_booking2:parseFloat(this.price.price_booking2),
+                price_booking3:parseFloat(this.price.price_booking3),
+				price_hotel:parseFloat(this.price.price_hotel),
 				},
 				{ headers: { Authorization: 'Bearer ' + localStorage.getItem('token')}}
 				).then(res=>{
@@ -162,9 +167,11 @@ import axios from 'axios';
 					 console.log(response)})},
 					 
 			   async addroom(){
+				     this.user=JSON.parse(localStorage.getItem('user'));
+		
 			 await axios
 			
-			    .post('http://localhost:8000/api/user/room',
+			    .post('http://localhost:8000/api/room',
 				{nbBed:this.room.nbBed,
                 description:this.room.description,
 				num_room:this.room.num_room,
@@ -172,9 +179,10 @@ import axios from 'axios';
 				nbAdult:this.room.nbAdult,
                 nbEnfant:this.room.nbEnfant,
                 avaibility:this.room.avaibility,
+				 nbbebe:this.room.nbbebe,
 				type_id:this.types.type_id.id,
 				price_id:(localStorage.getItem('price_id')),
-				
+				user_id:this.user.id,
 			 
 				
 				},{ headers: { Authorization: 'Bearer ' + localStorage.getItem('token')}}

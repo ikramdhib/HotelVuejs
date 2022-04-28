@@ -16,22 +16,22 @@
       
         <div class="field col-12 md:col-6">
                         
-       <span class="text-black-700">Disponibilité</span>           
-       <div class="mt-2">
+       
                      
                    
-    <label class="inline-flex items-center ml-4">
+        <span class="text-black-700">Disponibilité</span>           
+                   <div class="mt-2">
+						  <label class="inline-flex items-center ml-4">
 		
-      <input type="radio" class="form-radio"  value="oui" v-model="option.avaibility"/>
-      <span class="ml-2">Oui</span>
-    </label>
-    <label class="inline-flex items-center ml-4">
-      <input type="radio" class="form-radio"   value="non" v-model="option.avaibility"/>
-      <span class="ml-2">Non</span>
-    </label>
-    </div>
+            	 <input type="radio"  value="oui"  v-model="option.avaibility">
+                <span class="ml-2">Oui</span>
+                 </label>
+               <label class="inline-flex items-center ml-4">
+                        	 <input type="radio"  value="non"  v-model="option.avaibility">
+                <span class="ml-2">Non</span>
+              </label>
   
-        </div>  </div>
+        </div>  </div></div>
 	<Button label="modifier"  v-on:click="updateOption" class="p-button-secondary mr-2 mb-2"  />
                             
 	

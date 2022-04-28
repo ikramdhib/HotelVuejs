@@ -2,7 +2,7 @@
 	<div class="grid">
 		<div class="col-12">
 			<div class="card">
-				<h5> Ajouter Chambre</h5>
+				<h5> Editer Chambre</h5>
 			      <div class="p-fluid formgrid grid">
 					   <div class="field col-12 md:col-4">
 					     <label for="lastname2">Type_chambre</label>
@@ -18,20 +18,19 @@
 					
 					<div class="field col-12 md:col-4">
                         
-              <span class="text-black-700">Disponibilité</span>           
+         <span class="text-black-700">Disponibilité</span>           
                    <div class="mt-2">
 						  <label class="inline-flex items-center ml-4">
 		
-                <input type="radio" class="form-radio"  value="oui" v-model="room.avaibility"/>
+            	 <input type="radio"  value="oui"  v-model="room.avaibility">
                 <span class="ml-2">Oui</span>
                  </label>
                <label class="inline-flex items-center ml-4">
-                         <input type="radio" class="form-radio" value="non" v-model="room.avaibility"/>
+                        	 <input type="radio"  value="non"  v-model="room.avaibility">
                 <span class="ml-2">Non</span>
-              </label>
-				 
-				</div>
-			</div>
+              </label>      
+         
+			</div></div>
 			<div class="field col-12">
 						<label for="desc">description</label>
 						<Textarea id="desc" rows="4" v-model="room.description"/>
@@ -120,7 +119,7 @@ import axios from 'axios';
 			mounted(){
                 this.gettype();
 	const id=this.$route.params.id;
-     axios.get("http://127.0.0.1:8000/api/user/room/"+id, {
+     axios.get("http://127.0.0.1:8000/api/room/"+id, {
         headers: { Authorization: "Bearer " + localStorage.getItem("token") },
       })
       .then((res) => {
@@ -140,7 +139,7 @@ import axios from 'axios';
        console.log(res.data);
          
        })
-       axios.get("http://127.0.0.1:8000/api/user/price/"+id, {
+       axios.get("http://127.0.0.1:8000/api/price/"+id, {
         headers: { Authorization: "Bearer " + localStorage.getItem("token") },
       })
       .then((res) => {
@@ -150,7 +149,7 @@ import axios from 'axios';
           this.price.price_booking2=res.data.data.price_booking2;
           this.price.price_booking3=res.data.data.price_booking3;
        })
-        axios.get("http://127.0.0.1:8000/api/user/type/"+id, {
+        axios.get("http://127.0.0.1:8000/api/type/"+id, {
         headers: { Authorization: "Bearer " + localStorage.getItem("token") },
       })
       .then((res) => {

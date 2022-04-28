@@ -1,11 +1,12 @@
 <template>
   <div>
     <div class="col-12">
+     
       <div class="card">
-        <h5>list option</h5>
+        	<h5>list Spa </h5>
          <div class="col-12 mb-2 lg:col-4 lg:mb-0">
 						<span class="p-input-icon-right">
-							<InputText type="search" class="search" placeholder="Search" v-model=" search" />
+							<InputText type="search" class="search" placeholder="Search"  />
 							<i class="pi pi-search" />
 						</span>
 					</div>
@@ -16,11 +17,13 @@
             <thead
               class="text-xs text-gray-700uppercasebg-gray-50dark:bg-gray-700 dark:text-gray-400
   "
-            >
+ >
               <tr>
-                <th scope="col" class="px-6 py-3">nom option</th>
-                <th scope="col" class="px-6 py-3">prix option</th>
-                <th scope="col" class="px-6 py-3">disponibilité</th>
+                <th scope="col" class="px-6 py-3">titre</th>
+                <th scope="col" class="px-6 py-3">prix </th>
+                <th scope="col" class="px-6 py-3">description</th>
+                   <th scope="col" class="px-6 py-3">disponibilité</th>
+                      <th scope="col" class="px-6 py-3">capacité</th>
                 <th scope="col" class="px-6 py-3">supprimer</th>
                 <th scope="col" class="px-6 py-3">
                   <span class="sr-only">modifier</span>
@@ -28,7 +31,8 @@
               </tr>
             </thead>
             <tbody>
-              <template v-for="option in FilteredList" :key="option.id">
+             
+              <template v-for="spa in spas" :key="spa.id">
                 <tr
                   class="
                     bg-white
@@ -47,17 +51,19 @@
                       whitespace-nowrap
                     "
                   >
-                    {{ option.nom_option }}
+                    {{ spa.title }}
                   </th>
-                  <td class="px-6 py-4">{{ option.price_option }}</td>
-                  <td class="px-6 py-4">{{ option.avaibility }}</td>
+                  <td class="px-6 py-4">{{ spa.prix_reservation }}</td>
+                  <td class="px-6 py-4">{{ spa.description}}</td>
+                     <td class="px-6 py-4">{{ spa.avaibility}}</td>
+                        <td class="px-6 py-4">{{ spa.capacite}}</td>
                   <td class="px-6 py-4">
-                    <Button
+                       <Button
                       label="Delete"
                       icon="pi pi-trash"
                       class="p-button-danger"
                       style="width: auto"
-                      @click="openConfirmation();"
+                      @click="openConfirmation" 
                     />
                     <Dialog
                       header="Confirmation"
@@ -79,10 +85,11 @@
                           @click="closeConfirmation"
                           class="p-button-text"
                         />
+                             
                         <Button
                           label="Yes"
                           icon="pi pi-check"
-                         @click="delete_option(option.id);closeConfirmation()"
+                         @click="delete_spa(spa.id);closeConfirmation()"
                           class="p-button-text"
                           autofocus
                         />
@@ -90,14 +97,13 @@
                     </Dialog>
                   </td> 
                       <td>   
-                 		
-		 <router-link :to="{ name: 'OptionUpdate', params: {id:option.id}}">
-         <Button label="Modifier"  icon="pi pi-refresh"   style="width: auto" class="p-button-success " /></router-link> 
-       
-      
+           <router-link  tag="button"  :to="{ name: 'updateSpa', params: {id:spa.id}}">
+		            <Button label="Modifier"  icon="pi pi-refresh"   style="width: auto" class="p-button-success " />
+           </router-link>
                   </td>
                 </tr>
               </template>
+            
             </tbody>
           </table>
         </div>
@@ -107,62 +113,54 @@
 </template>
 <script>
 import axios from "axios";
-
-
 export default {
+  
   data() {
     return {
       displayConfirmation: false,
       display: false,
-      options: [],
-      search:""
-     
+ 
+      spas: [],
+   
     };
   },
-  computed: {
-    FilteredList() {
-      return this.options.filter((option) => {
-        return this.search.toLowerCase().split(' ').every(v => option.nom_option.toLowerCase().includes(v));
-      });
-    }
+     
+  mounted() {
+   this.getspas();
+   
   },
-    
+ 
 
  
-  mounted() {
-   this.getOption();
   
-  },
   
-
-
   methods: {
-  async getOption(){
+  async getspas(){
  await axios
-      .get("http://127.0.0.1:8000/api/option", {
+      .get("http://127.0.0.1:8000/api/spa", {
         headers: { Authorization: "Bearer " + localStorage.getItem("token") },
       })
       .then((res) => {
           
-        this.options = res.data.data;
-        
+        this.spas = res.data.data;
         console.log(res.data);
       })
       .catch((error) =>{ console.log(error)
       });},
 
-      async delete_option(id){
+      async delete_spa(id){
       await axios
-      .delete("http://127.0.0.1:8000/api/option/"+id, {
+      .delete("http://127.0.0.1:8000/api/spa/"+id, {
         headers: { Authorization: "Bearer " + localStorage.getItem("token") },
       })
       .then((res) => {
 
            console.log(res.data);
-           this.getOption();
+           this.getPools();
       })},
    
-     
+       
+      
       
     open() {
       this.display = true;
@@ -178,9 +176,9 @@ export default {
     closeConfirmation() {
       this.displayConfirmation = false;
     },
-    
-		
+   
 			
+		
     
   }}
 </script>

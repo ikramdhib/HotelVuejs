@@ -2,7 +2,7 @@
 	<div class="grid">
 		<div class="col-12">
 			<div class="card">
-				<h5>Option</h5>
+				<h5> Ajouter Option</h5>
 				<div class="p-fluid formgrid grid">
 		<div class="field col-12 md:col-6">
 						<label for="nomop">nom_Option</label>
@@ -18,23 +18,20 @@
                         
        <span class="text-black-700">Disponibilité</span>           
        <div class="mt-2">
-                     
-                   
-    <label class="inline-flex items-center ml-4">
+                      <label class="inline-flex items-center ml-4">
 		
-      <input type="radio" class="form-radio"  value="oui" v-model="option.avaibility"/>
-      <span class="ml-2">Oui</span>
-    </label>
-    <label class="inline-flex items-center ml-4">
-      <input type="radio" class="form-radio"   value="non" v-model="option.avaibility"/>
-      <span class="ml-2">Non</span>
-    </label>
-    </div>
+            	 <input type="radio"  value="oui"  v-model="option.avaibility">
+                <span class="ml-2">Oui</span>
+                 </label>
+               <label class="inline-flex items-center ml-4">
+                        	 <input type="radio"  value="non"  v-model="option.avaibility">
+                <span class="ml-2">Non</span>
+              </label>
   
-        </div>  </div>
+        </div>  </div></div>
 	<Button label="ajouter"   @click="addOption()" class="p-button-secondary mr-2 mb-2"  />
-                            
-	
+    <router-link :to="{ path: 'image'}"> <Button label="suivant"  class="p-button-success mr-2 mb-2" />
+	</router-link>
 </div>	
 </div>	
 </div>	
@@ -62,7 +59,7 @@ export default {
 			 async addOption() {
 			
 			 await axios
-			    .post('http://localhost:8000/api/user/option',
+			    .post('http://localhost:8000/api/option',
 				{avaibility:this.option.avaibility,
                 price_option:this.option.price_option,
                 nom_option:this.option.nom_option,
@@ -74,7 +71,7 @@ export default {
 					console.log(this.headers);
 				     let response = res.data.data;
 					 console.log(response);
-					  this.$router.push('image');
+					 
 			         
 					 
 			})}}}
