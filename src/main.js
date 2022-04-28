@@ -4,6 +4,8 @@ import 'primeicons/primeicons.css';
 import 'prismjs/themes/prism-coy.css';
 import './assets/styles/layout.scss';
 import './assets/demo/flags/flags.css';
+import moment from 'moment'
+
 
 
 
@@ -120,6 +122,7 @@ app.use(PrimeVue, { ripple: true, inputStyle: 'outlined' });
 app.use(ConfirmationService);
 app.use(ToastService);
 app.use(router);
+app.config.globalProperties.$moment = moment
 
 app.directive('tooltip', Tooltip);
 app.directive('ripple', Ripple);

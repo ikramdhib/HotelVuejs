@@ -8,7 +8,7 @@ const routes = [
       {
         path: '/',
         name: 'dashboard',
-        component: () => import('./components/FormLayoutDemo.vue'),
+        component: () => import('./components/Dashboard.vue'),
         beforeEnter: (to, from, next) => {
             if (!localStorage.getItem("token")) {
               next("login");
@@ -554,6 +554,66 @@ const routes = [
             }
           }
     },
+    {
+      path: '/addrooftop',
+      name: 'addrooftop',
+     component: () => import('./components/AddRoofTop.vue'),
+      beforeEnter: (to, from, next) => {
+          if (!localStorage.getItem("token")) {
+            next("login");
+          } else {
+            next();
+          }
+        }
+  },
+  {
+    path: '/addrestaurant',
+    name: 'addrestaurant',
+   component: () => import('./components/AddRestaurant.vue'),
+    beforeEnter: (to, from, next) => {
+        if (!localStorage.getItem("token")) {
+          next("login");
+        } else {
+          next();
+        }
+      }
+},
+{
+  path: '/addmenu',
+  name: 'addmenu',
+ component: () => import('./components/AddMenu.vue'),
+  beforeEnter: (to, from, next) => {
+      if (!localStorage.getItem("token")) {
+        next("login");
+      } else {
+        next();
+      }
+    }
+},
+{
+  path: '/addconferenceroom',
+  name: 'addconferenceroom',
+ component: () => import('./components/AddConferenceRoom.vue'),
+  beforeEnter: (to, from, next) => {
+      if (!localStorage.getItem("token")) {
+        next("login");
+      } else {
+        next();
+      }
+    }
+},
+{
+  path: '/rooftop',
+  name: 'rooftop',
+ component: () => import('./components/RoofTopTable.vue'),
+  beforeEnter: (to, from, next) => {
+      if (!localStorage.getItem("token")) {
+        next("login");
+      } else {
+        next();
+      }
+    }
+},
    
    
 ];

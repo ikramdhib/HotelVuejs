@@ -17,8 +17,8 @@ export default {
   },
   data() {
     return {
+      rooms:[],
       calendarOptions:  {
-        ch:'',
         plugins: [ dayGridPlugin, interactionPlugin, listPlugin, timeGridPlugin,  ],
         initialView: 'dayGridMonth',
         locale:frLocale,
@@ -50,30 +50,33 @@ export default {
                 .then(res => {
                   let reserv = res.data.bookings
                   let tab=[]
+                  this.getAll_rooms()
+                  console.log(this.rooms);
                   for (let i=0; i<reserv.length ;i++){
                     if(reserv[i].confirmation==1){
                       tab.push(reserv[i])
-                      
-                   /*  let id=reserv[i].room_id
-                    axios.get('http://localhost:8000/api/user/room/'+id,
-                      { headers: { Authorization: 'Bearer ' + localStorage.getItem('token') }} 
-                      )
-                      .then(res=>{
-                        console.log("hoo",res.data);
-                         this.ch = res.data.room.num_room;
-                        console.log('gggo',this.ch);
-                         reserv[i].color="h"+this.ch;
-                      })*/
-                      
-                      
-                  console.log("gg",this.ch);
+                    }
+                    for(let j=0 ; j<this.rooms.length ; j++){
+                      if(reserv[j].room_id==this.rooms[j].id){
+                        reserv[i].title=this.rooms[j].num_room
+                        console.log("rr",reserv[i]);
+                      }
                     }
                   }
-                  this.calendarOptions.events=tab.map(enevtnew=>({title: "Room reservation", start: enevtnew.start , end: enevtnew.end}
+                this.calendarOptions.events=tab.map(enevtnew=>({title:"Chambre N°"+enevtnew.numRoom +" Etage N°"+enevtnew.numEtage, start: enevtnew.start , end: enevtnew.end}
                   ));
-                  console.log("hhggf",tab);
+                 // console.log("hhggf",tab);
                         });
     },
+      getAll_rooms(){
+        axios.get('http://localhost:8000/api/user/room',
+                      { headers: { Authorization: 'Bearer ' + localStorage.getItem('token') }} 
+                      ).then(res=>{
+                        this.rooms=res.data.data
+                        return this.rooms
+                      })
+                      
+      }
   
   },
 

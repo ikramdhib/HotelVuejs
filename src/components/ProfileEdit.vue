@@ -67,7 +67,7 @@
                 
                         <div class="flex align-items-lef justify-content-left">
                             <div class="mx-2 w-4 p-2 ">
-                           <Button label="Rechercher"  v-on:click="updatepass()"></button></div>
+                           <Button label="Rechercher"  v-on:click="updateProfile()"></button></div>
                            <div   class=" w-4 p-2">
                            <Button label="Annuler" class="p-button-secondary mr-2 mb-2" @click="backForgetPassword()"></button></div>
                         </div>
@@ -80,6 +80,7 @@
 <script>
 import axios from 'axios';
 export default {
+ 
     data(){
         return{
           email:"",
@@ -100,6 +101,7 @@ export default {
                     }
                 }
             },
+            
             methods:{
               passModify(){
                 this.passIsToModify=true;
@@ -193,8 +195,8 @@ export default {
                   console.log(res)
               })
                   }
-                   if (!this.userInfo.firstname ){
-                    console.log("hi");
+                   if (!this.userInfo.firstname && !this.userInfo.lastname && !this.userInfo.phone && !this.userInfo.country
+                   && !this.userInfo.zipcode ){
 			           	this.$toast.add({severity:'error', summary: 'Erreur', detail:'Tous les champs sont vides !', life: 3000});
 			
                  }
@@ -211,11 +213,8 @@ export default {
          } ).then(response=>{
              let res = response.data;
             console.log(res)
-            this.$router.push("login")
 	       	}).catch(error=>{
-            if(error.response.status==422){
-            this.errors="Les deux Mot de Passe ne sont compatible"
-            }
+             console.log(error);
         })
         }
         },
