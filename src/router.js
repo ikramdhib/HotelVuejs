@@ -626,6 +626,18 @@ const routes = [
       }
     }
 },
+{
+  path: '/conferencerooms',
+  name: 'confrencerooms',
+ component: () => import('./components/ConferenceRoomTable.vue'),
+  beforeEnter: (to, from, next) => {
+      if (!localStorage.getItem("token")) {
+        next("login");
+      } else {
+        next();
+      }
+    }
+},
    
 ];
 

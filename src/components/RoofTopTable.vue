@@ -15,7 +15,7 @@
                         </div>
                     </template>
                     <template #empty>
-                        No customers found.
+                        Pas de Roof-Tops trouvé.
                     </template>
                     <Column  header="Intitule" style="min-width:12rem">
                         <template #body="{data}">
