@@ -44,13 +44,24 @@
                     </Column>
                     <Column field="activity" header="" :showFilterMatchModes="false" style="min-width:12rem" >
                         <template #body="{data}">
-			               	<Button :value="data.id"  label="Modifier" class="p-button-rounded p-button-info mr-2 mb-2" />
-                            
+                          <router-link :to="{ name: 'updaterooftop', params: {id:data.id}}">
+			               	<Button   label="Modifier" class="p-button-rounded p-button-info mr-2 mb-2" />
+                          </router-link>
                         </template>
                     </Column>
                     <Column  header=""  bodyClass="text-center" style="min-width:8rem">
                         <template #body="{data}">
-		                      		<Button :value="data.id" label="Supprimer" class="p-button-rounded p-button-danger mr-2 mb-2" />
+		                      		<Button :value="data.id"  @click="openConfirmation" label="Supprimer" style="width: auto" class="p-button-rounded p-button-danger mr-2 mb-2" />
+                              <Dialog header="Confirmation" v-model:visible="displayConfirmation" :style="{width: '350px'}" :modal="true">
+                                  <div class="flex align-items-center justify-content-center">
+                                    <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
+                                    <span>Are you sure you want to proceed?</span>
+                                  </div>
+                                  <template #footer>
+                                    <Button label="No" icon="pi pi-times" @click="closeConfirmation" class="p-button-text"/>
+                                    <Button label="Yes" icon="pi pi-check" @click="deleteRoofTop(data.id);closeConfirmation();" class="p-button-text" autofocus />
+                                  </template>
+                                </Dialog>
 			                  
                         </template>
                     </Column>
@@ -69,6 +80,7 @@
         loading1: true,
         rooftops:[],
         table:[],
+        displayConfirmation: false,
 			}
 		},
 		mounted() {
@@ -76,7 +88,9 @@
 		},
 		methods: {
       async getRoofTops(){
-      await axios.get('http://localhost:8000/api/allRoofs-Tops')
+      await axios.get('http://localhost:8000/api/allRoofs-Tops',
+      
+      )
       .then(res=>{
         if(res){
           this.rooftops=res.data.rooftops;
@@ -89,8 +103,19 @@
           console.log(res.data);
         }
       })
-    }
-    
+    },
+    openConfirmation() {
+				this.displayConfirmation = true;
+			},
+			
+			closeConfirmation() {
+        this.displayConfirmation = false;
+      },
+       async deleteRoofTop(id){
+     await axios.delete('http://localhost:8000/api/delete-Roof-Top/'+id,
+     { headers: { Authorization: 'Bearer ' + localStorage.getItem('token') }}
+     )
+       }
 		
 		}
 	}
