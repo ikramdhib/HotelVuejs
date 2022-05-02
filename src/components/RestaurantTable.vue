@@ -1,7 +1,7 @@
 <template>
 <div class="col-12">
       <div class="card">
-        <h4 id="title">Restaurant</h4>
+        <h4 id="title">Les Restaurants</h4>
         <DataTable :value="table" v-model:expandedRows="expandedRows" dataKey="id" responsiveLayout="scroll">
 					<template #header>
 						<div>

@@ -579,7 +579,7 @@ const routes = [
       }
 },
 {
-  path: '/addmenu',
+  path: '/addmenu:id',
   name: 'addmenu',
  component: () => import('./components/AddMenu.vue'),
   beforeEnter: (to, from, next) => {
