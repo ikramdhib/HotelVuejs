@@ -64,6 +64,9 @@ import axios from 'axios';
 			return {
 				dropdownValue:null,
 				pluss:1,
+				idM:null,
+				idP:null,
+				isRegisterd:false,
 				menu_id:"",
 				restaurant_id:"",
 				menu:{
@@ -80,18 +83,37 @@ import axios from 'axios';
 					 'PLATS PRINCIPAUX',
 					'DESSERT',
 				],
+				menuRegistred:false,
 			}
 		},
 
 		mounted (){
-			this.restaurant_id=parseInt(localStorage.getItem('restaurant_id'));
-			console.log(localStorage.getItem('restaurant_id'));
+			
 		},
 
 		methods :{
 			 addMenu(){
-				console.log("menu",this.menu);
-				 axios.post('http://localhost:8000/api/addMenu',
+				 if(this.isRegisterd){
+					 if(this.idM!=null ){
+					 axios.post('http://localhost:8000/api/addPlat',
+				{
+					nom:this.plat.nom,
+					intitule:this.plat.intitule,
+					prix_plat:parseFloat(this.plat.prix_plat),
+					menu_restaurant_id:this.idM,
+				},
+				{ headers: { Authorization: 'Bearer ' + localStorage.getItem('token') }}
+				).then(
+					res=>{
+						this.idP=res.data.plat.id
+					}
+				);
+					 }
+					if(this.idM!=null & this.idP!=null){
+						 this.$toast.add({severity:'success', summary: 'Excellent', detail:'les information a été soumise avec succès', life: 3000});
+					 }
+				   if(this.idM==null && this.idP==null){
+						 axios.post('http://localhost:8000/api/addMenu',
 				{
 					titre:this.menu.titre,
 					description:this.menu.description,
@@ -99,7 +121,6 @@ import axios from 'axios';
 				},
 				{ headers: { Authorization: 'Bearer ' + localStorage.getItem('token') }}
 				).then(res=>{
-
 					console.log("plat",this.plat);
 				console.log("zzz",this.menu_id);
 				 axios.post('http://localhost:8000/api/addPlat',
@@ -120,14 +141,59 @@ import axios from 'axios';
 				})
 					
 				})
+					 }
+				 }
 			},
 			clickPluss(){
-				this.pluss++;
-			
-			}
+				const restaurant_id=this.$route.params.id;
+				if(this.isRegisterd==false){
+				 axios.post('http://localhost:8000/api/addMenu',
+				{
+					titre:this.menu.titre,
+					description:this.menu.description,
+					restaurant_id:restaurant_id
+				},
+				{ headers: { Authorization: 'Bearer ' + localStorage.getItem('token') }}
+				).then(res=>{
+					if(res){
+					this.idM=res.data.Menu.id
+					console.log("plat",this.plat);
+				console.log("zzz",this.menu_id);
+				 axios.post('http://localhost:8000/api/addPlat',
+				{
+					nom:this.plat.nom,
+					intitule:this.plat.intitule,
+					prix_plat:parseFloat(this.plat.prix_plat),
+					menu_restaurant_id:this.idM,
+				},
+				{ headers: { Authorization: 'Bearer ' + localStorage.getItem('token') }}
+				).then(
+					res=>{
+						this.idP=res.data.plat.id
+					}
+				);
+					}
+						});
+		}
+		if(this.isRegisterd){
+			 axios.post('http://localhost:8000/api/addPlat',
+				{
+					nom:this.plat.nom,
+					intitule:this.plat.intitule,
+					prix_plat:parseFloat(this.plat.prix_plat),
+					menu_restaurant_id:this.idM,
+				},
+				{ headers: { Authorization: 'Bearer ' + localStorage.getItem('token') }}
+				).then(
+					res=>{
+						this.idP=res.data.plat.id
+					}
+				);
+		}
+		this.isRegisterd=true;
+	}
 		}
 	}
-	
 	
 	
 </script>

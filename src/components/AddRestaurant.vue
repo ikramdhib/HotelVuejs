@@ -53,6 +53,7 @@ import axios from 'axios'
 	export default {
 		data() {
 			return {
+				id:null,
 				user:null,
 				restaurant:{
 					nom:"",
@@ -85,8 +86,8 @@ import axios from 'axios'
 				{ headers: { Authorization: 'Bearer ' + localStorage.getItem('token') }}
 				).then(res=>{
 					if(res){
-						this.$router.push("addmenu");
-						localStorage.setItem('restaurant_id',res.data.restaurant.id)
+						this.id=res.data.restaurant.id
+						this.$router.push({name:'addmenu' , params:{id:this.id}});
 					}
 				}
 

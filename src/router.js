@@ -581,7 +581,7 @@ const routes = [
       }
 },
 {
-  path: '/addmenu',
+  path: '/addmenu:id',
   name: 'addmenu',
  component: () => import('./components/AddMenu.vue'),
   beforeEnter: (to, from, next) => {
@@ -616,7 +616,43 @@ const routes = [
       }
     }
 },
-   
+{
+  path: '/restaurants',
+  name: 'restaurants',
+ component: () => import('./components/RestaurantTable.vue'),
+  beforeEnter: (to, from, next) => {
+      if (!localStorage.getItem("token")) {
+        next("login");
+      } else {
+        next();
+      }
+    }
+},
+{
+  path: '/conferencerooms',
+  name: 'confrencerooms',
+ component: () => import('./components/ConferenceRoomTable.vue'),
+  beforeEnter: (to, from, next) => {
+      if (!localStorage.getItem("token")) {
+        next("login");
+      } else {
+        next();
+      }
+    }
+},
+
+{
+  path: '/updaterooftop:id',
+  name: 'updaterooftop',
+ component: () => import('./components/UpdateRoofTop.vue'),
+  beforeEnter: (to, from, next) => {
+      if (!localStorage.getItem("token")) {
+        next("login");
+      } else {
+        next();
+      }
+    }
+},
    
 ];
 

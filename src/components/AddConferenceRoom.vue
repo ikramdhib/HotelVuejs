@@ -19,7 +19,7 @@
 						<Textarea id="desc" rows="4"  v-model="room.description"/>
 						</div>
 					</div>
-		 <div  class="p-fluid formgrid grid" v-for="i in pluss" :key="i">
+		 <div  class="p-fluid formgrid grid">
 					<div class="field col-12 md:col-4">
 					  <label for="lastname2">Type :</label>
 				     <span class="p-float-label" >
@@ -31,11 +31,11 @@
 						<InputText id="num-ch" type="number"  v-model="type.capacite"/>
 					</div>
 					<div class="field col-12 md:col-4">
-							<Button id="btn" icon="pi pi-plus" @click="clickPluss()" class="mr-2 mb-2" />
+							<Button id="btn" icon="pi pi-plus" @click="addWithPluss()" class="mr-2 mb-2" />
 
 					</div>
 		 </div>
-		 <div class="p-fluid formgrid grid"  v-for="j in jpluss" :key="j" >
+		 <div class="p-fluid formgrid grid"  >
 					<div class="field col-12 md:col-4">
 						<label for="num_etage">Equipement :</label>
 						<InputText id="num_etage" type="text"  v-model="equipement.label"/>
@@ -45,7 +45,7 @@
 						<InputText id="num_etage" type="text" v-model="equipement.prix"/>
 					</div>
 					<div class="field col-12 md:col-4">
-							<Button id="btn" icon="pi pi-plus" @click="clickjPluss()" class="mr-2 mb-2" />
+							<Button id="btn" icon="pi pi-plus" @click="addWithPlussEq()" class="mr-2 mb-2" />
 
 					</div>
 			 </div>
@@ -56,6 +56,7 @@
 					</div>
 		
 	      <div class="field col-12 md:col-3">
+			   <Toast />
 			<Button label="Ajouter" @click="addConferenceRoom()"></Button>
 		</div>
 			</div>
@@ -73,8 +74,13 @@ import axios from 'axios';
 				switchValue: null,
 				dropdownValue:null,
 				user:null,
-				pluss:1,
-				jpluss:1,
+				isRegistred:false,
+				idc:null,
+				roomRegistred:false,
+				typeRegistred:false,
+				equipementRegistred:false,
+				idT:null,
+				idE:null,
 				room:{
 					prix:"",
 					description:"",
@@ -83,16 +89,16 @@ import axios from 'axios';
 				type:{
 					label:"",
 					capacite:"",
-					disponibilite:""
+					disponibilite:true,
 				},
 				equipement:{
 					label:"",
 					prix:""
 				},
 				dropdownValues: [
-					'ENTREES',
-				'PLATS PRINCIPAUX',
-				     'DESSERT'
+					'CAREES',
+				'OVAL',
+				     'NORMALE'
 				]
 		}
           
@@ -105,8 +111,72 @@ import axios from 'axios';
 
 			methods:{
 				addConferenceRoom(){
-					let msg1=false;
-					let msg2=false;
+					if(this.isRegistred){
+
+						if(this.idc!=null && this.idT!=null){
+						axios.get('http://localhost:8000/api/getConferenceRoom/'+this.idc).then(res=>{
+							if(res.data.message==true){
+								this.roomRegistred=true
+							}
+						}
+						);
+						axios.get('http://localhost:8000/api/getType/'+this.idT).then(res=>{
+							if(res.data.message==true){
+								this.typeRegistred=true
+							}
+						});
+						axios.post('http://localhost:8000/api/addEquipement',
+							{
+								label:this.equipement.label,
+								prix:this.equipement.prix,
+								conference_room_id:this.idc
+							},
+							{ headers: { Authorization: 'Bearer ' + localStorage.getItem('token') }}
+							).then(res=>{
+								this.idE=res.data.equipement
+							});
+							this.$toast.add({severity:'success', summary: 'Excellent', detail:'les information a été soumise avec succès', life: 3000});
+						}
+					  if(this.idE!=null && this.idc !=null){
+
+						axios.post('http://localhost:8000/api/addType',
+							{
+								label:this.type.label,
+								capacite:this.type.capacite,
+								disponibilite:this.type.disponibilite,
+								conference_room_id:this.idc
+							},
+							{ headers: { Authorization: 'Bearer ' + localStorage.getItem('token') }}
+							).then(resp=>{
+								this.idT=resp.data.type.id
+							});
+							this.$toast.add({severity:'success', summary: 'Excellent', detail:'les information a été soumise avec succès', life: 3000});
+						
+						}
+					if(this.idc!=null && this.idT!=null && this.idE!=null){
+						axios.get('http://localhost:8000/api/getEquipement/'+this.idE).then(res=>{
+							if(res.data.message==true){
+								this.equipementRegistred=true
+							}
+						});
+						axios.get('http://localhost:8000/api/getConferenceRoom/'+this.idc).then(res=>{
+							if(res.data.message==true){
+								this.roomRegistred=true
+							}
+						});
+						axios.get('http://localhost:8000/api/getType/'+this.idT).then(res=>{
+							if(res.data.message==true){
+								this.typeRegistred=true
+							}
+						});
+						this.$toast.add({severity:'success', summary: 'Excellent', detail:'les information a été soumise avec succès', life: 3000});
+					}
+					
+					}
+					
+					if(this.isRegistred==false){
+						let msg1=false;
+					    let msg2=false;
 					axios.post('http://localhost:8000/api/addConferenceRoom',
 					{
 						decoration:this.room.decoration,
@@ -140,19 +210,106 @@ import axios from 'axios';
 							);
 							if(msg1 && msg2){
 			            	this.$toast.add({severity:'success', summary: 'Excellent', detail:'les information a été soumise avec succès', life: 3000});
-
 							}
 						}else{
 							this.$toast.add({severity:'error', summary: "Message d'erreur", detail:'quelque chose est mal passé', life: 3000});
-
 						}
-					})
+					});
+					}
+					
 				},
-				clickPluss(){
-					this.pluss++
+				addWithPluss(){
+					
+					if(this.isRegistred==false){
+
+						axios.post('http://localhost:8000/api/addConferenceRoom',
+					{
+						decoration:this.room.decoration,
+						description:this.room.description,
+						prix:parseFloat(this.room.prix),
+						user_id:this.user.id
+					},
+					{ headers: { Authorization: 'Bearer ' + localStorage.getItem('token') }}
+					).then(res=>{
+						this.idc=res.data.conference_room.id
+						if(res){
+							axios.post('http://localhost:8000/api/addType',
+							{
+								label:this.type.label,
+								capacite:this.type.capacite,
+								disponibilite:this.type.disponibilite,
+								conference_room_id:this.idc
+							},
+							{ headers: { Authorization: 'Bearer ' + localStorage.getItem('token') }}
+							).then(resp=>{
+								this.idT=resp.data.type.id
+							});
+						}
+						});
+
+					}
+					
+					if(this.isRegistred){
+						axios.post('http://localhost:8000/api/addType',
+							{
+								label:this.type.label,
+								capacite:this.type.capacite,
+								disponibilite:this.type.disponibilite,
+								conference_room_id:this.idc
+							},
+							{ headers: { Authorization: 'Bearer ' + localStorage.getItem('token') }}
+							).then(res=>{
+								this.idT=res.data.type.id
+							}
+
+							);
+							
+					}
+					this.isRegistred=true
 				},
-				clickjPluss(){
-					this.jpluss++
+				addWithPlussEq(){
+					if(this.isRegistred==false){
+						
+						axios.post('http://localhost:8000/api/addConferenceRoom',
+					{
+						decoration:this.room.decoration,
+						description:this.room.description,
+						prix:parseFloat(this.room.prix),
+						user_id:this.user.id
+					},
+					{ headers: { Authorization: 'Bearer ' + localStorage.getItem('token') }}
+					).then(res=>{
+						this.idc=res.data.conference_room.id
+						if(res){
+							axios.post('http://localhost:8000/api/addEquipement',
+							{
+								label:this.equipement.label,
+								prix:this.equipement.prix,
+								conference_room_id:this.idc
+							},
+							{ headers: { Authorization: 'Bearer ' + localStorage.getItem('token') }}
+							).then(res=>{
+								this.idE=res.data.equipement
+							}
+							);
+						}
+					});
+
+					}
+					if(this.isRegistred){
+						axios.post('http://localhost:8000/api/addEquipement',
+							{
+								label:this.equipement.label,
+								prix:this.equipement.prix,
+								conference_room_id:this.idc
+							},
+							{ headers: { Authorization: 'Bearer ' + localStorage.getItem('token') }}
+							).then(res=>{
+								this.idE=res.data.equipement
+							}
+							);
+					}
+					this.isRegistred=true
 				}
 			}
 		
