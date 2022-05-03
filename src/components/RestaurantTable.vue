@@ -35,6 +35,16 @@
               {{ data.prix_reservation}} DT
 						</template>
 					</Column>
+					<Column  header="" >
+						<template #body="{data}">
+							<Button :value="data.id"  label="Modifier" class="p-button-rounded p-button-info mr-2 mb-2" />
+						</template>
+					</Column>
+					<Column  header="" >
+						<template #body="{data}">
+							<Button  @click="deleteRestaurant(data.id)" label="Supprimer" class="p-button-rounded p-button-danger mr-2 mb-2" />
+						</template>
+					</Column>
 					<template #expansion="{data}">
 						<div class="p-3">
 							<h5>Menu : {{data.menu.titre}}</h5>
@@ -64,8 +74,8 @@
 								</Column>
 								
 								<Column headerStyle="width:4rem">
-									<template #body>
-		                      		<Button :value="data.id" label="Supprimer" class="p-button-rounded p-button-danger mr-2 mb-2" />
+									<template #body="{data}">
+		                      		<Button  label="Supprimer" @click="deletePlat(data.id)"  class="p-button-rounded p-button-danger mr-2 mb-2" />
 									
 									</template>
 								</Column>
@@ -126,9 +136,23 @@
             this.table2.push(this.plats[i]);
           }
         })
-      }
-      
+	  },
+	  	async deleteRestaurant(id){
+			console.log("hi");
+			await axios.delete('http://localhost:8000/api/delete-Restaurant/'+id,
+			{ headers: { Authorization: 'Bearer ' + localStorage.getItem('token') }}
+			)
+		},
+		async deletePlat(id){
+			await axios.delete('http://localhost:8000/api/delete-Plat/'+id,
+			{ headers: { Authorization: 'Bearer ' + localStorage.getItem('token') }}
+			)
 		}
+      
+		},
+		
+		
+	
 	}
 </script>
 <style scoped>

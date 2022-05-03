@@ -42,7 +42,7 @@
                     </Column>
                     <Column header="" :filterMenuStyle="{'width':'14rem'}" style="min-width:12rem">
                         <template #body="{data}">
-                     		<Button :value="data.id" label="Supprimer" class="p-button-rounded p-button-danger mr-2 mb-2" />
+                     		<Button @click="deleteConferenceRoom(data.id)" label="Supprimer" class="p-button-rounded p-button-danger mr-2 mb-2" />
 
                         </template>
                     </Column>
@@ -105,8 +105,8 @@
 								</Column>
 								
 								<Column headerStyle="width:4rem">
-									<template #body>
-		                      		<Button :value="data.id" label="Supprimer" class="p-button-rounded p-button-danger mr-2 mb-2" />
+									<template #body="{data}">
+		                      		<Button @click="deleteType(data.id)" label="Supprimer" class="p-button-rounded p-button-danger mr-2 mb-2" />
 									
 									</template>
 								</Column>
@@ -166,8 +166,8 @@
 								</Column>
 								
 								<Column headerStyle="width:4rem">
-									<template #body>
-		                      		<Button :value="data.id" label="Supprimer" class="p-button-rounded p-button-danger mr-2 mb-2" />
+									<template #body={data}>
+		                      		<Button @click="deleteEquipement(data.id)" label="Supprimer" class="p-button-rounded p-button-danger mr-2 mb-2" />
 									
 									</template>
 								</Column>
@@ -248,7 +248,22 @@ import axios from 'axios';
             this.table3.push(this.equipements[i]);
           }
         })
-      }
+	  },
+	  async deleteConferenceRoom(id){
+		  await axios.delete('http://localhost:8000/api/delete-conference-room/'+id,
+		  { headers: { Authorization: 'Bearer ' + localStorage.getItem('token') }}
+		  )
+	  },
+	  async deleteType(id){
+		  await axios.delete('http://localhost:8000/api/delete-Type/'+id,
+		  { headers: { Authorization: 'Bearer ' + localStorage.getItem('token') }}
+		  )
+	  },
+	  async deleteEquipement(id){
+		  await axios.delete('http://localhost:8000/api/delete-equipement/'+id,
+		   { headers: { Authorization: 'Bearer ' + localStorage.getItem('token') }}
+		  )
+	  }
 		}
 	}
 </script>
