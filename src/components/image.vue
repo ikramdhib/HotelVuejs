@@ -4,8 +4,8 @@
             <div class="col-md-8">
                 <div class="card">
                    
-                    <form @submit="formSubmit" enctype="multipart/form-data">
-                            <input type="file" name="path" id="path" class="form-control" v-on:change="onChange">
+                    <form @submit="formSubmit"   method="post"   enctype="multipart/form-data">
+        	<input type="file" name="path" url="http://localhost:8000/api/image" id="path" class="form-control" v-on:change="onChange">
                             <button class="btn btn-primary btn-block">Upload</button>
                         </form>
                     </div>
@@ -24,26 +24,33 @@ import axios from 'axios';
               room_id:0,
             };
         },
-        methods: {
+      
+    methods: {
             onChange(e) {
-                this.path = e.target.files[0];
+              this.path = e.target.files[0];
                 console.log('<<data<<',this.path)
             },
-            formSubmit(e) {
-                e.preventDefault();
-                let existingObj = this;
+            formSubmit() {
+                
                 const config = {
                     headers: {
-                        'content-type': 'multipart/form-data'
+                        'content-type':`multipart/form-data`
                     }
                 }
-                
+                this.room_id=parseInt(localStorage.getItem('room_id'));
                 let data = new FormData();
-                data.append('path', this.path);
-                data.append(localStorage.getItem('room_id'),this.room_id);
-                axios.post('http://localhost:8000/api/image', data, config)
+                
+        
+             data.append("room_id", this.room_id);
+           data.append('path',this.path);
+
+
+             
+                axios.post('http://localhost:8000/api/image', data,
+                 config)
                    .then(res=>{
-                        existingObj.success = res.data.file.path;
+                      let response = res.data.file.path;
+                      console.log(response);
                     })
                    
             }

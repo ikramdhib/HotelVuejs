@@ -107,8 +107,6 @@
 </template>
 <script>
 import axios from "axios";
-
-
 export default {
   data() {
     return {
@@ -127,15 +125,12 @@ export default {
     }
   },
     
-
  
   mounted() {
    this.getOption();
   
   },
   
-
-
   methods: {
   async getOption(){
  await axios
@@ -150,14 +145,12 @@ export default {
       })
       .catch((error) =>{ console.log(error)
       });},
-
       async delete_option(id){
       await axios
       .delete("http://127.0.0.1:8000/api/option/"+id, {
         headers: { Authorization: "Bearer " + localStorage.getItem("token") },
       })
       .then((res) => {
-
            console.log(res.data);
            this.getOption();
       })},

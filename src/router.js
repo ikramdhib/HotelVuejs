@@ -53,7 +53,9 @@ const routes = [
         } else {
           next();
         }
-      }},{
+      }},
+      
+      {
     path: '/Spa',
     name: 'Spa',
     component: () => import('./components/AddSpa.vue'),
