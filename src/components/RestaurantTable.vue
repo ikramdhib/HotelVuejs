@@ -37,7 +37,7 @@
 					</Column>
 					<Column  header="" >
 						<template #body="{data}">
-							<Button :value="data.id"  label="Modifier" class="p-button-rounded p-button-info mr-2 mb-2" />
+							<Button  @click="goUpdateRestaurant(data.id)"  label="Modifier" class="p-button-rounded p-button-info mr-2 mb-2" />
 						</template>
 					</Column>
 					<Column  header="" >
@@ -53,7 +53,7 @@
 								<Column  header="Intitulé"  >
 								
 									<template #body="{data}">
-										{{data.intitule}}
+										{{data.intitule}} 
 									</template>
 								</Column>
 								<Column  header="Le plat" >
@@ -68,7 +68,7 @@
 								</Column>
 								<Column  header="" >
 									<template #body="{data}" >
-			               	<Button :value="data.id"  label="Modifier" class="p-button-rounded p-button-info mr-2 mb-2" />
+			               	<Button @click="goUpdatePlat(data.id)"  label="Modifier" class="p-button-rounded p-button-info mr-2 mb-2" />
 										
 									</template>
 								</Column>
@@ -138,7 +138,6 @@
         })
 	  },
 	  	async deleteRestaurant(id){
-			console.log("hi");
 			await axios.delete('http://localhost:8000/api/delete-Restaurant/'+id,
 			{ headers: { Authorization: 'Bearer ' + localStorage.getItem('token') }}
 			)
@@ -147,9 +146,16 @@
 			await axios.delete('http://localhost:8000/api/delete-Plat/'+id,
 			{ headers: { Authorization: 'Bearer ' + localStorage.getItem('token') }}
 			)
+		},
+		goUpdateRestaurant(id){
+			this.$router.push({name:'restaurantupdate', params:{id:id}});
+		},
+
+		goUpdatePlat(id){
+			this.$router.push({name:'platupdate', params:{id:id}});
 		}
       
-		},
+		}
 		
 		
 	

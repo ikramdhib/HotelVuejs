@@ -84,7 +84,8 @@ import axios from 'axios';
 				room:{
 					prix:"",
 					description:"",
-					decoration:""
+					decoration:"",
+					disponibilite:true
 				},
 				type:{
 					label:"",
@@ -93,7 +94,8 @@ import axios from 'axios';
 				},
 				equipement:{
 					label:"",
-					prix:""
+					prix:"",
+					disponibilite:true,
 				},
 				dropdownValues: [
 					'CAREES',
@@ -129,6 +131,7 @@ import axios from 'axios';
 							{
 								label:this.equipement.label,
 								prix:this.equipement.prix,
+								disponibilite:this.equipement.disponibilite,
 								conference_room_id:this.idc
 							},
 							{ headers: { Authorization: 'Bearer ' + localStorage.getItem('token') }}
@@ -182,7 +185,8 @@ import axios from 'axios';
 						decoration:this.room.decoration,
 						description:this.room.description,
 						prix:parseFloat(this.room.prix),
-						user_id:this.user.id
+						user_id:this.user.id,
+						disponibilite:this.room.disponibilite
 					},
 					{ headers: { Authorization: 'Bearer ' + localStorage.getItem('token') }}
 					).then(res=>{
@@ -202,6 +206,7 @@ import axios from 'axios';
 							{
 								label:this.equipement.label,
 								prix:this.equipement.prix,
+								disponibilite:this.equipement.disponibilite,
 								conference_room_id:res.data.conference_room.id
 							},
 							{ headers: { Authorization: 'Bearer ' + localStorage.getItem('token') }}
@@ -227,6 +232,7 @@ import axios from 'axios';
 						decoration:this.room.decoration,
 						description:this.room.description,
 						prix:parseFloat(this.room.prix),
+						disponibilite:this.room.disponibilite,
 						user_id:this.user.id
 					},
 					{ headers: { Authorization: 'Bearer ' + localStorage.getItem('token') }}
@@ -275,7 +281,8 @@ import axios from 'axios';
 						decoration:this.room.decoration,
 						description:this.room.description,
 						prix:parseFloat(this.room.prix),
-						user_id:this.user.id
+						user_id:this.user.id,
+						disponibilite:this.room.disponibilite
 					},
 					{ headers: { Authorization: 'Bearer ' + localStorage.getItem('token') }}
 					).then(res=>{
@@ -285,6 +292,7 @@ import axios from 'axios';
 							{
 								label:this.equipement.label,
 								prix:this.equipement.prix,
+								disponibilite:this.equipement.disponibilite,
 								conference_room_id:this.idc
 							},
 							{ headers: { Authorization: 'Bearer ' + localStorage.getItem('token') }}
@@ -301,6 +309,7 @@ import axios from 'axios';
 							{
 								label:this.equipement.label,
 								prix:this.equipement.prix,
+								disponibilite:this.equipement.disponibilite,
 								conference_room_id:this.idc
 							},
 							{ headers: { Authorization: 'Bearer ' + localStorage.getItem('token') }}

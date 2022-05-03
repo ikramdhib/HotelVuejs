@@ -34,9 +34,14 @@
                             <span style="margin-left: .5em; vertical-align: middle" class="image-text">{{data.prix}} DT</span>
                         </template>
                     </Column>
+					<Column  header="Disponibilité" >
+						<template #body="{data}"> 
+						  <i class="pi" :class="{'text-green-500 pi-check-circle': data.disponibilite=='1' , 'text-pink-500 pi-times-circle': data.disponibilite=='0'}"></i>
+						</template>
+						</Column>
                     <Column header=""   style="min-width:10rem">
                         <template #body="{data}">
-                       	<Button :value="data.id"  label="Modifier" class="p-button-rounded p-button-info mr-2 mb-2" />
+                       	<Button @click="goUpdateRoom(data.id)"  label="Modifier" class="p-button-rounded p-button-info mr-2 mb-2" />
 
                         </template>
                     </Column>
@@ -52,7 +57,7 @@
 
       <div class="card">
         <h4>Les type des salles de conferences</h4>
-        <DataTable :value="table2" v-model:expandedRows="expandedRows" dataKey="id" responsiveLayout="scroll">
+        <DataTable :value="table2" v-model:expandedRows="expandedRows1" dataKey="id" responsiveLayout="scroll">
 					<template #header>
 						<div>
 							<Button icon="pi pi-plus" label="Expand All" @click="expandAll" class="mr-2 mb-2" />
@@ -73,7 +78,7 @@
 					</Column>
 					<Column  header="Prix de résérvation" >
 						<template #body="{data}">
-              {{ data.prix}} DT
+ 							{{ data.prix}} DT
 						</template>
 					</Column>
 					<template  #expansion="{data}">
@@ -94,12 +99,12 @@
 								</Column>
 								<Column  header="Disponibilité" >
 									<template #body="{data}"> 
-										{{ data.disponibilite}}
+										  <i class="pi" :class="{'text-green-500 pi-check-circle': data.disponibilite=='1' , 'text-pink-500 pi-times-circle': data.disponibilite=='0'}"></i>
 									</template>
 								</Column>
 								<Column  header="" >
 									<template #body="{data}" >
-			               	<Button :value="data.id"  label="Modifier" class="p-button-rounded p-button-info mr-2 mb-2" />
+			               	<Button @click="goUpdateType(data.id)"  label="Modifier" class="p-button-rounded p-button-info mr-2 mb-2" />
 										
 									</template>
 								</Column>
@@ -118,11 +123,11 @@
 
       <div class="card">
         <h4 >Les equipements disponibles pour chaque salle</h4>
-        <DataTable :value="table3" v-model:expandedRows="expandedRows" dataKey="id" responsiveLayout="scroll">
+        <DataTable :value="table3" v-model:expandedRows="expandedRows2" dataKey="id" responsiveLayout="scroll">
 					<template #header>
 						<div>
 							<Button icon="pi pi-plus" label="Expand All" @click="expandAll2" class="mr-2 mb-2" />
-							<Button icon="pi pi-minus" label="Collapse All" @click="collapseAll" class="mb-2" />
+							<Button icon="pi pi-minus" label="Collapse All" @click="collapseAll2" class="mb-2" />
 						</div>
 					</template>
 					<Column :expander="true" headerStyle="width: 3rem" />
@@ -144,7 +149,7 @@
 					</Column>
 					<template  #expansion="{data}">
 						<div class="p-3">
-							<h5> Les Types pour cette Salle</h5>
+							<h5> Les Equipements pour cette Salle</h5>
 							<DataTable :value="data.equipements" responsiveLayout="scroll" >
 								
 								<Column  header="L'equipement"  >
@@ -158,9 +163,14 @@
 										{{data.prix}} DT
 									</template>
 								</Column>
+									<Column  header="Disponibilité" >
+									<template #body="{data}"> 
+										  <i class="pi" :class="{'text-green-500 pi-check-circle': data.disponibilite=='1' , 'text-pink-500 pi-times-circle': data.disponibilite=='0'}"></i>
+									</template>
+								</Column>
 								<Column  header="" >
 									<template #body="{data}" >
-			               	<Button :value="data.id"  label="Modifier" class="p-button-rounded p-button-info mr-2 mb-2" />
+			               	<Button @click="goUpdateEquipement(data.id)"  label="Modifier" class="p-button-rounded p-button-info mr-2 mb-2" />
 										
 									</template>
 								</Column>
@@ -192,7 +202,8 @@ import axios from 'axios';
         rooms:[],
         types:[],
         equipements:[],
-				expandedRows: [],
+				expandedRows1: [],
+				expandedRows2: [],
 			}
 		},
 		customerService: null,
@@ -210,14 +221,17 @@ import axios from 'axios';
 		methods: {
       
 		expandAll2() {
-				this.expandedRows = this.table3.filter(p => p.id);
+				this.expandedRows2 = this.table3;
 			},
 			
 			expandAll() {
-				this.expandedRows = this.table2.filter(p => p.id);
+				this.expandedRows1 = this.table2;
 			},
 			collapseAll() {
-				this.expandedRows = null;
+				this.expandedRows1 = null;
+			},
+			collapseAll2() {
+				this.expandedRows2 = null;
 			},
       
       async getAllRooms(){
@@ -263,6 +277,15 @@ import axios from 'axios';
 		  await axios.delete('http://localhost:8000/api/delete-equipement/'+id,
 		   { headers: { Authorization: 'Bearer ' + localStorage.getItem('token') }}
 		  )
+	  },
+	  goUpdateEquipement(id){
+		  this.$router.push({name:'equipementupdate' , params:{id:id}})
+	  },
+	  goUpdateType(id){
+		  this.$router.push({name:'typeupdate' , params:{id:id}})
+	  },
+	  goUpdateRoom(id){
+		   this.$router.push({name:'conferenceroomupdate' , params:{id:id}})
 	  }
 		}
 	}

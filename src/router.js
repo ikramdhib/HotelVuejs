@@ -651,7 +651,66 @@ const routes = [
       }
     }
 },
-   
+{
+  path: '/equipementupdate:id',
+  name: 'equipementupdate',
+ component: () => import('./components/EquipementUpdate.vue'),
+  beforeEnter: (to, from, next) => {
+      if (!localStorage.getItem("token")) {
+        next("login");
+      } else {
+        next();
+      }
+    }
+},
+{
+  path: '/typeupdate:id',
+  name: 'typeupdate',
+ component: () => import('./components/TypeUpdate.vue'),
+  beforeEnter: (to, from, next) => {
+      if (!localStorage.getItem("token")) {
+        next("login");
+      } else {
+        next();
+      }
+    }
+},
+{
+  path: '/conferenceroomupdate:id',
+  name: 'conferenceroomupdate',
+ component: () => import('./components/ConferenceRoomUpdate.vue'),
+  beforeEnter: (to, from, next) => {
+      if (!localStorage.getItem("token")) {
+        next("login");
+      } else {
+        next();
+      }
+    }
+},
+{
+  path: '/restaurantupdate:id',
+  name: 'restaurantupdate',
+ component: () => import('./components/RestaurantUpdate.vue'),
+  beforeEnter: (to, from, next) => {
+      if (!localStorage.getItem("token")) {
+        next("login");
+      } else {
+        next();
+      }
+    }
+},
+{
+  path: '/platupdate:id',
+  name: 'platupdate',
+ component: () => import('./components/PlatUpdate.vue'),
+  beforeEnter: (to, from, next) => {
+      if (!localStorage.getItem("token")) {
+        next("login");
+      } else {
+        next();
+      }
+    }
+},
 ];
 
 const router = createRouter({
