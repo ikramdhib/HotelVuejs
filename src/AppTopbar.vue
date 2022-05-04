@@ -18,7 +18,7 @@
 			
 					<li> 
 				<div v-on:click="isActiv = !isActiv">
-    <Button id="btn" class="  mr-2 mb-2" >
+    <Button  class="p-button-text p-button-plain p-button-rounded " >
     <i class="pi pi-bell"  id="icon" >  <Badge v-if=" unreadnotifications.length >0" :value="unreadnotifications.length" severity="danger" class="mr-2"></Badge></i>
 	</Button>
    
@@ -57,7 +57,7 @@
                     </p>
                 </a>
             </div>
-            <a id="border" href="#" class="block bg-gray-800 text-white text-center font-bold py-2">See all notifications</a>
+            <router-link id="border" to="notifications" class="block bg-gray-800 text-white text-center font-bold py-2">See all notifications</router-link>
         </div>
         </div>
 </div>
