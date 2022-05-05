@@ -34,9 +34,9 @@
 
         <div id="border" x-show="dropdownOpen" class="absolute right-0 mt-2 bg-white rounded-md shadow-lg overflow-hidden z-20" style="width:20rem;">
 			<div v-show="unreadnotifications.length > 0" class="py-2">
-                <a v-for="(unread , index) in unreadnotifications" :key="index" href="#" class="flex items-center px-4 py-3 border-b hover:bg-gray-100 -mx-2">
+                <a  class="flex items-center px-4 py-3 border-b hover:bg-gray-100 -mx-2">
                     <p class="text-gray-600 text-sm mx-2">
-                          <span class="font-bold text-blue-500" href="#"  @click="markAsRead">Tout marquer comme lu !</span> 
+                          <span class="font-bold text-blue-500" href=""  @click="markAsRead">Tout marquer comme lu !</span> 
 						
                     </p>
                 </a>
@@ -44,7 +44,8 @@
             <div id="border" class="py-2">
                 <a v-for="(unread , index) in unreadnotifications" :key="index" href="#" class="flex items-center px-4 py-3 border-b hover:bg-gray-100 -mx-2">
                     <p class="text-gray-600 text-sm mx-2">
-                        <span class="font-bold" href="#">{{ unread.data.user_firstname }} {{ unread.data.user_lastname }}</span> fait une {{ unread.data.room }} <span class="font-bold text-blue-500" href="#">Upload Image</span> 
+                        <span class="font-bold" href="#">{{ unread.data.user_firstname }} {{ unread.data.user_lastname }}</span> fait une résérvation sur la chambre <span class="text-900 line-height-3"> {{ unread.data.booking_status.num_room }} </span> l'Etage  <span class="text-900 line-height-3">{{ unread.data.booking_status.numEtage }}</span> de <span class="text-blue-500"> {{ unread.data.room.start}} </span>  à <span class="text-blue-500"> {{ unread.data.room.end}}</span>
+
 						{{ $moment(unread.created_at).fromNow() }}
                     </p>
                 </a>
@@ -124,9 +125,9 @@ data: function () {
         }
 	},
 	mounted(){
-		/*this.interval= setInterval(function(){
+		//this.interval= setInterval(function(){
 			this.getNotification()
-		}.bind(this), 500);*/
+		//}.bind(this), 500);
 	},
     methods: {
         onMenuToggle(event) {
