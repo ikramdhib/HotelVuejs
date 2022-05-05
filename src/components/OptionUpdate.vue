@@ -57,15 +57,15 @@ export default {
         },
 		mounted(){
 			 const id=this.$route.params.id;
-     axios.get("http://127.0.0.1:8000/api/user/option/"+id, {
+     axios.get("http://127.0.0.1:8000/api/option/"+id, {
         headers: { Authorization: "Bearer " + localStorage.getItem("token") },
       })
       .then((res) => {
        
-       this.option.nom_option=res.data.data.nom_option;
-        this.option.price_option=res.data.data.price_option;
-         this.option.avaibility=res.data.data.avaibility;
-        let room=  this.option.room_id=res.data.data.room_id
+       this.option.nom_option=res.data.option.nom_option;
+        this.option.price_option=res.data.option.price_option;
+         this.option.avaibility=res.data.option.avaibility;
+        let room=  this.option.room_id=res.data.option.room_id
       localStorage.setItem("ro",room);
        console.log(res.data);
          
@@ -77,7 +77,7 @@ export default {
 			 async updateOption() {
 				 const id=this.$route.params.id;
 			await axios
-			    .put('http://localhost:8000/api/user/option/'+id,
+			    .put('http://localhost:8000/api/option/'+id,
 				{avaibility:this.option.avaibility,
                 price_option:this.option.price_option,
                 nom_option:this.option.nom_option,
@@ -86,10 +86,11 @@ export default {
 				{ headers: { Authorization: 'Bearer ' + localStorage.getItem('token')}}
 				).then(res=>{
 		
-					console.log(this.headers);
-				     let response = res.data.data;
-					 console.log(response);
-					  this.$router.push('TableOption');
+					if(res.data.data){
+							this.$toast.add({severity:'success', summary: 'Excellent', detail:'les information a été soumise avec succès', life: 3000});
+						}else{
+							this.$toast.add({severity:'error', summary: "Message d'erreur", detail:'quelque chose est mal passé', life: 3000});
+						}
 			         
 					 
 			})}}}

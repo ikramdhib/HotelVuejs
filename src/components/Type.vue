@@ -51,7 +51,7 @@ export default {
 				{ headers: {Authorization: 'Bearer ' + localStorage.getItem('token')}}
 				).then(res=>{
 					console.log(this.headers);
-				     let response = res.data;
+				     let response = res.data.type;
 					 console.log(response)
 			         this.$router.push("TableType")
 					 

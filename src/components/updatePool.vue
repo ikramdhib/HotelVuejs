@@ -78,11 +78,11 @@ export default {
         headers: { Authorization: "Bearer " + localStorage.getItem("token") },
       })
       .then((res) => {
-      this.pool.avaibility=res.data.data.avaibility,
-                this.pool.description=res.data.data.description,
-                this.pool.title=res.data.data.title,
-				this.pool.capacite=res.data.data.capacite,
-				this.pool.prix_reservation=res.data.data.prix_reservation
+      this.pool.avaibility=res.data.pool.avaibility,
+                this.pool.description=res.data.pool.description,
+                this.pool.title=res.data.pool.title,
+				this.pool.capacite=res.data.pool.capacite,
+				this.pool.prix_reservation=res.data.pool.prix_reservation
 			
      
    
@@ -108,10 +108,11 @@ export default {
 				},
 				{ headers: { Authorization: 'Bearer ' + localStorage.getItem('token')}}
 				).then(res=>{
-					console.log(this.headers);
-				     let response = res.data;
-					 console.log(response)
-					  this.$router.push('TablePool');
+					if(res){
+							this.$toast.add({severity:'success', summary: 'Excellent', detail:'les information a été soumise avec succès', life: 3000});
+						}else{
+							this.$toast.add({severity:'error', summary: "Message d'erreur", detail:'quelque chose est mal passé', life: 3000});
+						}
 					 
 					 
 			         

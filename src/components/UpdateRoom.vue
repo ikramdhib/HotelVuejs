@@ -57,6 +57,10 @@
 						<InputText id="prix1" type="text" v-model="price.price_hotel" />
 					</div>
 					<div class="field col-12 md:col-3">
+						<label for="nb-B">Nombre bebe</label>
+						<InputText id="nb-B" type="number" min="0" v-model="room.nbbebe"/>
+					</div>
+					<div class="field col-12 md:col-3">
 						<label for="prix2">prix_booking1</label>
 						<InputText id="prix2" type="text" v-model="price.price_booking1"/>
 					</div>
@@ -69,7 +73,7 @@
 						<InputText id="prix4" type="text" v-model="price.price_booking3"/>
 					</div>
 	               <div class="field col-12 md:col-3">
-					<Button label="Ajouter"  @click="updateroom();updatePrice()" ></Button>
+					<Button label="Ajouter"  @click="updateroom()" ></Button>
 		</div>
 		</div>
 			</div>
@@ -85,11 +89,12 @@ import axios from 'axios';
 		data() {
 			return {
 				
+			 user_id:0,	
 			price:{
-				price_hotel:0,
-				price_booking1:0,
-				price_booking2:0,
-                price_booking3:0,
+				price_hotel:"",
+				price_booking1:"",
+				price_booking2:"",
+                price_booking3:"",
 			},
 				types:[],
 				type:{type_id:0},
@@ -124,14 +129,19 @@ import axios from 'axios';
       })
       .then((res) => {
        
-          this.room.nbBed=res.data.data.nbBed;
-          this.room.description=res.data.data.description;
-          this.room.num_room=res.data.data.num_room;
-          this.room.numEtage=res.data.data.numEtage;
-          this.room.nbAdult=res.data.data.nbAdult;
-          this.room.nbEnfant=res.data.data.nbEnfant;
-          this.room.avaibility=res.data.data.avaibility;
-           let pric=  this.room.price_id=res.data.data.price_id
+          this.room.nbBed=res.data.room.nbBed;
+          this.room.description=res.data.room.description;
+          this.room.num_room=res.data.room.num_room;
+          this.room.numEtage=res.data.room.numEtage;
+          this.room.nbAdult=res.data.room.nbAdult;
+          this.room.nbEnfant=res.data.room.nbEnfant;
+          this.room.avaibility=res.data.room.avaibility;
+          this.room.nbbebe=res.data.room.nbbebe;
+
+		 this.room.type_id=res.data.room.type_id;
+           let pric=  this.room.price_id=res.data.data.price_id;
+		  
+
       localStorage.setItem("r",pric);
                
 				
@@ -144,10 +154,10 @@ import axios from 'axios';
       })
       .then((res) => {
        
-          this.price.price_hotel=res.data.data.price_hotel;
-          this.price.price_booking1=res.data.data.price_booking1;
-          this.price.price_booking2=res.data.data.price_booking2;
-          this.price.price_booking3=res.data.data.price_booking3;
+          this.price.price_hotel=res.data.price.price_hotel;
+          this.price.price_booking1=res.data.price.price_booking1;
+          this.price.price_booking2=res.data.price.price_booking2;
+          this.price.price_booking3=res.data.price.price_booking3;
        })
         axios.get("http://127.0.0.1:8000/api/type/"+id, {
         headers: { Authorization: "Bearer " + localStorage.getItem("token") },
@@ -162,11 +172,12 @@ import axios from 'axios';
 		 methods: {	
 		 
 			 async gettype(){
-            await axios.get('http://localhost:8000/api/user/type/',
+            await axios.get('http://localhost:8000/api/type',
             { headers: { Authorization: 'Bearer ' + localStorage.getItem('token') }
         }).then(res=>{
 
-           this.types = res.data.data;
+           this.types = res.data.type;
+		    this.types.nom_type=res.data.type.nom_type;
 		   let type_id=sessionStorage.getItem(type_id);
 		
 		   console.log(res);
@@ -174,29 +185,28 @@ import axios from 'axios';
           
         })
 			
-		} ,  async updatePrice() {
-		
+		} ,  async updateroom() {
+		 const id1=this.$route.params.id;
+		  const id2=this.$route.params.id;
 			 await axios
-			 
-			    .put('http://localhost:8000/api/user/price/'+id,
-				{price_booking1:this.price.price_booking1,
-                price_booking2:this.price.price_booking2,
-                price_booking3:this.price.price_booking3,
-				price_hotel:this.price.price_hotel,
-				},
+			  
+			    .put('http://localhost:8000/api/price/'+id1,
+			{price_booking1:parseFloat(this.price.price_booking1),
+                price_booking2:parseFloat(this.price.price_booking2),
+                price_booking3:parseFloat(this.price.price_booking3),
+				price_hotel:parseFloat(this.price.price_hotel),},
 				{ headers: { Authorization: 'Bearer ' + localStorage.getItem('token')}}
 				).then(res=>{
 					 	
 				     let response = res.data.data.id
 					localStorage.setItem('price_id', response);
 					  
-					 console.log(response)})},
-					 
-			   async updateroom(){
-                   const id1=this.$route.params.id;
+					 console.log(response)}),
+		
+			   
 			 await axios
 			
-			    .put('http://localhost:8000/api/user/room/'+id1,
+			    .put('http://localhost:8000/api/room/'+id2,
 				{nbBed:this.room.nbBed,
                 description:this.room.description,
 				num_room:this.room.num_room,
@@ -204,9 +214,11 @@ import axios from 'axios';
 				nbAdult:this.room.nbAdult,
                 nbEnfant:this.room.nbEnfant,
                 avaibility:this.room.avaibility,
+				 nbbebe:this.room.nbbebe,
 				type_id:this.types.type_id.id,
 				price_id:(localStorage.getItem('r')),
-				
+					user_id:this.user.id,
+			 
 			 
 				
 				},{ headers: { Authorization: 'Bearer ' + localStorage.getItem('token')}}
