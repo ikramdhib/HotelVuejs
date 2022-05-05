@@ -2,24 +2,24 @@
      <div class="col-12">
 	    <div class="card">
 		
-				<h5>Type</h5>
+				<h4> Ajouter Type</h4>
 				<div class="p-fluid formgrid grid">
 					
-             <div class="field col-12 md:col-6">
+             <div class="field col-12 md:col-3">
 						<label for="nom">nom_type</label>
 					<InputText id="nom" type="text" v-model="type.nom_type"/>
 					</div>
-					<div class="field col-12 md:col-6">
-						<label for="prix">prix_type</label>
-						<InputText id="prix" type="text" v-model="type.price_Type"/>
-					</div>
-                     <div class="field col-12 md:col-3">
-						<label for="desc">discription</label>
+				
+                     <div class="field col-9">
+						<label for="desc">description</label>
 						<Textarea id="desc" rows="4" cols="60" v-model="type.intitule"/>
 					</div>
 					</div>
+					 <div class="field col-12 md:col-3">
+					<Button label="Ajouter"  @click="addType()" ></Button>
+		</div>
 					
-				<Button label="ajouter" @click="addType()" class="p-button-secondary mr-2 mb-2" />
+			
                             
          
 	
@@ -35,7 +35,7 @@ export default {
             return {
                 type: {
 					nom_type:"",
-					price_Type:0,
+					
 					intitule:"",
 					
 				}
@@ -46,14 +46,16 @@ export default {
 			 async addType() {
 			 await axios
 			    .post('http://localhost:8000/api/type',{nom_type:this.type.nom_type,
-				price_Type:this.type.price_Type,
 				intitule:this.type.intitule},
 				{ headers: {Authorization: 'Bearer ' + localStorage.getItem('token')}}
 				).then(res=>{
-					console.log(this.headers);
-				     let response = res.data.type;
-					 console.log(response)
-			         this.$router.push("TableType")
+				
+						if(res){
+							this.$toast.add({severity:'success', summary: 'Excellent', detail:'les information a été soumise avec succès', life: 3000});
+						}else{
+							this.$toast.add({severity:'error', summary: "Message d'erreur", detail:'quelque chose est mal passé', life: 3000});
+						}
+			       
 					 
 			})}}}
         </script>

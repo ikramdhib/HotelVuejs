@@ -73,6 +73,13 @@
 						<label for="prix4">prix_booking3</label>
 						<InputText id="prix4" type="text" v-model="price.price_booking3"/>
 					</div>
+					<div class="field col-12 md:col-6">
+						<label for="prix4">Choisir des image :</label>
+						<span class="p-input-icon-left">
+							<i class="pi pi-folder-open" />
+							<InputText  type="file" multiple @change="changeFile"/>
+						</span>
+					</div>
 	               <div class="field col-12 md:col-3">
 					<Button label="Ajouter"  @click="addroom();addPrice()" ></Button>
 		</div>
@@ -112,7 +119,8 @@ import axios from 'axios';
               
               
 				},
-				
+					image:[],
+                form: new FormData,
 
 		};
           
@@ -134,6 +142,19 @@ import axios from 'axios';
 		
      
 		 methods: {	
+			 	changeFile(e){
+
+              let selectedFiles=e.target.files
+              if(!selectedFiles.length){
+                  return false
+              }
+
+              for(let i=0 ;i<selectedFiles.length ;i++ ){
+                  this.image.push(selectedFiles[i])
+              }
+            
+              
+           },
 		
 			 async gettype(){
             await axios.get('http://localhost:8000/api/type',
@@ -190,18 +211,28 @@ import axios from 'axios';
 					
 					 //localStorage.setItem("room_id", id);
 				     let response = res.data.data.id;
-			
-					 console.log(response);
-                        id =response
+		                         id =response
 					 localStorage.setItem("room_id", id);
-					 this.$router.push('option');
-			      
-					 
+
+					
+			      	for(let i=0 ;i<this.image.length;i++){
+							this.form.append('path',this.image[i])
+							this.form.append('room_id',res.data.data.id)
+
+							const config= {headers:{'Content-Type':'multipart/form-data',
+							Authorization: 'Bearer ' + localStorage.getItem('token') }};
+							axios.post('http://localhost:8000/api/images',this.form,config)
+							}
+						if(res){
+			            	this.$toast.add({severity:'success', summary: 'Excellent', detail:'les information a été soumise avec succès', life: 3000});
+			          
+						}else{
+							this.$toast.add({severity:'error', summary: "Message d'erreur", detail:'quelque chose est mal passé', life: 3000});
+						}
+					  this.$router.push('option');
 				})
-				.catch(function (error) {
-              console.log(error);
-                      });},}
-			
+				}
+		 }
 				
 			};
 	

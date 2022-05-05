@@ -54,7 +54,15 @@ export default {
                                 },
                                 {
                                     label: 'Les chambres', icon: 'pi pi-list', 
-                                    to:'TableRoom'
+                                    to:'RoomTable'
+                                },
+                                 {
+                                    label: 'Ajouter type chambre', icon: 'pi pi-plus',
+                                    to:'type'
+                                },
+                                {
+                                    label: 'Les types', icon: 'pi pi-list', 
+                                    to:'TypeTable'
                                 }
                             ]
                         },
@@ -93,7 +101,7 @@ export default {
                                 },
                                 {
                                     label: 'Les SPAs', icon: 'pi pi-list',
-                                    to:''
+                                    to:'SpaTable'
                                 }
                             ]
                         },
@@ -106,7 +114,7 @@ export default {
                                 },
                                 {
                                     label: 'Les Pools', icon: 'pi pi-list',
-                                    to:''
+                                    to:'poolTable'
                                 }
                             ]
                         },

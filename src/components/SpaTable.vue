@@ -43,7 +43,7 @@
 										
 									</template>
 								</Column>
-                    <Column  header="capacité"  bodyClass="text-center" style="min-width:8rem">
+                    <Column  header=""  bodyClass="text-center" style="min-width:8rem">
                         <template #body="{data}">
 		                      		<Button :value="data.id"  @click="openConfirmation" label="Supprimer" style="width: auto" class="p-button-rounded p-button-danger mr-2 mb-2" />
                               <Dialog header="Confirmation" v-model:visible="displayConfirmation" :style="{width: '350px'}" :modal="true">
