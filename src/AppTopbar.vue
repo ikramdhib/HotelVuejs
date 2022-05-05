@@ -18,16 +18,10 @@
 			
 					<li> 
 				<div v-on:click="isActiv = !isActiv">
-    <button
-      class="flex bg-white text-sm border-2 p-link layout-topbar-button border-transparent rounded-full focus:outline-none focus:border-white transition duration-150 "
-      id="user-menu"
-      aria-label="User menu"
-      aria-haspopup="true"
-	  
-    >
-    <i class="pi pi-bell"   >  <Badge :value="2" class="mr-2" id="badge"></Badge></i>
-	<span>  {{ unreadnotifications.length }} </span>
-    </button>
+    <Button  class="p-button-text p-button-plain p-button-rounded " >
+    <i class="pi pi-bell"  id="icon" >  <Badge v-if=" unreadnotifications.length >0" :value="unreadnotifications.length" severity="danger" class="mr-2"></Badge></i>
+	</Button>
+   
   </div>
     <div v-show="isActiv" class="origin-top-left absolute  mt-2 w-1 rounded-md shadow-lg">
     <div
@@ -63,14 +57,14 @@
                     </p>
                 </a>
             </div>
-            <a id="border" href="#" class="block bg-gray-800 text-white text-center font-bold py-2">See all notifications</a>
+            <router-link id="border" to="notifications" class="block bg-gray-800 text-white text-center font-bold py-2">See all notifications</router-link>
         </div>
         </div>
 </div>
 			</li>
 			
 			<li>
-				<button class="p-link layout-topbar-button">
+				<button @click="goCalender()" class="p-link layout-topbar-button">
 					<i class="pi pi-calendar"></i>
 					<span>Events</span>
 				</button>
@@ -179,6 +173,9 @@ data: function () {
 				console.log(res);
 				location.reload();
 			})
+		},
+		goCalender(){
+			this.$router.push('calendrier')
 		}
     },
 	computed: {
@@ -197,5 +194,15 @@ data: function () {
 #border{
 	border-radius: 0.5rem;
 	filter: drop-shadow(0 10px 8px rgb(0 0 0 / 0.04)) drop-shadow(0 4px 3px rgb(0 0 0 / 0.1));
+}
+#btn{
+	background-color:transparent;
+	color:grey;
+	border-color: transparent;
+	border-radius: 100%;
+	margin-left: 40px;
+}
+#icon{
+	font-size: 23px;
 }
 </style>

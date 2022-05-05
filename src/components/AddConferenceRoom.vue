@@ -50,19 +50,23 @@
 					</div>
 			 </div>
 			 <div class="p-fluid formgrid grid">
-					<div class="field col-12 md:col-12">
+					<div class="field col-12 md:col-6">
 						<label for="prix4">Choisir des image :</label>
-						<FileUpload name="file" url="" ref="file" @upload="onUpload" @change="selectFile" :multiple="true" accept="image/png, image/jpeg" :maxFileSize="1000000"/>
+						<span class="p-input-icon-left">
+							<i class="pi pi-folder-open" />
+							<InputText type="file" multiple @change="changeFile"/>
+						</span>
 					</div>
-		
-	      <div class="field col-12 md:col-3">
+			 </div>
+			  <div class="p-fluid formgrid grid">
+	      <div class="field col-12 md:col-3 py-4">
 			   <Toast />
 			<Button label="Ajouter" @click="addConferenceRoom()"></Button>
 		</div>
 			</div>
 		</div>
-			</div>
 		</div>
+			</div>
 </template>
 
 <script>
@@ -84,7 +88,8 @@ import axios from 'axios';
 				room:{
 					prix:"",
 					description:"",
-					decoration:""
+					decoration:"",
+					disponibilite:true
 				},
 				type:{
 					label:"",
@@ -93,13 +98,16 @@ import axios from 'axios';
 				},
 				equipement:{
 					label:"",
-					prix:""
+					prix:"",
+					disponibilite:true,
 				},
 				dropdownValues: [
 					'CAREES',
 				'OVAL',
 				     'NORMALE'
-				]
+				],
+				 image:[],
+                form: new FormData,
 		}
           
 		
@@ -110,6 +118,19 @@ import axios from 'axios';
 			},
 
 			methods:{
+					changeFile(e){
+
+              let selectedFiles=e.target.files
+              if(!selectedFiles.length){
+                  return false
+              }
+
+              for(let i=0 ;i<selectedFiles.length ;i++ ){
+                  this.image.push(selectedFiles[i])
+              }
+              console.log("tt",this.image);
+              
+           },
 				addConferenceRoom(){
 					if(this.isRegistred){
 
@@ -129,6 +150,7 @@ import axios from 'axios';
 							{
 								label:this.equipement.label,
 								prix:this.equipement.prix,
+								disponibilite:this.equipement.disponibilite,
 								conference_room_id:this.idc
 							},
 							{ headers: { Authorization: 'Bearer ' + localStorage.getItem('token') }}
@@ -182,7 +204,8 @@ import axios from 'axios';
 						decoration:this.room.decoration,
 						description:this.room.description,
 						prix:parseFloat(this.room.prix),
-						user_id:this.user.id
+						user_id:this.user.id,
+						disponibilite:this.room.disponibilite
 					},
 					{ headers: { Authorization: 'Bearer ' + localStorage.getItem('token') }}
 					).then(res=>{
@@ -202,12 +225,21 @@ import axios from 'axios';
 							{
 								label:this.equipement.label,
 								prix:this.equipement.prix,
+								disponibilite:this.equipement.disponibilite,
 								conference_room_id:res.data.conference_room.id
 							},
 							{ headers: { Authorization: 'Bearer ' + localStorage.getItem('token') }}
 							).then(
 								msg1=true
 							);
+							for(let i=0 ;i<this.image.length;i++){
+							this.form.append('path',this.image[i])
+							this.form.append('conference_room_id',res.data.conference_room.id)
+
+							const config= {headers:{'Content-Type':'multipart/form-data',
+							Authorization: 'Bearer ' + localStorage.getItem('token') }};
+							axios.post('http://localhost:8000/api/images',this.form,config)
+							}
 							if(msg1 && msg2){
 			            	this.$toast.add({severity:'success', summary: 'Excellent', detail:'les information a été soumise avec succès', life: 3000});
 							}
@@ -227,6 +259,7 @@ import axios from 'axios';
 						decoration:this.room.decoration,
 						description:this.room.description,
 						prix:parseFloat(this.room.prix),
+						disponibilite:this.room.disponibilite,
 						user_id:this.user.id
 					},
 					{ headers: { Authorization: 'Bearer ' + localStorage.getItem('token') }}
@@ -244,6 +277,14 @@ import axios from 'axios';
 							).then(resp=>{
 								this.idT=resp.data.type.id
 							});
+							for(let i=0 ;i<this.image.length;i++){
+							this.form.append('path',this.image[i])
+							this.form.append('conference_room_id',res.data.conference_room.id)
+
+							const config= {headers:{'Content-Type':'multipart/form-data',
+							Authorization: 'Bearer ' + localStorage.getItem('token') }};
+							axios.post('http://localhost:8000/api/images',this.form,config)
+							}
 						}
 						});
 
@@ -275,7 +316,8 @@ import axios from 'axios';
 						decoration:this.room.decoration,
 						description:this.room.description,
 						prix:parseFloat(this.room.prix),
-						user_id:this.user.id
+						user_id:this.user.id,
+						disponibilite:this.room.disponibilite
 					},
 					{ headers: { Authorization: 'Bearer ' + localStorage.getItem('token') }}
 					).then(res=>{
@@ -285,6 +327,7 @@ import axios from 'axios';
 							{
 								label:this.equipement.label,
 								prix:this.equipement.prix,
+								disponibilite:this.equipement.disponibilite,
 								conference_room_id:this.idc
 							},
 							{ headers: { Authorization: 'Bearer ' + localStorage.getItem('token') }}
@@ -292,6 +335,14 @@ import axios from 'axios';
 								this.idE=res.data.equipement
 							}
 							);
+							for(let i=0 ;i<this.image.length;i++){
+							this.form.append('path',this.image[i])
+							this.form.append('conference_room_id',res.data.conference_room.id)
+
+							const config= {headers:{'Content-Type':'multipart/form-data',
+							Authorization: 'Bearer ' + localStorage.getItem('token') }};
+							axios.post('http://localhost:8000/api/images',this.form,config)
+							}
 						}
 					});
 
@@ -301,6 +352,7 @@ import axios from 'axios';
 							{
 								label:this.equipement.label,
 								prix:this.equipement.prix,
+								disponibilite:this.equipement.disponibilite,
 								conference_room_id:this.idc
 							},
 							{ headers: { Authorization: 'Bearer ' + localStorage.getItem('token') }}

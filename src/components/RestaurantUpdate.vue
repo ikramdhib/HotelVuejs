@@ -2,7 +2,7 @@
 	<div class="grid">
 		<div class="col-12">
 			<div class="card">
-				<h4 id="titre"> Ajouter un Restaurant</h4>
+				<h4 id="titre"> Modifier  le Restaurant : {{ restaurant.nom }}  </h4>
 			      <div class="p-fluid formgrid grid">
 					<div class="field col-12 md:col-3">
 						<label for="num_etage">Non du restaurant :</label>
@@ -32,20 +32,19 @@
 						<label for="desc">Description</label>
 						<Textarea id="desc" rows="4" v-model="restaurant.description" />
 			</div>
-			      </div>	
-					 <div class="p-fluid formgrid grid">
-					<div class="field col-12 md:col-6">
+					
+					
+					<div class="field col-12 md:col-12">
 						<label for="prix4">Choisir des image :</label>
-						<span class="p-input-icon-left">
-							<i class="pi pi-folder-open" />
-							<InputText  type="file" multiple @change="changeFile"/>
-						</span>
+						<FileUpload name="file" url="" ref="file" @upload="onUpload" @change="selectFile" :multiple="true" accept="image/png, image/jpeg" :maxFileSize="1000000"/>
 					</div>
-			 </div>
-			 <div class="p-fluid formgrid grid">
-	               <div class="field col-12 md:col-3  py-4">
-					<Button label="Ajouter"  @click="addRestaurant()" ></Button>
+	               <div class="field col-12 md:col-3 py-4">
+					   <Toast />
+					<Button label="Modifier"  @click="updateRestaurant()" ></Button>
 		</div>
+		<div class="field col-12 md:col-3 py-4">
+			<Button label="Annuler" @click="goBack()" class="p-button-secondary mr-2 mb-2" ></Button>
+			</div>
 		</div>
 			</div>
 		</div>
@@ -58,8 +57,7 @@ import axios from 'axios'
 	export default {
 		data() {
 			return {
-				id:null,
-				user:null,
+				
 				restaurant:{
 					nom:"",
 					description:"",
@@ -67,65 +65,55 @@ import axios from 'axios'
 					nbtable:"",
 					disponibilite:"",
 					prix_reservation:"",
-				},
-					image:[],
-                form: new FormData,
+				}
 			}
 		},
 		mounted(){
-			this.user=JSON.parse(localStorage.getItem('user'))
+			this.getRestaurant();
 		},
 
 		methods :{
-					changeFile(e){
 
-              let selectedFiles=e.target.files
-              if(!selectedFiles.length){
-                  return false
-              }
+			async getRestaurant(){
+				const id=this.$route.params.id;
+				await axios.get('http://localhost:8000/api/getrestaurant/'+id).then(res=>{
+					this.restaurant.nom=res.data.restaurant.nom
+					this.restaurant.description=res.data.restaurant.description
+					this.restaurant.capacite=res.data.restaurant.capacite
+					this.restaurant.nbtable=res.data.restaurant.nbtable
+					this.restaurant.prix_reservation=res.data.restaurant.prix_reservation
+						if(res.data.restaurant.disponibilite==1){
+						this.restaurant.disponibilite=true;
+					}else{
+						this.restaurant.disponibilite=false;
+					}
+				})
+			},
 
-              for(let i=0 ;i<selectedFiles.length ;i++ ){
-                  this.image.push(selectedFiles[i])
-              }
-              console.log("tt",this.image);
-              
-           },
-
-			async addRestaurant(){
-				console.log("rr",this.restaurant);
-				axios.post('http://localhost:8000/api/addRestaurant',
+			async updateRestaurant(){
+				const id=this.$route.params.id;
+				await axios.put('http://localhost:8000/api/update-Restaurant/'+id,
 				{
 					nom:this.restaurant.nom,
 					description:this.restaurant.description,
-					capacite:parseInt(this.restaurant.capacite),
-					nbtable:parseInt(this.restaurant.nbtable),
+					capacite:this.restaurant.capacite,
+					nbtable:this.restaurant.nbtable,
+					prix_reservation:this.restaurant.prix_reservation,
 					disponibilite:this.restaurant.disponibilite,
-					prix_reservation:parseFloat(this.restaurant.prix_reservation),
-					user_id:this.user.id
 				},
-				{ headers: { Authorization: 'Bearer ' + localStorage.getItem('token') }}
-				).then(res=>{
-					for(let i=0 ;i<this.image.length;i++){
-							this.form.append('path',this.image[i])
-							this.form.append('restaurant_id',res.data.restaurant.id)
-
-							const config= {headers:{'Content-Type':'multipart/form-data',
-							Authorization: 'Bearer ' + localStorage.getItem('token') }};
-							axios.post('http://localhost:8000/api/images',this.form,config)
-							}
-					if(res){
-						this.id=res.data.restaurant.id
-						this.$router.push({name:'addmenu' , params:{id:this.id}});
-						this.$toast.add({severity:'success', summary: 'Excellent', detail:'les information a été soumise avec succès', life: 3000});
-			          
+				{ headers: { Authorization: 'Bearer ' + localStorage.getItem('token') }}).then(
+					res=>{
+						if(res.data.updated){
+							this.$toast.add({severity:'success', summary: 'Excellent', detail:'les information a été soumise avec succès', life: 3000});
 						}else{
 							this.$toast.add({severity:'error', summary: "Message d'erreur", detail:'quelque chose est mal passé', life: 3000});
 						}
-					
-				}
-
+					}
 				)
-			}
+			},
+			goBack(){
+					this.$router.push('restaurants')
+				}
 
 		}
 	}

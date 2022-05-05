@@ -25,15 +25,16 @@
 				</div>
 			</div>
 
-			<div class="field col-12">
+			<div class="field col-6">
 						<label for="desc">Description</label>
 						<Textarea id="desc" rows="4"  v-model="rooftop.description"/>
 			</div>
-					
-					
-					<div class="field col-12 md:col-12">
-						<label for="prix4">Choisir des images :</label>
-						<FileUpload name="file" url="" ref="file" @upload="onUpload" @change="selectFile" :multiple="true" accept="image/png, image/jpeg" :maxFileSize="1000000"/>
+					<div class="field col-12 md:col-6">
+						<label for="prix4">Choisir des image :</label>
+						<span class="p-input-icon-left">
+							<i class="pi pi-folder-open" />
+							<InputText  type="file" multiple @change="changeFile"/>
+						</span>
 					</div>
 	               <div class="field col-12 md:col-3">
 					   <Toast />
@@ -59,15 +60,28 @@ import axios from 'axios'
 					intitule:"",
 					capacite:"",
 					disponibilite:"",
-				}
+				},
+				image:[],
+                form: new FormData,
 			}
 			},
 			mounted (){
 				this.user= JSON.parse(localStorage.getItem('user'));
-				console.log(this.user);
-				console.log(localStorage.getItem('token'))
 			},
 			methods :{
+				changeFile(e){
+
+              let selectedFiles=e.target.files
+              if(!selectedFiles.length){
+                  return false
+              }
+
+              for(let i=0 ;i<selectedFiles.length ;i++ ){
+                  this.image.push(selectedFiles[i])
+              }
+              console.log("tt",this.image);
+              
+           },
 				async addRooftop(){
 					console.log("ggg",this.rooftop);
 					await axios.post('http://localhost:8000/api/addRoof-Top',
@@ -81,13 +95,21 @@ import axios from 'axios'
 					},
 					 { headers: { Authorization: 'Bearer ' + localStorage.getItem('token') }}
 					).then(res=>{
+							for(let i=0 ;i<this.image.length;i++){
+							this.form.append('path',this.image[i])
+							this.form.append('rooftop_id',res.data.RoofTop.id)
+
+							const config= {headers:{'Content-Type':'multipart/form-data',
+							Authorization: 'Bearer ' + localStorage.getItem('token') }};
+							axios.post('http://localhost:8000/api/images',this.form,config)
+							}
 						if(res){
 			            	this.$toast.add({severity:'success', summary: 'Excellent', detail:'les information a été soumise avec succès', life: 3000});
 			          
 						}else{
 							this.$toast.add({severity:'error', summary: "Message d'erreur", detail:'quelque chose est mal passé', life: 3000});
 						}
-					})
+					});
 				}
 			}
 	}
