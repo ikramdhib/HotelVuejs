@@ -3,11 +3,31 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
+                    <FileUpload name="demo[]" url="http://127.0.0.1:8000/public/files" @change="changeFile"  :multiple="true" accept="image/*" :maxFileSize="1000000"/>
+                    <div class="col-12 mb-2 lg:col-4 lg:mb-0">
+						<span class="p-input-icon-left">
+							<i class="pi pi-folder-open" />
+							<InputText id="inp" type="file" placeholder="Username" />
+						</span>
+					</div>
+                    <div class="field">
+					<label for="name1">Name</label>
+					<InputText id="name1" type="file"  multiple @change="changeFile"  />
+				</div>
+                     <from enctype="multipart/form-data">
+                   	<div class="field col-12 md:col-12">
+						<label for="prix4">Choisir des image :</label>
+
+<button id="btn" class="p-button-secondary mr-2 mb-2">
+					<input id="inp" type="file" multiple @change="changeFile"  />
+</button>
+					</div>
                    
-                    <form @submit="formSubmit" enctype="multipart/form-data">
-                            <input type="file" name="path" id="path" class="form-control" v-on:change="onChange">
-                            <button class="btn btn-primary btn-block">Upload</button>
-                        </form>
+	      <div class="field col-12 md:col-3">
+			   <Toast />
+			<Button label="Ajouter" @click="addimage()"></Button>
+		</div>
+                    </from>
                     </div>
                 </div>
             </div>
@@ -19,34 +39,50 @@ import axios from 'axios';
     export default {
         data() {
             return {
-              
-                path: '',
-              room_id:0,
+                image:[],
+              form: new FormData,
+
             };
         },
         methods: {
-            onChange(e) {
-                this.path = e.target.files[0];
-                console.log('<<data<<',this.path)
-            },
-            formSubmit(e) {
-                e.preventDefault();
-                let existingObj = this;
-                const config = {
-                    headers: {
-                        'content-type': 'multipart/form-data'
-                    }
-                }
-                
-                let data = new FormData();
-                data.append('path', this.path);
-                data.append(localStorage.getItem('room_id'),this.room_id);
-                axios.post('http://localhost:8000/api/image', data, config)
-                   .then(res=>{
-                        existingObj.success = res.data.file.path;
-                    })
-                   
-            }
+           changeFile(e){
+
+              let selectedFiles=e.target.files
+              if(!selectedFiles.length){
+                  return false
+              }
+
+              for(let i=0 ;i<selectedFiles.length ;i++ ){
+                  this.image.push(selectedFiles[i])
+              }
+              console.log("tt",this.image);
+              
+           },
+
+           addimage(){
+               for(let i=0 ;i<this.image.length;i++){
+              this.form.append('path',this.image[i])
+              this.form.append('plat_id',1)
+
+              const config= {headers:{'Content-Type':'multipart/form-data',
+              Authorization: 'Bearer ' + localStorage.getItem('token') }};
+               axios.post('http://localhost:8000/api/images',this.form,config).then();
         }
+           }
+    }
     }
     </script>
+
+    <style scoped>
+    
+    #inp{
+        color: gray;
+    }
+    #btn{
+        background-color: moccasin;
+        padding: 20px;
+        border-color:transparent ;
+        border-radius: 44%;
+        width: 260px;
+    }
+    </style>

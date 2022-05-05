@@ -32,13 +32,18 @@
 						<label for="desc">Description</label>
 						<Textarea id="desc" rows="4" v-model="restaurant.description" />
 			</div>
-					
-					
-					<div class="field col-12 md:col-12">
+			      </div>	
+					 <div class="p-fluid formgrid grid">
+					<div class="field col-12 md:col-6">
 						<label for="prix4">Choisir des image :</label>
-						<FileUpload name="file" url="" ref="file" @upload="onUpload" @change="selectFile" :multiple="true" accept="image/png, image/jpeg" :maxFileSize="1000000"/>
+						<span class="p-input-icon-left">
+							<i class="pi pi-folder-open" />
+							<InputText  type="file" multiple @change="changeFile"/>
+						</span>
 					</div>
-	               <div class="field col-12 md:col-3">
+			 </div>
+			 <div class="p-fluid formgrid grid">
+	               <div class="field col-12 md:col-3  py-4">
 					<Button label="Ajouter"  @click="addRestaurant()" ></Button>
 		</div>
 		</div>
@@ -62,7 +67,9 @@ import axios from 'axios'
 					nbtable:"",
 					disponibilite:"",
 					prix_reservation:"",
-				}
+				},
+					image:[],
+                form: new FormData,
 			}
 		},
 		mounted(){
@@ -70,6 +77,19 @@ import axios from 'axios'
 		},
 
 		methods :{
+					changeFile(e){
+
+              let selectedFiles=e.target.files
+              if(!selectedFiles.length){
+                  return false
+              }
+
+              for(let i=0 ;i<selectedFiles.length ;i++ ){
+                  this.image.push(selectedFiles[i])
+              }
+              console.log("tt",this.image);
+              
+           },
 
 			async addRestaurant(){
 				console.log("rr",this.restaurant);
@@ -85,10 +105,23 @@ import axios from 'axios'
 				},
 				{ headers: { Authorization: 'Bearer ' + localStorage.getItem('token') }}
 				).then(res=>{
+					for(let i=0 ;i<this.image.length;i++){
+							this.form.append('path',this.image[i])
+							this.form.append('restaurant_id',res.data.restaurant.id)
+
+							const config= {headers:{'Content-Type':'multipart/form-data',
+							Authorization: 'Bearer ' + localStorage.getItem('token') }};
+							axios.post('http://localhost:8000/api/images',this.form,config)
+							}
 					if(res){
 						this.id=res.data.restaurant.id
 						this.$router.push({name:'addmenu' , params:{id:this.id}});
-					}
+						this.$toast.add({severity:'success', summary: 'Excellent', detail:'les information a été soumise avec succès', life: 3000});
+			          
+						}else{
+							this.$toast.add({severity:'error', summary: "Message d'erreur", detail:'quelque chose est mal passé', life: 3000});
+						}
+					
 				}
 
 				)

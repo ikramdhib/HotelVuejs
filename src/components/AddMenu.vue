@@ -19,7 +19,7 @@
 		 <div class="p-fluid formgrid grid" v-for="i in pluss" :key="i">
 					<div class="field col-12 md:col-9">
 		 <div class="p-fluid formgrid grid">
-					<div class="field col-12 md:col-4">
+					<div class="field col-12 md:col-3">
 					     <label for="lastname2">Intitulé du Plat</label>
 				     <span class="p-float-label" >
 					<Dropdown id="dropdown"  v-model="plat.intitule" :options="dropdownValues"   placeholder="Select" ></Dropdown>
@@ -34,11 +34,14 @@
 						<label for="num_etage">Prix :</label>
 						<InputText id="num_etage" type="text" v-model="plat.prix_plat" />
 					</div>
-
-					<div class="field col-12 md:col-12">
-						<label for="prix4">Choisir des image :</label>
-						<FileUpload name="file" url="" ref="file" @upload="onUpload" @change="selectFile" :multiple="true" accept="image/png, image/jpeg" :maxFileSize="1000000"/>
-					</div>
+					<div class="field col-12 md:col-3">
+						<label >Choisir des image :</label>
+						<span class="p-input-icon-left">
+							<i class="pi pi-folder-open" />
+							<InputText   type="file" multiple @change="changeFile"/>
+						</span>
+			 </div>
+					
 		 </div>
 		 </div>
 		 <div class="field col-12 md:col-2">
@@ -46,10 +49,11 @@
 
 					</div>
 		 </div>
+		 		 <div class="p-fluid formgrid grid">
 	      <div class="field col-12 md:col-3">
 			   <Toast />
 			<Button label="Ajouter"  @click="addMenu()"></Button>
-		
+	      </div>
 		 </div>
 			</div>
 		</div>
@@ -68,7 +72,7 @@ import axios from 'axios';
 				idP:null,
 				isRegisterd:false,
 				menu_id:"",
-				restaurant_id:"",
+				restaurant_id:this.$route.params.id,
 				menu:{
 					titre:"",
 					description:""
@@ -84,14 +88,29 @@ import axios from 'axios';
 					'DESSERT',
 				],
 				menuRegistred:false,
+			    image:[],
+                form: new FormData,
 			}
 		},
 
 		mounted (){
-			
+			console.log('dd',this.restaurant_id);
 		},
 
 		methods :{
+					changeFile(e){
+
+              let selectedFiles=e.target.files
+              if(!selectedFiles.length){
+                  return false
+              }
+
+              for(let i=0 ;i<selectedFiles.length ;i++ ){
+                  this.image.push(selectedFiles[i])
+              }
+              console.log("tt",this.image);
+              
+           },
 			 addMenu(){
 				 if(this.isRegisterd){
 					 if(this.idM!=null ){
@@ -105,6 +124,14 @@ import axios from 'axios';
 				{ headers: { Authorization: 'Bearer ' + localStorage.getItem('token') }}
 				).then(
 					res=>{
+						for(let i=0 ;i<this.image.length;i++){
+							this.form.append('path',this.image[i])
+							this.form.append('plat_id',res.data.plat.id)
+
+							const config= {headers:{'Content-Type':'multipart/form-data',
+							Authorization: 'Bearer ' + localStorage.getItem('token') }};
+							axios.post('http://localhost:8000/api/images',this.form,config)
+							}
 						this.idP=res.data.plat.id
 					}
 				);
@@ -112,7 +139,8 @@ import axios from 'axios';
 					if(this.idM!=null & this.idP!=null){
 						 this.$toast.add({severity:'success', summary: 'Excellent', detail:'les information a été soumise avec succès', life: 3000});
 					 }
-				   if(this.idM==null && this.idP==null){
+				 }
+				   if((this.idM==null && this.idP==null) || this.isRegisterd==false){
 						 axios.post('http://localhost:8000/api/addMenu',
 				{
 					titre:this.menu.titre,
@@ -133,6 +161,14 @@ import axios from 'axios';
 				{ headers: { Authorization: 'Bearer ' + localStorage.getItem('token') }}
 				).then(res=>{
 					if(res){
+						for(let i=0 ;i<this.image.length;i++){
+							this.form.append('path',this.image[i])
+							this.form.append('plat_id',res.data.plat.id)
+
+							const config= {headers:{'Content-Type':'multipart/form-data',
+							Authorization: 'Bearer ' + localStorage.getItem('token') }};
+							axios.post('http://localhost:8000/api/images',this.form,config)
+							}
 			            	this.$toast.add({severity:'success', summary: 'Excellent', detail:'les information a été soumise avec succès', life: 3000});
 			          
 						}else{
@@ -141,7 +177,7 @@ import axios from 'axios';
 				})
 					
 				})
-					 }
+					 
 				 }
 			},
 			clickPluss(){
@@ -169,6 +205,14 @@ import axios from 'axios';
 				{ headers: { Authorization: 'Bearer ' + localStorage.getItem('token') }}
 				).then(
 					res=>{
+						for(let i=0 ;i<this.image.length;i++){
+							this.form.append('path',this.image[i])
+							this.form.append('plat_id',res.data.plat.id)
+
+							const config= {headers:{'Content-Type':'multipart/form-data',
+							Authorization: 'Bearer ' + localStorage.getItem('token') }};
+							axios.post('http://localhost:8000/api/images',this.form,config)
+							}
 						this.idP=res.data.plat.id
 					}
 				);
@@ -186,6 +230,14 @@ import axios from 'axios';
 				{ headers: { Authorization: 'Bearer ' + localStorage.getItem('token') }}
 				).then(
 					res=>{
+						for(let i=0 ;i<this.image.length;i++){
+							this.form.append('path',this.image[i])
+							this.form.append('plat_id',res.data.plat.id)
+
+							const config= {headers:{'Content-Type':'multipart/form-data',
+							Authorization: 'Bearer ' + localStorage.getItem('token') }};
+							axios.post('http://localhost:8000/api/images',this.form,config)
+							}
 						this.idP=res.data.plat.id
 					}
 				);
