@@ -42,6 +42,12 @@
                           <i class="pi" :class="{'text-green-500 pi-check-circle': data.disponibilite=='1' , 'text-pink-500 pi-times-circle': data.disponibilite=='0'}"></i>
                         </template>
                     </Column>
+                  <Column header="Image">
+                      <template #body="data">
+                        {{ image }}
+                        <img :src="'http://localhost:8000/storage/app/'+image" :alt="data.id" class="shadow-2" width="100" />
+                      </template>
+                   </Column>
                     <Column field="activity" header="" :showFilterMatchModes="false" style="min-width:12rem" >
                         <template #body="{data}">
                           <router-link :to="{ name: 'updaterooftop', params: {id:data.id}}">
@@ -49,6 +55,7 @@
                           </router-link>
                         </template>
                     </Column>
+
                     <Column  header=""  bodyClass="text-center" style="min-width:8rem">
                         <template #body="{data}">
 		                      		<Button :value="data.id"  @click="openConfirmation" label="Supprimer" style="width: auto" class="p-button-rounded p-button-danger mr-2 mb-2" />
@@ -81,10 +88,12 @@
         rooftops:[],
         table:[],
         displayConfirmation: false,
+        image:null,
 			}
 		},
 		mounted() {
       this.getRoofTops();
+      this.getImage();
 		},
 		methods: {
       async getRoofTops(){
@@ -115,6 +124,12 @@
      await axios.delete('http://localhost:8000/api/delete-Roof-Top/'+id,
      { headers: { Authorization: 'Bearer ' + localStorage.getItem('token') }}
      )
+       },
+       getImage(){
+         axios.get('http://localhost:8000/api/image/4').then(res=>{
+           this.image=res.data.data.path
+           console.log(this.image);
+         })
        }
 		
 		}
