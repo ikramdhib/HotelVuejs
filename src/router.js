@@ -107,9 +107,9 @@ const routes = [
             }
       },
       {
-        path: '/tablepool',
-        name: 'tablepool',
-       component: () => import('./components/TablePool.vue'),
+        path: '/PoolTable',
+        name: 'PoolTable',
+       component: () => import('./components/PoolTable.vue'),
         beforeEnter: (to, from, next) => {
             if (!localStorage.getItem("token")) {
               next("login");
@@ -121,9 +121,9 @@ const routes = [
 
   
     {
-      path: '/TableType/',
-      name: 'TableType',
-      component: () => import('./components/TableType.vue'),
+      path: '/TypeTable/',
+      name: 'TypeTable',
+      component: () => import('./components/TypeTable.vue'),
       beforeEnter: (to, from, next) => {
           if (!localStorage.getItem("token")) {
             next("login");
@@ -142,6 +142,17 @@ const routes = [
                 next();
               }
             }},
+            {
+              path: '/RoomTable',
+              name: 'RoomTable',
+              component: () => import('./components/RoomTable.vue'),
+              beforeEnter: (to, from, next) => {
+                  if (!localStorage.getItem("token")) {
+                    next("login");
+                  } else {
+                    next();
+                  }
+                }},
            
       
             {
@@ -177,17 +188,7 @@ const routes = [
                             next();
                           }
                         }},
-            {
-              path: '/TableRoom',
-              name: 'TableRoom',
-              component: () => import('./components/TableRoom.vue'),
-              beforeEnter: (to, from, next) => {
-                  if (!localStorage.getItem("token")) {
-                    next("login");
-                  } else {
-                    next();
-                  }
-                }},
+            
   
   
 

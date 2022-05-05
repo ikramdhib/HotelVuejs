@@ -46,9 +46,9 @@ export default {
       })
       .then((res) => {
        
-       this.type.nom_type=res.data.data.nom_type;
-        this.type.price_Type=res.data.data.price_Type;
-         this.type.intitule=res.data.data.intitule;
+       this.type.nom_type=res.data.type.nom_type;
+        this.type.price_Type=res.data.type.price_Type;
+         this.type.intitule=res.data.type.intitule;
    
        console.log(res.data);
          
@@ -63,10 +63,10 @@ export default {
 				intitule:this.type.intitule},
 				{ headers: {Authorization: 'Bearer ' + localStorage.getItem('token')}}
 				).then(res=>{
-					console.log(this.headers);
-				     let response = res.data;
-					 console.log(response)
-			         this.$router.push("TableType")
-					 
+					if(res){
+							this.$toast.add({severity:'success', summary: 'Excellent', detail:'les information a été soumise avec succès', life: 3000});
+						}else{
+							this.$toast.add({severity:'error', summary: "Message d'erreur", detail:'quelque chose est mal passé', life: 3000});
+						}
 			})}}}
         </script>

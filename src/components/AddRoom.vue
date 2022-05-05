@@ -140,7 +140,7 @@ import axios from 'axios';
             { headers: { Authorization: 'Bearer ' + localStorage.getItem('token') }
         }).then(res=>{
 
-           this.types = res.data.data;
+           this.types = res.data.type;
 		   let type_id=sessionStorage.getItem(type_id);
 		
 		   console.log(res);
