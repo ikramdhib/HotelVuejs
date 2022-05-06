@@ -36,9 +36,12 @@
 						<Textarea id="desc" rows="4"  v-model="spa.description"/>
 			           </div>
 		                </div>
-					<div class="field col-12 md:col-12">
-					
-						<FileUpload name="file" url="" ref="file" @upload="onUpload"  :multiple="true" accept="image/png, image/jpeg" :maxFileSize="1000000"/>
+						<div class="field col-12 md:col-6">
+						<label for="prix4">Choisir des image :</label>
+						<span class="p-input-icon-left">
+							<i class="pi pi-folder-open" />
+							<InputText  type="file" multiple @change="changeFile"/>
+						</span>
 					</div>
 		
 	      <div class="field col-12 md:col-3">
@@ -63,11 +66,25 @@ export default {
 			title:"",
 			capacite:0
 					
-				}
+				},image:[],
+                form: new FormData,
             }
         },
 		
 			methods:{
+					changeFile(e){
+
+              let selectedFiles=e.target.files
+              if(!selectedFiles.length){
+                  return false
+              }
+
+              for(let i=0 ;i<selectedFiles.length ;i++ ){
+                  this.image.push(selectedFiles[i])
+              }
+              console.log("tt",this.image);
+              
+           },
 	
 			 async addSpa() {
 			   this.user=JSON.parse(localStorage.getItem('user'));
@@ -82,12 +99,24 @@ export default {
 	          
 				},
 				{ headers: { Authorization: 'Bearer ' + localStorage.getItem('token')}}
-				).then(res=>{
+				).then(res=>{  
+					  
+					for(let i=0 ;i<this.image.length;i++){
+							this.form.append('path',this.image[i])
+							this.form.append('spa_id',res.data.data.id)
+
+							const config= {headers:{'Content-Type':'multipart/form-data',
+							Authorization: 'Bearer ' + localStorage.getItem('token') }};
+							axios.post('http://localhost:8000/api/images',this.form,config)
+							}
+						if(res){
+			            	this.$toast.add({severity:'success', summary: 'Excellent', detail:'les information a été soumise avec succès', life: 3000});
+			          
+						}else{
+							this.$toast.add({severity:'error', summary: "Message d'erreur", detail:'quelque chose est mal passé', life: 3000});
+						}
 		
-					console.log(this.headers);
-				     let response = res.data.data;
-					 console.log(response);
-				
+					
 			            
 					 
 			         

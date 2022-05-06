@@ -2,19 +2,19 @@
 	<div class="grid">
 		<div class="col-12">
 			<div class="card">
-				<h5> Ajouter Option</h5>
-				<div class="p-fluid formgrid grid">
-		<div class="field col-12 md:col-6">
+				<h4> Ajouter Option</h4>
+				<div class="p-fluid formgrid grid"> 
+		<div class="field col-12 md:col-4">
 						<label for="nomop">nom_Option</label>
 						<InputText id="nomop" type="text" v-model="option.nom_option" />
 					</div>
-					<div class="field col-12 md:col-6">
+					<div class="field col-12 md:col-4">
 						<label for="prixop">prix_Option</label>
 						<InputText id="prixop" type="text" v-model="option.price_option"/>
 					</div>
          
       
-        <div class="field col-12 md:col-6">
+        <div class="field col-12 md:col-4">
                         
        <span class="text-black-700">Disponibilité</span>           
        <div class="mt-2">
@@ -29,12 +29,15 @@
               </label>
   
         </div>  </div></div>
-	<Button label="ajouter"   @click="addOption()" class="p-button-secondary mr-2 mb-2"  />
-    <router-link :to="{ path: 'image'}"> <Button label="suivant"  class="p-button-success mr-2 mb-2" />
+		
+	<Button label="ajouter" @click="addOption()" />
+    <router-link :to="{ path: 'RoomTable'}"> <Button label="Annuler" class="p-button-secondary "  />
 	</router-link>
+</div>
+
 </div>	
 </div>	
-</div>	
+
 </template>
 <script>
 import axios from 'axios';

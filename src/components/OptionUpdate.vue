@@ -2,26 +2,23 @@
 	<div class="grid">
 		<div class="col-12">
 			<div class="card">
-				<h5>Option</h5>
+				<h4> Editer Option</h4>
 				<div class="p-fluid formgrid grid">
-		<div class="field col-12 md:col-6">
+		<div class="field col-12 md:col-4">
 						<label for="nomop">nom_Option</label>
 						<InputText id="nomop" type="text" v-model="option.nom_option" />
 					</div>
-					<div class="field col-12 md:col-6">
+					<div class="field col-12 md:col-4">
 						<label for="prixop">prix_Option</label>
 						<InputText id="prixop" type="text" v-model="option.price_option"/>
 					</div>
          
       
-        <div class="field col-12 md:col-6">
+        <div class="field col-12 md:col-4">
                         
-       
-                     
-                   
-        <span class="text-black-700">Disponibilité</span>           
-                   <div class="mt-2">
-						  <label class="inline-flex items-center ml-4">
+       <span class="text-black-700">Disponibilité</span>           
+       <div class="mt-2">
+                      <label class="inline-flex items-center ml-4">
 		
             	 <input type="radio"  value="oui"  v-model="option.avaibility">
                 <span class="ml-2">Oui</span>
@@ -32,9 +29,10 @@
               </label>
   
         </div>  </div></div>
-	<Button label="modifier"  v-on:click="updateOption" class="p-button-secondary mr-2 mb-2"  />
-                            
-	
+		
+	<Button label="modifier" @click="updateOption()" />
+    <router-link :to="{ path: 'RoomTable'}"> <Button label="Annuler" class="p-button-secondary "  />
+	</router-link>
 </div>	
 </div>	
 </div>	

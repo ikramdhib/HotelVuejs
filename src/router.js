@@ -70,9 +70,9 @@ const routes = [
 },
       
       {
-        path: '/image',
-        name: 'Image',
-        component: () => import('./components/image.vue'),
+        path: '/SpaTable',
+        name: 'SpaTable',
+        component: () => import('./components/SpaTable.vue'),
         beforeEnter: (to, from, next) => {
             if (!localStorage.getItem("token")) {
               next("login");

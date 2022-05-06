@@ -2,25 +2,22 @@
      <div class="col-12">
 	    <div class="card">
 		
-				<h5> Editer Type</h5>
+				<h4> Editer Type</h4>
 				<div class="p-fluid formgrid grid">
 					
-             <div class="field col-12 md:col-6">
+             <div class="field col-12 md:col-3">
 						<label for="nom">nom_type</label>
 					<InputText id="nom" type="text" v-model="type.nom_type"/>
 					</div>
-					<div class="field col-12 md:col-6">
-						<label for="prix">prix_type</label>
-						<InputText id="prix" type="text" v-model="type.price_Type"/>
-					</div>
-                     <div class="field col-12 md:col-3">
+				
+                     <div class="field col-9">
 						<label for="desc">description</label>
 						<Textarea id="desc" rows="4" cols="60" v-model="type.intitule"/>
 					</div>
-				<Button label="modifier" @click="update()" class="p-button-secondary mr-2 mb-2" />
-                            
-         
-	
+					</div>
+					 <div class="field col-12 md:col-3">
+					<Button label="Modifier"  @click="update()" ></Button>
+		
 	</div>
 </div>
 </div>
@@ -33,7 +30,7 @@ export default {
             return {
                 type: {
 					nom_type:"",
-					price_Type:0,
+				
 					intitule:"",
 					
 				}
@@ -47,7 +44,7 @@ export default {
       .then((res) => {
        
        this.type.nom_type=res.data.type.nom_type;
-        this.type.price_Type=res.data.type.price_Type;
+        
          this.type.intitule=res.data.type.intitule;
    
        console.log(res.data);
@@ -59,11 +56,13 @@ export default {
 				  const id=this.$route.params.id;
 			 await axios
 			    .put('http://localhost:8000/api/type/'+id,{nom_type:this.type.nom_type,
-				price_Type:this.type.price_Type,
+				
 				intitule:this.type.intitule},
 				{ headers: {Authorization: 'Bearer ' + localStorage.getItem('token')}}
 				).then(res=>{
+
 					if(res){
+						 this.$router.push('TypeTable');
 							this.$toast.add({severity:'success', summary: 'Excellent', detail:'les information a été soumise avec succès', life: 3000});
 						}else{
 							this.$toast.add({severity:'error', summary: "Message d'erreur", detail:'quelque chose est mal passé', life: 3000});
