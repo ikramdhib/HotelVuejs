@@ -455,6 +455,18 @@ const routes = [
       }
     }
 },
+{
+  path: '/addoffres',
+  name: 'addoffres',
+ component: () => import('./components/AddOffres.vue'),
+  beforeEnter: (to, from, next) => {
+      if (!localStorage.getItem("token")) {
+        next("login");
+      } else {
+        next();
+      }
+    }
+},
 ];
 
 const router = createRouter({

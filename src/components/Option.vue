@@ -3,7 +3,7 @@
 		<div class="col-12">
 			<div class="card">
 				<h4> Ajouter Option</h4>
-				<div class="p-fluid formgrid grid">
+				<div class="p-fluid formgrid grid"> 
 		<div class="field col-12 md:col-4">
 						<label for="nomop">nom_Option</label>
 						<InputText id="nomop" type="text" v-model="option.nom_option" />
