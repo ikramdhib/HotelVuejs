@@ -23,18 +23,14 @@
 </button>
 					</div>
                    
-<<<<<<< HEAD
-                    <form @submit="formSubmit"   method="post"   enctype="multipart/form-data">
-        	<input type="file" name="path" url="http://localhost:8000/api/image" id="path" class="form-control" v-on:change="onChange">
-                            <button class="btn btn-primary btn-block">Upload</button>
-                        </form>
-=======
 	      <div class="field col-12 md:col-3">
 			   <Toast />
 			<Button label="Ajouter" @click="addimage()"></Button>
 		</div>
+
+                                {{ image }}
+                        <img :src="'http://localhost:8000/storage'+image"  class="shadow-2" width="100" />
                     </from>
->>>>>>> b4c2fdc1ad6bd5835a9fe222ac540177a9f95057
                     </div>
                 </div>
             </div>
@@ -46,43 +42,15 @@ import axios from 'axios';
     export default {
         data() {
             return {
-                image:[],
+                images:'QqF8Ho9cvEtSebMmaeL4DQXQUTou4X5cfIkEdU7M.jpg',
               form: new FormData,
+               image:"",
 
             };
         },
-<<<<<<< HEAD
-      
-    methods: {
-            onChange(e) {
-              this.path = e.target.files[0];
-                console.log('<<data<<',this.path)
-            },
-            formSubmit() {
-                
-                const config = {
-                    headers: {
-                        'content-type':`multipart/form-data`
-                    }
-                }
-                this.room_id=parseInt(localStorage.getItem('room_id'));
-                let data = new FormData();
-                
-        
-             data.append("room_id", this.room_id);
-           data.append('path',this.path);
-
-
-             
-                axios.post('http://localhost:8000/api/image', data,
-                 config)
-                   .then(res=>{
-                      let response = res.data.file.path;
-                      console.log(response);
-                    })
-                   
-            }
-=======
+        mounted(){
+             this.getImage();
+        },
         methods: {
            changeFile(e){
 
@@ -106,9 +74,14 @@ import axios from 'axios';
               const config= {headers:{'Content-Type':'multipart/form-data',
               Authorization: 'Bearer ' + localStorage.getItem('token') }};
                axios.post('http://localhost:8000/api/images',this.form,config).then();
->>>>>>> b4c2fdc1ad6bd5835a9fe222ac540177a9f95057
         }
-           }
+           },
+            getImage(){
+         axios.get('http://localhost:8000/api/image/13').then(res=>{
+           this.image=res.data.str
+           console.log(this.image);
+         })
+       }
     }
     }
     </script>

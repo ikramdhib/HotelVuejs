@@ -2,7 +2,7 @@
 	<div class="grid">
 		<div class="col-12">
 			<div class="card">
-				<h4 id="titre">Ajouter Menu pour le restaurant :</h4>
+				<h4 id="titre">Ajouter Un salle de conference :</h4>
 			      <div class="p-fluid formgrid grid">
 					<div class="field col-12 md:col-3">
 					     <label for="lastname2">Décoration</label>
