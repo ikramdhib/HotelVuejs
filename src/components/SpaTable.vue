@@ -10,7 +10,7 @@
                         <div class="flex justify-content-between flex-column sm:flex-row">
                             <span class="p-input-icon-left mb-2">
                                 <i class="pi pi-search" />
-                                <InputText  placeholder="Chercher" style="width: 100%"/>
+                                <InputText  placeholder="Chercher" style="width: 100%" v-model=" search"/>
                             </span>
                         </div>
                     </template>
@@ -18,8 +18,10 @@
                         Pas de SPA trouvé.
                     </template>
                     <Column  header="Titre" style="min-width:12rem">
-                        <template #body="{data}">
-                            {{ data.title }}
+                        <template   #body="{data}">
+         
+                            {{data.title }}
+         
                         </template>
                     </Column>
                     <Column header="Description" filterField="country.name" style="min-width:12rem">
@@ -73,15 +75,21 @@
 				filters1: null,
         loading1: true,
         spas:[],
+     
         table:[],
         displayConfirmation: false,
+          search:""
 			}
 		},
+   
 		mounted() {
-      this.getPools();
+      this.getSpas();
+   
 		},
 		methods: {
-      async getPools(){
+
+       
+      async getSpas(){
       await axios.get('http://localhost:8000/api/spa',
       
       )
