@@ -1,7 +1,99 @@
 <template>
 <div class="col-12">
       <div class="card">
-        <h4 id="title">Les chambres</h4>
+        <h4 id="title"> les chambre</h4>
+    	<DataTable :value="table" :paginator="true" class="p-datatable-gridlines" :rows="10" dataKey="id" 
+						 responsiveLayout="scroll"
+							 >
+					
+					<template #header>
+                        <div class="flex justify-content-between flex-column sm:flex-row">
+                            <span class="p-input-icon-left mb-2">
+                                <i class="pi pi-search" />
+                                <InputText  placeholder="Chercher" style="width: 100%" v-model=" search"/>
+                            </span>
+                        </div>
+                    </template>
+                    <template #empty>
+                       Aucun chambre trouver
+                    </template>
+				
+					<Column  header="type chambre" >
+                    
+						<template #body="{data}">
+                  
+               <div v-for="type in types" :key="type.id">
+                    <div v-if="type.id == data.type_id">
+						{{ type.nom_type }}
+                   
+					</div></div>
+                        </template>
+					</Column>
+					
+					<Column  header="Nombre de lit" >
+						<template #body="{data}">
+							{{data.nbBed}}
+						</template>
+					</Column>
+					<Column  header="description" >
+					<template #body="{data}">
+							{{ data.description}} 
+						</template></Column>
+					<Column  header="numero room" >
+						<template #body="{data}">
+                   {{ data.num_room}} 
+						</template>
+					</Column>
+					<Column  header="numero etage" >
+						<template #body="{data}">
+              {{ data.numEtage}} 
+						</template>
+					</Column>
+                    	<Column  header="nombre d'adult" >
+						<template #body="{data}">
+              {{ data.nbAdult}} Adult
+						</template>
+					</Column>
+                    	<Column  header="nombre enfant" >
+						<template #body="{data}">
+              {{ data.nbEnfant}} Enfant
+						</template>
+					</Column>
+                    <Column  header="nombre bebe" >
+						<template #body="{data}">
+              {{ data.nbbebe}} Bebe
+						</template>
+					</Column>
+                    <Column  header="disponibilité" >
+						<template #body="{data}">
+              {{ data.avaibility}} 
+						</template>
+					</Column>
+					 <Column  header="prix chambre" >
+						<template #body="{data}">
+            <div v-for="price in prices" :key="price.id">
+                    <div v-if="price.id == data.price_id">
+						{{ price.price_hotel }}DT
+                   
+					</div></div>
+						</template>
+					</Column>
+					  <Column  header="" >
+									<template #body="{data}" >
+			               	<Button @click="updateRoom(data.id)"  label="Modifier" class="p-button-rounded p-button-info mr-2 mb-2" />
+										
+									</template>
+								</Column>
+					<Column  header="" >
+						<template #body="{data}">
+							<Button  @click="delete_room(data.id)" label="Supprimer" class="p-button-rounded p-button-danger mr-2 mb-2" />
+						</template>
+					</Column>
+		</DataTable>
+	  </div></div>
+<div class="col-12">
+      <div class="card">
+        <h4 id="title">Les option des chambre</h4>
         <DataTable :value="table" v-model:expandedRows="expandedRows" dataKey="id" responsiveLayout="scroll">
 					<template #header>
 						<div>
