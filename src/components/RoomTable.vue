@@ -80,13 +80,13 @@
 					</Column>
 					  <Column  header="" >
 									<template #body="{data}" >
-			               	<Button @click="updateRoom(data.id)"  label="Modifier" class="p-button-rounded p-button-info mr-2 mb-2" />
+			               	<Button @click="updateRoom(data.id)"  icon="pi pi-pencil" class="p-button-rounded p-button-info p-button-outlined mr-2 mb-2" />
 										
 									</template>
 								</Column>
 					<Column  header="" >
 						<template #body="{data}">
-							<Button  @click="delete_room(data.id)" label="Supprimer" class="p-button-rounded p-button-danger mr-2 mb-2" />
+							<Button  @click="delete_room(data.id)" icon="pi pi-times" class="p-button-rounded p-button-danger p-button-outlined mr-2 mb-2"  />
 						</template>
 					</Column>
 		</DataTable>

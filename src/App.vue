@@ -132,15 +132,15 @@ export default {
                             ]
                         },
                          {
-                            label: 'Roof-Top', 
+                            label: 'Offres', 
                             items: [
                                 {
-                                    label: 'Ajouter un Roof-Top ', icon: 'pi pi-plus',
-                                    to:'/addrooftop'
+                                    label: 'Ajouter un Offre ', icon: 'pi pi-plus',
+                                    to:'addoffres'
                                 },
                                 {
-                                    label: 'Les Roof-Top', icon: 'pi pi-list',
-                                    to:'rooftop'
+                                    label: 'Les Offres', icon: 'pi pi-list',
+                                    to:'offres'
                                 }
                             ]
                         }

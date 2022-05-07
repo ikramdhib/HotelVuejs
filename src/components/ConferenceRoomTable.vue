@@ -60,7 +60,7 @@
 				</DataTable>
 			</div>
 		</div>
-
+<div class="col-12">
       <div class="card">
         <h4>Les type des salles de conferences</h4>
         <DataTable :value="table2" v-model:expandedRows="expandedRows1" dataKey="id" responsiveLayout="scroll">
@@ -126,7 +126,8 @@
 					</template>
 				</DataTable>
       </div>
-
+</div>
+<div class="col-12">
       <div class="card">
         <h4 >Les equipements disponibles pour chaque salle</h4>
         <DataTable :value="table3" v-model:expandedRows="expandedRows2" dataKey="id" responsiveLayout="scroll">
@@ -192,6 +193,7 @@
 					</template>
 				</DataTable>
       </div>
+	</div>
 	</div>
 </template>
 
