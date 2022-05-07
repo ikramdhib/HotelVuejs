@@ -37,6 +37,11 @@
                             <span style="margin-left: .5em; vertical-align: middle" class="image-text">{{data.avaibility}}</span>
                         </template>
                     </Column>
+                      <Column header="prix reservation" filterField="country.name" style="min-width:12rem">
+                        <template #body="{data}">
+                            <span style="margin-left: .5em; vertical-align: middle" class="image-text">{{data.prix_reservation}}</span>
+                        </template>
+                    </Column>
                         <Column  header="" bodyClass="text-center" style="min-width:8rem" >
 									<template #body="{data}" >
 			               	<Button @click="Updatepool(data.id)"  label="Modifier" class="p-button-rounded p-button-info mr-2 mb-2" />

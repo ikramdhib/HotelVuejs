@@ -91,7 +91,7 @@ export default {
               for(let i=0 ;i<selectedFiles.length ;i++ ){
                   this.image.push(selectedFiles[i])
               }
-              console.log("tt",this.image);
+            
               
            },
 			 async addPool() {

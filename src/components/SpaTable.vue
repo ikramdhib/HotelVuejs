@@ -39,10 +39,21 @@
                             <span style="margin-left: .5em; vertical-align: middle" class="image-text">{{data.avaibility}}</span>
                         </template>
                     </Column>
+                      <Column header="prix reservation" filterField="country.name" style="min-width:12rem">
+                        <template #body="{data}">
+                            <span style="margin-left: .5em; vertical-align: middle" class="image-text">{{data.prix_reservation}}</span>
+                        </template>
+                    </Column>
                       <Column  header="" bodyClass="text-center" style="min-width:8rem">
 									<template #body="{data}" >
 			               	<Button @click="Updatespa(data.id)"  label="Modifier" class="p-button-rounded p-button-info mr-2 mb-2" />
 										
+									</template>
+								</Column>
+                <Column  header="image" bodyClass="text-center" style="min-width:8rem">
+									<template #body="" >
+			             
+										<img src="{{ asset('public/storage/files/' . $image->image) }}" width="200px"/>
 									</template>
 								</Column>
                     <Column  header=""  bodyClass="text-center" style="min-width:8rem">
@@ -55,7 +66,7 @@
                                   </div>
                                   <template #footer>
                                     <Button label="No" icon="pi pi-times" @click="closeConfirmation" class="p-button-text"/>
-                                    <Button label="Yes" icon="pi pi-check" @click="deletePool(data.id);closeConfirmation();" class="p-button-text" autofocus />
+                                    <Button label="Yes" icon="pi pi-check" @click="deleteSpa(data.id);closeConfirmation();" class="p-button-text" autofocus />
                                   </template>
                                 </Dialog>
 			                  
@@ -116,7 +127,7 @@
 			closeConfirmation() {
         this.displayConfirmation = false;
       },
-       async deletePool(id){
+       async deleteSpa(id){
      await axios.delete('http://localhost:8000/api/spa/'+id,
      { headers: { Authorization: 'Bearer ' + localStorage.getItem('token') }}
      )

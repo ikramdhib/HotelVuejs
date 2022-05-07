@@ -35,14 +35,12 @@
 						<Textarea id="desc" rows="4" v-model="spa.description"/>
 			</div>
 		</div>
-
-					
-					
-					
-
-					<div class="field col-12 md:col-12">
-					
-						<FileUpload name="file" url="" ref="file" @upload="onUpload"  :multiple="true" accept="image/png, image/jpeg" :maxFileSize="1000000"/>
+					<div class="field col-12 md:col-6">
+						<label for="prix4">Choisir des image :</label>
+						<span class="p-input-icon-left">
+							<i class="pi pi-folder-open" />
+							<InputText  type="file" multiple @change="changeFile"/>
+						</span>
 					</div>
 		
 	      <div class="field col-12 md:col-3">
@@ -81,12 +79,16 @@ export default {
                 this.spa.title=res.data.spa.title,
 				this.spa.capacite=res.data.spa.capacite,
 				this.spa.prix_reservation=res.data.spa.prix_reservation
-			
+			localStorage.set("id",res.data.spa.id);
      
    
        console.log(res.data);
          
        })},
+	     
+        
+        
+	
 	
 		
 			methods:{

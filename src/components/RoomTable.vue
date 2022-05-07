@@ -85,9 +85,21 @@
 									</template>
 								</Column>
 					<Column  header="" >
-						<template #body="{data}">
-							<Button  @click="delete_room(data.id)" label="Supprimer" class="p-button-rounded p-button-danger mr-2 mb-2" />
-						</template>
+					 <template #body="{data}">
+		                      		<Button :value="data.id"  @click="openConfirmation" label="Supprimer" style="width: auto" class="p-button-rounded p-button-danger mr-2 mb-2" />
+                              <Dialog header="Confirmation" v-model:visible="displayConfirmation" :style="{width: '350px'}" :modal="true">
+                                  <div class="flex align-items-center justify-content-center">
+                                    <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
+                                    <span>Vous avez vraiment supprimer?</span>
+                                  </div>
+                                  <template #footer>
+                                    <Button label="No" icon="pi pi-times" @click="closeConfirmation" class="p-button-text"/>
+                                    <Button label="Yes" icon="pi pi-check" @click="delete_room(data.id);closeConfirmation();" class="p-button-text" autofocus />
+                                  </template>
+                                </Dialog>
+			                  
+                        </template>
+						
 					</Column>
 		</DataTable>
 	  </div></div>
@@ -168,10 +180,12 @@
 										
 									</template>
 								</Column>
-					<Column  header="" >
-						<template #body="{data}">
+					
+					  <Column  header=""  bodyClass="text-center" style="min-width:8rem">
+                       <template #body="{data}">
 							<Button  @click="delete_room(data.id)" label="Supprimer" class="p-button-rounded p-button-danger mr-2 mb-2" />
 						</template>
+                   
 					</Column>
 					<template #expansion="{data}">
 						<div class="p-3">
@@ -226,6 +240,7 @@
         options:[],
          rooms:[],
      	expandedRows: [],
+		   displayConfirmation: false,
 			}
 		},
 		mounted() {
@@ -313,6 +328,12 @@
            console.log(res.data);
 
       })},
+	   openConfirmation() {
+				this.displayConfirmation = true;
+			},
+				closeConfirmation() {
+        this.displayConfirmation = false;
+      },
 		async deleteOption(id){
 			await axios.delete('http://localhost:8000/api/option/'+id,
 			{ headers: { Authorization: 'Bearer ' + localStorage.getItem('token') }}
