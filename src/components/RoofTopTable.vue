@@ -42,23 +42,23 @@
                           <i class="pi" :class="{'text-green-500 pi-check-circle': data.disponibilite=='1' , 'text-pink-500 pi-times-circle': data.disponibilite=='0'}"></i>
                         </template>
                     </Column>
-                  <Column header="Image">
-                      <template #body="data">
-                        {{ image }}
-                        <img :src="'http://localhost:8000/storage/app/'+image" :alt="data.id" class="shadow-2" width="100" />
+                  <Column header="Image"  style="min-width:8rem">
+                      <template #body="{data}">
+                       		<Button  @click="goImages(data.id)" icon="pi pi-image" class="p-button-rounded p-button-help p-button-outlined mr-2 mb-2"/>
+                     
                       </template>
                    </Column>
-                    <Column field="activity" header="" :showFilterMatchModes="false" style="min-width:12rem" >
+                    <Column field="activity" header="" :showFilterMatchModes="false" style="min-width:8rem" >
                         <template #body="{data}">
                           <router-link :to="{ name: 'updaterooftop', params: {id:data.id}}">
-			               	<Button   label="Modifier" class="p-button-rounded p-button-info mr-2 mb-2" />
+			               	<Button   icon="pi pi-pencil" class="p-button-rounded p-button-info p-button-outlined mr-2 mb-2" />
                           </router-link>
                         </template>
                     </Column>
 
                     <Column  header=""  bodyClass="text-center" style="min-width:8rem">
                         <template #body="{data}">
-		                      		<Button :value="data.id"  @click="openConfirmation" label="Supprimer" style="width: auto" class="p-button-rounded p-button-danger mr-2 mb-2" />
+		                      		<Button :value="data.id"  @click="openConfirmation"  icon="pi pi-times" class="p-button-rounded p-button-danger p-button-outlined mr-2 mb-2" />
                               <Dialog header="Confirmation" v-model:visible="displayConfirmation" :style="{width: '350px'}" :modal="true">
                                   <div class="flex align-items-center justify-content-center">
                                     <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
@@ -88,12 +88,10 @@
         rooftops:[],
         table:[],
         displayConfirmation: false,
-        image:null,
 			}
 		},
 		mounted() {
       this.getRoofTops();
-      this.getImage();
 		},
 		methods: {
       async getRoofTops(){
@@ -125,14 +123,12 @@
      { headers: { Authorization: 'Bearer ' + localStorage.getItem('token') }}
      )
        },
-       getImage(){
-         axios.get('http://localhost:8000/api/image/4').then(res=>{
-           this.image=res.data.data.path
-           console.log(this.image);
-         })
+       goImages(id){
+         this.$router.push({name:'images', params:{id:id , categorie:'rooftop'}})
        }
 		
-		}
+    },
+   
 	}
 </script>
 <style scoped>

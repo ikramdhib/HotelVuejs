@@ -29,23 +29,29 @@
                     </Column>
                       <Column header="Capacite" filterField="country.name" style="min-width:12rem">
                         <template #body="{data}">
-                            <span style="margin-left: .5em; vertical-align: middle" class="image-text">{{data.capacite}}</span>
+                            <span style="margin-left: .5em; vertical-align: middle" class="image-text">{{data.capacite}} Personne</span>
                         </template>
                     </Column>
                      <Column header="Disponibilité" filterField="country.name" style="min-width:12rem">
                         <template #body="{data}">
-                            <span style="margin-left: .5em; vertical-align: middle" class="image-text">{{data.avaibility}}</span>
+                          <i class="pi" :class="{'text-green-500 pi-check-circle': data.avaibility=='1' , 'text-pink-500 pi-times-circle': data.avaibility=='0'}"></i>
                         </template>
                     </Column>
+                     <Column header="Image"  style="min-width:8rem">
+                      <template #body="{data}">
+                       		<Button  @click="goImages(data.id)" icon="pi pi-image" class="p-button-rounded p-button-help p-button-outlined mr-2 mb-2"/>
+                     
+                      </template>
+                   </Column>
                       <Column  header="" bodyClass="text-center" style="min-width:8rem">
 									<template #body="{data}" >
-			               	<Button @click="Updatespa(data.id)"  label="Modifier" class="p-button-rounded p-button-info mr-2 mb-2" />
+			               	<Button @click="Updatespa(data.id)"   icon="pi pi-pencil" class="p-button-rounded p-button-info p-button-outlined mr-2 mb-2" />
 										
 									</template>
 								</Column>
                     <Column  header=""  bodyClass="text-center" style="min-width:8rem">
                         <template #body="{data}">
-		                      		<Button :value="data.id"  @click="openConfirmation" label="Supprimer" style="width: auto" class="p-button-rounded p-button-danger mr-2 mb-2" />
+		                      		<Button :value="data.id"  @click="openConfirmation" icon="pi pi-times" class="p-button-rounded p-button-danger p-button-outlined mr-2 mb-2" />
                               <Dialog header="Confirmation" v-model:visible="displayConfirmation" :style="{width: '350px'}" :modal="true">
                                   <div class="flex align-items-center justify-content-center">
                                     <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
@@ -112,6 +118,9 @@
      await axios.delete('http://localhost:8000/api/spa/'+id,
      { headers: { Authorization: 'Bearer ' + localStorage.getItem('token') }}
      )
+       },
+        goImages(id){
+         this.$router.push({name:'images', params:{id:id , categorie:'spa'}})
        }
 		
 		}
