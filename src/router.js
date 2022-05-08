@@ -468,7 +468,7 @@ const routes = [
     }
 },
 {
-  path: '/images/:id/:categorie',
+  path: '/images :id :categorie',
   name: 'images',
  component: () => import('./components/Images.vue'),
   beforeEnter: (to, from, next) => {
@@ -479,34 +479,6 @@ const routes = [
       }
     }
 },
-<<<<<<< HEAD
-
-=======
-{
-  path: '/offres',
-  name: 'offres',
- component: () => import('./components/OffresTables.vue'),
-  beforeEnter: (to, from, next) => {
-      if (!localStorage.getItem("token")) {
-        next("login");
-      } else {
-        next();
-      }
-    }
-},
-{
-  path: '/offresupdate/:id',
-  name: 'offresupdate',
- component: () => import('./components/OffresUpdate.vue'),
-  beforeEnter: (to, from, next) => {
-      if (!localStorage.getItem("token")) {
-        next("login");
-      } else {
-        next();
-      }
-    }
-},
->>>>>>> 7d18569f898ef6c26c6f007564bebca5d4df72b9
 ];
 
 const router = createRouter({

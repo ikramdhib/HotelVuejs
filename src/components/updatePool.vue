@@ -1,4 +1,4 @@
-<template>
+'<template>
 	<div class="grid">
 		<div class="col-12">
 			<div class="card">
@@ -16,21 +16,17 @@
 						<label for="num_etage">capacité:</label>
 						<InputText id="num_etage" type="number"  min="1" v-model="pool.capacite"/>
 					</div>
-                    	<div class="field col-12 md:col-4">
+                    
                         
-                   <span class="text-black-700">Disponibilité</span>           
-                   <div class="mt-2">
-						  <label class="inline-flex items-center ml-4">
-		
-            	 <input type="radio"  value="oui"  v-model="pool.avaibility">
-                <span class="ml-2">Oui</span>
-                 </label>
-               <label class="inline-flex items-center ml-4">
-                        	 <input type="radio"  value="non"  v-model="pool.avaibility">
-                <span class="ml-2">Non</span>
-              </label>
-				 
-				</div>
+               	<div class="field col-12 md:col-3">
+                        
+         <span class="text-black-700">Disponibilité</span>           
+                   
+            	      
+                   <div class="mt-2 py-2 px-4">
+				<InputSwitch  v-model="pool.avaibility"/>
+				</div>    
+         
 			</div>
 			<div class="field col-10">
 						<label for="desc">Description :</label>
@@ -42,12 +38,10 @@
 					
 					
 
-					<div class="field col-12 md:col-12">
 					
-						<FileUpload name="file" url="" ref="file" @upload="onUpload"  :multiple="true" accept="image/png, image/jpeg" :maxFileSize="1000000"/>
-					</div>
 		
 	      <div class="field col-12 md:col-3">
+			     <Toast />
 					<Button label="Ajouter" @click="updatePool()"  ></Button>
 		</div>
 		</div>
@@ -78,7 +72,11 @@ export default {
         headers: { Authorization: "Bearer " + localStorage.getItem("token") },
       })
       .then((res) => {
-      this.pool.avaibility=res.data.pool.avaibility,
+     	if(res.data.pool.avaibility==1){
+						this.pool.avaibility=true;
+					}else{
+						this.pool.avaibility=false;
+					}
                 this.pool.description=res.data.pool.description,
                 this.pool.title=res.data.pool.title,
 				this.pool.capacite=res.data.pool.capacite,
@@ -109,7 +107,7 @@ export default {
 				{ headers: { Authorization: 'Bearer ' + localStorage.getItem('token')}}
 				).then(res=>{
 					if(res){
-							this.$toast.add({severity:'success', summary: 'Excellent', detail:'les information a été soumise avec succès', life: 3000});
+							this.$toast.add({severity:'success', summary: 'Excellent', detail:'les information a été modifier avec succès', life: 3000});
 						}else{
 							this.$toast.add({severity:'error', summary: "Message d'erreur", detail:'quelque chose est mal passé', life: 3000});
 						}

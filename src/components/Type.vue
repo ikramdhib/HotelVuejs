@@ -16,6 +16,7 @@
 					</div>
 					</div>
 					 <div class="field col-12 md:col-3">
+						 <Toast/>
 					<Button label="Ajouter"  @click="addType()" ></Button>
 		</div>
 					

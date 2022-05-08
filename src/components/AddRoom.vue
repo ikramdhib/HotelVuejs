@@ -19,19 +19,16 @@
 					<div class="field col-12 md:col-4">
                         
               <span class="text-black-700">Disponibilité</span>           
-                   <div class="mt-2">
-						  <label class="inline-flex items-center ml-4">
-		
-            	 <input type="radio"  value="oui"  v-model="room.avaibility">
-                <span class="ml-2">Oui</span>
-                 </label>
-               <label class="inline-flex items-center ml-4">
-                        	 <input type="radio"  value="non"  v-model="room.avaibility">
-                <span class="ml-2">Non</span>
-              </label>
+                  
+                        
+                            
+                   <div class="mt-2 py-2 px-4">
+				<InputSwitch  v-model="room.avaibility"/>
+				</div>
 				 
 				</div>
-			</div>
+				 
+				
 			<div class="field col-9">
 						<label for="desc">description</label>
 						<Textarea id="desc" rows="4" v-model="room.description"/>
@@ -72,19 +69,23 @@
 					<div class="field col-12 md:col-3">
 						<label for="prix4">prix_booking3</label>
 						<InputText id="prix4" type="text" v-model="price.price_booking3"/>
-					</div>
+					</div></div>
+						 <div class="p-fluid formgrid grid">
 					<div class="field col-12 md:col-6">
 						<label for="prix4">Choisir des image :</label>
 						<span class="p-input-icon-left">
 							<i class="pi pi-folder-open" />
 							<InputText  type="file" multiple @change="changeFile"/>
 						</span>
-					</div>
-	               <div class="field col-12 md:col-3">
+					</div></div>
+					 <div class="p-fluid formgrid grid">
+	               <div class="ield col-12 md:col-3  py-4">
+					   <Toast/>
 					<Button label="Ajouter"  @click="addroom();addPrice()" ></Button>
+					</div>
 		</div>
 		</div>
-			</div>
+		
 		</div>
 		</div>
 </template>

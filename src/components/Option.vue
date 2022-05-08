@@ -29,7 +29,7 @@
               </label>
   
         </div>  </div></div>
-		
+		<Toast/>
 	<Button label="ajouter" @click="addOption()" />
     <router-link :to="{ path: 'RoomTable'}"> <Button label="Annuler" class="p-button-secondary "  />
 	</router-link>
@@ -70,9 +70,13 @@ export default {
 				{ headers: { Authorization: 'Bearer ' + localStorage.getItem('token')}}
 				).then(res=>{
 		
-					console.log(this.headers);
-				     let response = res.data.data;
-					 console.log(response);
+					
+				
+					if(res){
+							this.$toast.add({severity:'success', summary: 'Excellent', detail:'les information a été soumis avec succès', life: 3000});
+						}else{
+							this.$toast.add({severity:'error', summary: "Message d'erreur", detail:'quelque chose est mal passé', life: 3000});
+						}
 					 
 			         
 					 

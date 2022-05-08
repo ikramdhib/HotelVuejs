@@ -17,21 +17,15 @@
 						<label for="num_etage">capacité:</label>
 						<InputText id="num_etage" type="number"  min="1" v-model="pool.capacite"/>
 					</div>
-                    	<div class="field col-12 md:col-3">
+                    	          
+                 <div class="field col-12 md:col-3">
                         
-                 <span class="text-black-700">Disponibilité</span>           
-                   <div class="mt-2">
-						  <label class="inline-flex items-center ml-4">
-		
-            	 <input type="radio"  value="oui"  v-model="pool.avaibility">
-                <span class="ml-2">Oui</span>
-                 </label>
-               <label class="inline-flex items-center ml-4">
-                        	 <input type="radio"  value="non"  v-model="pool.avaibility">
-                <span class="ml-2">Non</span>
-              </label>
-				 
+                        <span class="text-black-700">Disponibilité :</span>           
+                   <div class="mt-2 py-2 px-4">
+				<InputSwitch  v-model="pool.avaibility"/>
 				</div>
+				 
+				
 			</div>
 			<div class="field col-10">
 						<label for="desc">Description :</label>
@@ -50,11 +44,13 @@
 							<InputText  type="file" multiple @change="changeFile"/>
 						</span>
 					</div>
+					    <div class="p-fluid formgrid grid">
 		
 	      <div class="field col-12 md:col-3">
+			   <Toast />
 					<Button label="Ajouter" @click="addPool()"  ></Button>
 		</div>
-		</div>
+		</div></div>
 			</div>
 		</div>
 		

@@ -29,7 +29,7 @@
               </label>
   
         </div>  </div></div>
-		
+		<Toast/>
 	<Button label="modifier" @click="updateOption()" />
     <router-link :to="{ path: 'RoomTable'}"> <Button label="Annuler" class="p-button-secondary "  />
 	</router-link>
@@ -85,7 +85,7 @@ export default {
 				).then(res=>{
 		
 					if(res.data.data){
-							this.$toast.add({severity:'success', summary: 'Excellent', detail:'les information a été soumise avec succès', life: 3000});
+							this.$toast.add({severity:'success', summary: 'Excellent', detail:'les information a été modifier avec succès', life: 3000});
 						}else{
 							this.$toast.add({severity:'error', summary: "Message d'erreur", detail:'quelque chose est mal passé', life: 3000});
 						}

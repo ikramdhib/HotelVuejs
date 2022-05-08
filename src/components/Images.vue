@@ -18,22 +18,6 @@
 								<img :src="'http://localhost:8000/storage' + slotProps.data.name" :alt="slotProps.data.name" class="my-4 md:my-0 w-9 md:w-10rem shadow-2 mr-5" />
 								<div class="flex-1 text-center md:text-left">
 
-<<<<<<< HEAD
-        <div class="col-12">
-            <div class="card">
-                <h5>Galleria</h5>
-                <Galleria :value="images" :responsiveOptions="galleriaResponsiveOptions" :numVisible="images.length" :circular="true" containerStyle="max-width: 800px; margin: auto">
-                    <template #item="slotProps">
-                        <img :src="'http://localhost:8000/storage'+slotProps.item.name" :alt="slotProps.item.alt" style="width: 100%; display: block" />
-                    </template>
-                    <template #thumbnail="slotProps">
-                        <img :src="'http://localhost:8000/storage'+slotProps.item.name" :alt="slotProps.item.alt" style="width: 100%; display: block;" />
-                    </template>
-                      
-                </Galleria>
-            </div>
-          
-=======
 								</div>
 								<div class="flex flex-row md:flex-column justify-content-between w-full md:w-auto align-items-center md:align-items-end mt-5 md:mt-0">
 
@@ -83,12 +67,8 @@
 				</DataView>
 			</div>
 		</div>
->>>>>>> 7d18569f898ef6c26c6f007564bebca5d4df72b9
         </div>
     </div>
-<<<<<<< HEAD
-	
-=======
     <div class="grid p-fluid" v-if="update">
 		<div class="col-12">
 			<div class="card">
@@ -114,9 +94,8 @@
 			</div>
         </div>
 </template>
->>>>>>> 7d18569f898ef6c26c6f007564bebca5d4df72b9
 
-</template>
+
 <script>
 import axios from 'axios';
 
@@ -190,22 +169,6 @@ export default {
             })
             }
         },
-<<<<<<< HEAD
-       async deleteImage(id){
-     await axios.delete('http://localhost:8000/api/image/'+id,
-     { headers: { Authorization: 'Bearer ' + localStorage.getItem('token') }}
-     )
-       },
-        updateImages(id){
-        
-      
-         this.$router.push({name:'updateImages', params:{id:id}})
-       
-     
-
-
-    }}
-=======
         clickupdate(id){
             this.id=id
             this.update=true
@@ -230,7 +193,6 @@ export default {
         this.displayConfirmation = false;
       },
     }
->>>>>>> 7d18569f898ef6c26c6f007564bebca5d4df72b9
 };
 </script>
 
