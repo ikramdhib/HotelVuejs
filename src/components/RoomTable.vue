@@ -114,7 +114,7 @@
 						</div>
 					</template>
 					<Column :expander="true" headerStyle="width: 3rem" />
-					<Column  header="type chambre" >
+					<Column  header="Type du chambre" >
                     
 						<template #body="{data}">
                   
@@ -131,52 +131,58 @@
 							{{data.nbBed}}
 						</template>
 					</Column>
-					<Column  header="description" >
+					<Column  header="Description" >
 					<template #body="{data}">
 							{{ data.description}} 
 						</template></Column>
-					<Column  header="numero room" >
+					<Column  header="Numero room" >
 						<template #body="{data}">
                    {{ data.num_room}} 
 						</template>
 					</Column>
-					<Column  header="numero etage" >
+					<Column  header="Numero etage" >
 						<template #body="{data}">
               {{ data.numEtage}} 
 						</template>
 					</Column>
-                    	<Column  header="nombre d'adult" >
+                    	<Column  header="Nombre d'adult" >
 						<template #body="{data}">
               {{ data.nbAdult}} Adult
 						</template>
 					</Column>
-                    	<Column  header="nombre enfant" >
+                    	<Column  header="Nombre enfant" >
 						<template #body="{data}">
               {{ data.nbEnfant}} Enfant
 						</template>
 					</Column>
-                    <Column  header="nombre bebe" >
+                    <Column  header="Nombre bebe" >
 						<template #body="{data}">
-              {{ data.nbbebe}} Bebe
+              {{ data.nbbebe}} Bébé
 						</template>
 					</Column>
-                    <Column  header="disponibilité" >
+                    <Column  header="Disponibilité" >
 						<template #body="{data}">
               {{ data.avaibility}} 
 						</template>
 					</Column>
-					 <Column  header="prix chambre" >
+					 <Column  header="Prix chambre" >
 						<template #body="{data}">
             <div v-for="price in prices" :key="price.id">
                     <div v-if="price.id == data.price_id">
-						{{ price.price_hotel }}DT
+						{{ price.price_hotel }} DT
                    
 					</div></div>
 						</template>
 					</Column>
+				 <Column header="Image"  style="min-width:8rem">
+                      <template #body="{data}">
+                       		<Button  @click="goImages(data.id)" icon="pi pi-image" class="p-button-rounded p-button-help p-button-outlined mr-2 mb-2"/>
+                     
+                      </template>
+                   </Column>
 					  <Column  header="" >
 									<template #body="{data}" >
-			               	<Button @click="updateRoom(data.id)"  label="Modifier" class="p-button-rounded p-button-info mr-2 mb-2" />
+			               	<Button @click="updateRoom(data.id)"   icon="pi pi-pencil" class="p-button-rounded p-button-info p-button-outlined mr-2 mb-2" />
 										
 									</template>
 								</Column>
@@ -211,13 +217,13 @@
 								</Column>
 								  <Column  header="" >
 									<template #body="{data}" >
-			               	<Button @click="updateOption(data.id)"  label="Modifier" class="p-button-rounded p-button-info mr-2 mb-2" />
+			               	<Button @click="updateOption(data.id)"  icon="pi pi-pencil" class="p-button-rounded p-button-info p-button-outlined mr-2 mb-2"  />
 										
 									</template>
 								</Column>
 								<Column headerStyle="width:4rem">
 									<template #body="{data}">
-		                      		<Button  label="Supprimer" @click="deleteOption(data.id)"  class="p-button-rounded p-button-danger mr-2 mb-2" />
+		                      		<Button   @click="deleteOption(data.id)"  icon="pi pi-times" class="p-button-rounded p-button-danger p-button-outlined mr-2 mb-2" />
 									
 									</template>
 								</Column>
@@ -338,7 +344,10 @@
 			await axios.delete('http://localhost:8000/api/option/'+id,
 			{ headers: { Authorization: 'Bearer ' + localStorage.getItem('token') }}
 			)
-		}
+		},
+		goImages(id){
+         this.$router.push({name:'images', params:{id:id , categorie:'chambre'}})
+       }
       
 		},
 		

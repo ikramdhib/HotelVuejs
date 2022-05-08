@@ -467,6 +467,19 @@ const routes = [
       }
     }
 },
+{
+  path: '/images/:id/:categorie',
+  name: 'images',
+ component: () => import('./components/Images.vue'),
+  beforeEnter: (to, from, next) => {
+      if (!localStorage.getItem("token")) {
+        next("login");
+      } else {
+        next();
+      }
+    }
+},
+
 ];
 
 const router = createRouter({

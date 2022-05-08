@@ -35,14 +35,25 @@
               {{ data.prix_reservation}} DT
 						</template>
 					</Column>
+					<Column header="Disponibilite" >
+							<template #body="{data}">
+							<i class="pi" :class="{'text-green-500 pi-check-circle': data.disponibilite=='1' , 'text-pink-500 pi-times-circle': data.disponibilite=='0'}"></i>
+								</template>
+						</Column>
+								<Column header="Image"  style="min-width:8rem">
+                      <template #body="{data}">
+                       		<Button  @click="goImages(data.id)" icon="pi pi-image" class="p-button-rounded p-button-help p-button-outlined mr-2 mb-2"/>
+                     
+                      </template>
+                   </Column>
 					<Column  header="" >
 						<template #body="{data}">
-							<Button  @click="goUpdateRestaurant(data.id)"  label="Modifier" class="p-button-rounded p-button-info mr-2 mb-2" />
+							<Button  @click="goUpdateRestaurant(data.id)" icon="pi pi-pencil" class="p-button-rounded p-button-info p-button-outlined mr-2 mb-2"/>
 						</template>
 					</Column>
 					<Column  header="" >
 						<template #body="{data}">
-							<Button  @click="deleteRestaurant(data.id)" label="Supprimer" class="p-button-rounded p-button-danger mr-2 mb-2" />
+							<Button  @click="deleteRestaurant(data.id)" icon="pi pi-times" class="p-button-rounded p-button-danger p-button-outlined mr-2 mb-2" />
 						</template>
 					</Column>
 					<template #expansion="{data}">
@@ -61,21 +72,27 @@
 										{{data.nom}}
 									</template>
 								</Column>
-								<Column field="Prix" header="Date" >
+								<Column  header="Prix" >
 									<template #body="{data}"> 
 										{{ data.prix_plat}} DT
 									</template>
 								</Column>
+									<Column header="Image"  style="min-width:8rem">
+                   		   <template #body="{data}">
+                     	  		<Button  @click="goImagess(data.id)" icon="pi pi-image" class="p-button-rounded p-button-help p-button-outlined mr-2 mb-2"/>
+                     
+                    			  </template>
+                 			  </Column>
 								<Column  header="" >
 									<template #body="{data}" >
-			               	<Button @click="goUpdatePlat(data.id)"  label="Modifier" class="p-button-rounded p-button-info mr-2 mb-2" />
+			               	<Button @click="goUpdatePlat(data.id)"  icon="pi pi-pencil" class="p-button-rounded p-button-info p-button-outlined mr-2 mb-2" />
 										
 									</template>
 								</Column>
 								
 								<Column headerStyle="width:4rem">
 									<template #body="{data}">
-		                      		<Button  label="Supprimer" @click="deletePlat(data.id)"  class="p-button-rounded p-button-danger mr-2 mb-2" />
+		                      		<Button  @click="deletePlat(data.id)"  icon="pi pi-times" class="p-button-rounded p-button-danger p-button-outlined mr-2 mb-2" />
 									
 									</template>
 								</Column>
@@ -153,7 +170,13 @@
 
 		goUpdatePlat(id){
 			this.$router.push({name:'platupdate', params:{id:id}});
-		}
+		},
+		goImages(id){
+         this.$router.push({name:'images', params:{id:id , categorie:'restaurant'}})
+	   },
+	   goImagess(id){
+         this.$router.push({name:'images', params:{id:id , categorie:'plat'}})
+       }
       
 		}
 		

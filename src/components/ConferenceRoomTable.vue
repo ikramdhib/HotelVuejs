@@ -39,15 +39,21 @@
 						  <i class="pi" :class="{'text-green-500 pi-check-circle': data.disponibilite=='1' , 'text-pink-500 pi-times-circle': data.disponibilite=='0'}"></i>
 						</template>
 						</Column>
+						 <Column header="Image"  style="min-width:8rem">
+                      <template #body="{data}">
+                       		<Button  @click="goImages(data.id)" icon="pi pi-image" class="p-button-rounded p-button-help p-button-outlined mr-2 mb-2"/>
+                     
+                      </template>
+                   </Column>
                     <Column header=""   style="min-width:10rem">
                         <template #body="{data}">
-                       	<Button @click="goUpdateRoom(data.id)"  label="Modifier" class="p-button-rounded p-button-info mr-2 mb-2" />
+                       	<Button @click="goUpdateRoom(data.id)" icon="pi pi-pencil" class="p-button-rounded p-button-info p-button-outlined mr-2 mb-2"/>
 
                         </template>
                     </Column>
                     <Column header="" :filterMenuStyle="{'width':'14rem'}" style="min-width:12rem">
                         <template #body="{data}">
-                     		<Button @click="deleteConferenceRoom(data.id)" label="Supprimer" class="p-button-rounded p-button-danger mr-2 mb-2" />
+                     		<Button @click="deleteConferenceRoom(data.id)" icon="pi pi-times" class="p-button-rounded p-button-danger p-button-outlined mr-2 mb-2"  />
 
                         </template>
                     </Column>
@@ -104,14 +110,14 @@
 								</Column>
 								<Column  header="" >
 									<template #body="{data}" >
-			               	<Button @click="goUpdateType(data.id)"  label="Modifier" class="p-button-rounded p-button-info mr-2 mb-2" />
+			               	<Button @click="goUpdateType(data.id)"   icon="pi pi-pencil" class="p-button-rounded p-button-info p-button-outlined mr-2 mb-2" />
 										
 									</template>
 								</Column>
 								
 								<Column headerStyle="width:4rem">
 									<template #body="{data}">
-		                      		<Button @click="deleteType(data.id)" label="Supprimer" class="p-button-rounded p-button-danger mr-2 mb-2" />
+		                      		<Button @click="deleteType(data.id)" icon="pi pi-times" class="p-button-rounded p-button-danger p-button-outlined mr-2 mb-2" />
 									
 									</template>
 								</Column>
@@ -170,14 +176,14 @@
 								</Column>
 								<Column  header="" >
 									<template #body="{data}" >
-			               	<Button @click="goUpdateEquipement(data.id)"  label="Modifier" class="p-button-rounded p-button-info mr-2 mb-2" />
+			               	<Button @click="goUpdateEquipement(data.id)"   icon="pi pi-pencil" class="p-button-rounded p-button-info p-button-outlined mr-2 mb-2" />
 										
 									</template>
 								</Column>
 								
 								<Column headerStyle="width:4rem">
 									<template #body={data}>
-		                      		<Button @click="deleteEquipement(data.id)" label="Supprimer" class="p-button-rounded p-button-danger mr-2 mb-2" />
+		                      		<Button @click="deleteEquipement(data.id)" icon="pi pi-times" class="p-button-rounded p-button-danger p-button-outlined mr-2 mb-2"/>
 									
 									</template>
 								</Column>
@@ -286,7 +292,10 @@ import axios from 'axios';
 	  },
 	  goUpdateRoom(id){
 		   this.$router.push({name:'conferenceroomupdate' , params:{id:id}})
-	  }
+	  },
+	  goImages(id){
+         this.$router.push({name:'images', params:{id:id , categorie:'conferenceroom'}})
+       }
 		}
 	}
 </script>
