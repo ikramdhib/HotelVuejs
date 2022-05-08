@@ -190,11 +190,11 @@
 				</div>
 				<div v-if="option=='Chambre'">
         <h4 class="px-4 py-4">LES OFFRES POUR LES CHAMBRES</h4>
-        <DataTable :value="table3" v-model:expandedRows="expandedRows2" dataKey="id" responsiveLayout="scroll">
+        <DataTable :value="table3" v-model:expandedRows="expandedRows3" dataKey="id" responsiveLayout="scroll">
 					<template #header>
 						<div>
-							<Button icon="pi pi-plus" label="Expand All" @click="expandAll2" class="mr-2 mb-2" />
-							<Button icon="pi pi-minus" label="Collapse All" @click="collapseAll2" class="mb-2" />
+							<Button icon="pi pi-plus" label="Expand All" @click="expandAll3" class="mr-2 mb-2" />
+							<Button icon="pi pi-minus" label="Collapse All" @click="collapseAll3" class="mb-2" />
 						</div>
 					</template>
 					<Column :expander="true" headerStyle="width: 3rem" />
@@ -291,11 +291,11 @@
 				</div>
 				<div v-if="option=='Pool'">
         <h4 class="px-4 py-4">LES OFFRES POUR LES POOL</h4>
-        <DataTable :value="table4" v-model:expandedRows="expandedRows2" dataKey="id" responsiveLayout="scroll">
+        <DataTable :value="table4" v-model:expandedRows="expandedRows4" dataKey="id" responsiveLayout="scroll">
 					<template #header>
 						<div>
-							<Button icon="pi pi-plus" label="Expand All" @click="expandAll2" class="mr-2 mb-2" />
-							<Button icon="pi pi-minus" label="Collapse All" @click="collapseAll2" class="mb-2" />
+							<Button icon="pi pi-plus" label="Expand All" @click="expandAll4" class="mr-2 mb-2" />
+							<Button icon="pi pi-minus" label="Collapse All" @click="collapseAll4" class="mb-2" />
 						</div>
 					</template>
 					<Column :expander="true" headerStyle="width: 3rem" />
@@ -387,11 +387,11 @@
 				</div>
 				<div v-if="option=='Spa'">
         <h4 class="px-4 py-4">LES OFFRES POUR LES SPA</h4>
-        <DataTable :value="table5" v-model:expandedRows="expandedRows2" dataKey="id" responsiveLayout="scroll">
+        <DataTable :value="table5" v-model:expandedRows="expandedRows5" dataKey="id" responsiveLayout="scroll">
 					<template #header>
 						<div>
-							<Button icon="pi pi-plus" label="Expand All" @click="expandAll2" class="mr-2 mb-2" />
-							<Button icon="pi pi-minus" label="Collapse All" @click="collapseAll2" class="mb-2" />
+							<Button icon="pi pi-plus" label="Expand All" @click="expandAll5" class="mr-2 mb-2" />
+							<Button icon="pi pi-minus" label="Collapse All" @click="collapseAll5" class="mb-2" />
 						</div>
 					</template>
 					<Column :expander="true" headerStyle="width: 3rem" />
@@ -483,11 +483,11 @@
 				</div>
 				<div v-if="option=='Roof-Top'">
         <h4 class="px-4 py-4">LES OFFRES POUR LES ROOF-TOP</h4>
-        <DataTable :value="table6" v-model:expandedRows="expandedRows2" dataKey="id" responsiveLayout="scroll">
+        <DataTable :value="table6" v-model:expandedRows="expandedRows6" dataKey="id" responsiveLayout="scroll">
 					<template #header>
 						<div>
-							<Button icon="pi pi-plus" label="Expand All" @click="expandAll2" class="mr-2 mb-2" />
-							<Button icon="pi pi-minus" label="Collapse All" @click="collapseAll2" class="mb-2" />
+							<Button icon="pi pi-plus" label="Expand All" @click="expandAll6" class="mr-2 mb-2" />
+							<Button icon="pi pi-minus" label="Collapse All" @click="collapseAll6" class="mb-2" />
 						</div>
 					</template>
 					<Column :expander="true" headerStyle="width: 3rem" />
@@ -599,6 +599,10 @@ import axios from 'axios';
 		displayConfirmation:false,
 		expandedRows1: [],
 		expandedRows2: [],
+		expandedRows3: [],
+		expandedRows4: [],
+		expandedRows5: [],
+		expandedRows6: [],
 		buttons : [ 'Chambre' , 'Salle de conference','Roof-Top',
 						'Pool', 'Spa' , 'Restaurant' ],
 		option:'Chambre',
@@ -618,17 +622,38 @@ import axios from 'axios';
 		methods: {
       
 		expandAll2() {
-				this.expandedRows2 = this.table3;
+				this.expandedRows2 = this.table2;
+			},
+			expandAll3() {
+				this.expandedRows3 = this.table3;
+			},expandAll4() {
+				this.expandedRows4 = this.table4;
+			},expandAll5() {
+				this.expandedRows5 = this.table5;
+			},expandAll6() {
+				this.expandedRows6 = this.table6;
 			},
 			
 			expandAll() {
-				this.expandedRows1 = this.table2;
+				this.expandedRows1 = this.table1;
 			},
 			collapseAll() {
 				this.expandedRows1 = null;
 			},
 			collapseAll2() {
 				this.expandedRows2 = null;
+			},
+			collapseAll3() {
+				this.expandedRows3= null;
+			},
+			collapseAll4() {
+				this.expandedRows4 = null;
+			},
+			collapseAll5() {
+				this.expandedRows5 = null;
+			},
+			collapseAll6() {
+				this.expandedRows6 = null;
 			},
       
       async getAllRooms(){

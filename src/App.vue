@@ -74,7 +74,7 @@ export default {
                                     to:'addconferenceroom'
                                 },
                                 {
-                                    label: 'Les salles de cinference', icon: 'pi pi-list',
+                                    label: 'Les salles de cenference', icon: 'pi pi-list',
                                     to:'conferencerooms'
                                 },
                             ]

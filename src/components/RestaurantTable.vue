@@ -9,6 +9,9 @@
 							<Button icon="pi pi-minus" label="Collapse All" @click="collapseAll" class="mb-2" />
 						</div>
 					</template>
+					 <template #empty>
+                        Pas de restaurant.
+                    </template>
 					<Column :expander="true" headerStyle="width: 3rem" />
 					<Column  header="Restaurant" >
 						<template #body="{data}">
@@ -53,13 +56,23 @@
 					</Column>
 					<Column  header="" >
 						<template #body="{data}">
-							<Button  @click="deleteRestaurant(data.id)" icon="pi pi-times" class="p-button-rounded p-button-danger p-button-outlined mr-2 mb-2" />
+							<Button  @click="openConfirmation" icon="pi pi-times" class="p-button-rounded p-button-danger p-button-outlined mr-2 mb-2" />
+							 <Dialog header="Confirmation" v-model:visible="displayConfirmation" :style="{width: '350px'}" :modal="true">
+                                  <div class="flex align-items-center justify-content-center">
+                                    <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
+                                    <span>Are you sure you want to proceed?</span>
+                                  </div>
+                                  <template #footer>
+                                    <Button label="No" icon="pi pi-times" @click="closeConfirmation" class="p-button-text"/>
+                                    <Button label="Yes" icon="pi pi-check" @click="deleteRestaurant(data.id);closeConfirmation();" class="p-button-text" autofocus />
+                                  </template>
+                                </Dialog>
 						</template>
 					</Column>
 					<template #expansion="{data}">
-						<div class="p-3">
+						<div class="p-3" v-if="data.menu">
 							<h5>Menu : {{data.menu.titre}}</h5>
-							<DataTable :value="data.menu.plat" responsiveLayout="scroll" >
+							<DataTable :value="data.menu.plat"   responsiveLayout="scroll" >
 								
 								<Column  header="Intitulé"  >
 								
@@ -92,8 +105,17 @@
 								
 								<Column headerStyle="width:4rem">
 									<template #body="{data}">
-		                      		<Button  @click="deletePlat(data.id)"  icon="pi pi-times" class="p-button-rounded p-button-danger p-button-outlined mr-2 mb-2" />
-									
+		                      		<Button  @click="openConfirmationPlat"  icon="pi pi-times" class="p-button-rounded p-button-danger p-button-outlined mr-2 mb-2" />
+									 <Dialog header="Confirmation" v-model:visible="displayConfirmation" :style="{width: '350px'}" :modal="true">
+                                  <div class="flex align-items-center justify-content-center">
+                                    <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
+                                    <span>Are you sure you want to proceed?</span>
+                                  </div>
+                                  <template #footer>
+                                    <Button label="No" icon="pi pi-times" @click="closeConfirmationPlat" class="p-button-text"/>
+                                    <Button label="Yes" icon="pi pi-check" @click="deletePlat(data.id);closeConfirmationPlat();" class="p-button-text" autofocus />
+                                  </template>
+                                </Dialog>
 									</template>
 								</Column>
 							</DataTable>
@@ -110,16 +132,12 @@
 			return {
         table:[],
         restaurants:[],
-        table2:[],
-        plats:[],
-     	expandedRows: [],
+		 expandedRows: [],
+		 displayConfirmation: false,
 			}
 		},
 		mounted() {
       this.getRestaurants();
-      console.log("rest",this.table);
-      this.getPlats();
-      console.log("plats",this.table2);
 		},
 		methods: {
 			initFilters1() {
@@ -129,7 +147,7 @@
 				this.initFilters1();
 			},
 			expandAll() {
-				this.expandedRows = this.table.filter(p => p.id);
+				this.expandedRows = this.table
 			},
 			collapseAll() {
 				this.expandedRows = null;
@@ -145,15 +163,7 @@
         })
       },
 
-      async getPlats(){
-        await axios.get('http://localhost:8000/api/getPlats')
-        .then(res=>{
-          this.plats=res.data.plats;
-          for(let i=0 ; i<this.plats.length ; i++){
-            this.table2.push(this.plats[i]);
-          }
-        })
-	  },
+      
 	  	async deleteRestaurant(id){
 			await axios.delete('http://localhost:8000/api/delete-Restaurant/'+id,
 			{ headers: { Authorization: 'Bearer ' + localStorage.getItem('token') }}
@@ -176,7 +186,21 @@
 	   },
 	   goImagess(id){
          this.$router.push({name:'images', params:{id:id , categorie:'plat'}})
-       }
+	   },
+	     openConfirmation() {
+				this.displayConfirmation = true;
+			},
+			
+			closeConfirmation() {
+        this.displayConfirmation = false;
+	  },
+	  openConfirmationPlat() {
+				this.displayConfirmation = true;
+			},
+			
+			closeConfirmationPlat() {
+        this.displayConfirmation = false;
+      },
       
 		}
 		

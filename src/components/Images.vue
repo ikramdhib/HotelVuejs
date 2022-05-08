@@ -1,22 +1,98 @@
 <template>
     <div class="grid p-fluid">
-        
+        <div class="grid">
+		<div class="col-12">
+			<div class="card">
+				<h5>DataView</h5>
+				<DataView :value="images" :layout="layout" :paginator="true" :rows="9" :sortOrder="sortOrder" :sortField="sortField" >
+					<template #header>
+						<div class="grid grid-nogutter">
+							<div class="col-6 text-right">
+								<DataViewLayoutOptions v-model="layout" />
+							</div>
+						</div>
+					</template>
+					<template #list="slotProps">
+						<div class="col-12">
+							<div class="flex flex-column md:flex-row align-items-center p-3 w-full">
+								<img :src="'http://localhost:8000/storage' + slotProps.data.name" :alt="slotProps.data.name" class="my-4 md:my-0 w-9 md:w-10rem shadow-2 mr-5" />
+								<div class="flex-1 text-center md:text-left">
 
-        <div class="col-12">
-            <div class="card">
-                <h5>Galleria</h5>
-                <Galleria :value="images" :responsiveOptions="galleriaResponsiveOptions" :numVisible="images.length" :circular="true" containerStyle="max-width: 800px; margin: auto">
-                    <template #item="slotProps">
-                        <img :src="'http://localhost:8000/storage'+slotProps.item.name" :alt="slotProps.item.alt" style="width: 100%; display: block" />
-                    </template>
-                    <template #thumbnail="slotProps">
-                        <img :src="'http://localhost:8000/storage'+slotProps.item.name" :alt="slotProps.item.alt" style="width: 100%; display: block;" />
-                    </template>
-                </Galleria>
-            </div>
+								</div>
+								<div class="flex flex-row md:flex-column justify-content-between w-full md:w-auto align-items-center md:align-items-end mt-5 md:mt-0">
+
+									<Button label="Modifier" icon="pi pi-pencil" class="p-button-rounded p-button-info p-button-outlined mr-2 mb-2" @click="clickupdate(slotProps.data.id)"></Button>
+                                    <Toast/>
+									<Button label="Supprimer" @click="openConfirmation" icon="pi pi-times" class="p-button-rounded p-button-danger p-button-outlined mr-2 mb-2"></Button>
+                                    <Dialog header="Confirmation" v-model:visible="displayConfirmation" :style="{width: '350px'}" :modal="true">
+                                  <div class="flex align-items-center justify-content-center">
+                                    <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
+                                    <span>Are you sure you want to proceed?</span>
+                                  </div>
+                                  <template #footer>
+                                    <Button label="No" icon="pi pi-times" @click="closeConfirmation" class="p-button-text"/>
+                                    <Button label="Yes" icon="pi pi-check" @click="deleteImage(slotProps.data.id);closeConfirmation();" class="p-button-text" autofocus />
+                                  </template>
+                                </Dialog>
+								</div>
+							</div>
+						</div>
+					</template>
+                    <template #grid="slotProps">
+						<div class="col-12 md:col-4">
+							<div class="card m-3 border-1 surface-border">
+								<div class="flex align-items-center justify-content-between">
+								</div>
+								<div class="text-center">
+									<img :src="'http://localhost:8000/storage' + slotProps.data.name" :alt="slotProps.data.name" class="w-9 shadow-2 my-3 mx-0"/>
+								</div>
+								<div class="flex align-items-center justify-content-between">
+									<Button  icon="pi pi-pencil" class="p-button-rounded p-button-info p-button-outlined mr-2 mb-2" @click="clickupdate(slotProps.data.id)"></Button>
+                                    <Toast/>
+									<Button  icon="pi pi-times" @click="openConfirmation" class="p-button-rounded p-button-danger  p-button-outlined mr-2 mb-2"></Button>
+                                     <Dialog header="Confirmation" v-model:visible="displayConfirmation" :style="{width: '350px'}" :modal="true">
+                                  <div class="flex align-items-center justify-content-center">
+                                    <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
+                                    <span>Are you sure you want to proceed?</span>
+                                  </div>
+                                  <template #footer>
+                                    <Button label="No" icon="pi pi-times" @click="closeConfirmation" class="p-button-text"/>
+                                    <Button label="Yes" icon="pi pi-check" @click="deleteImage(slotProps.data.id);closeConfirmation();" class="p-button-text" autofocus />
+                                  </template>
+                                </Dialog>
+								</div>
+							</div>
+						</div>
+					</template>
+				</DataView>
+			</div>
+		</div>
         </div>
-
     </div>
+    <div class="grid p-fluid" v-if="update">
+		<div class="col-12">
+			<div class="card">
+                 <div class="p-fluid formgrid grid">
+					<div class="field col-12 md:col-6">
+						<h5 class="px-4 py-4">Modifier l'image pour le Categorie {{ this.$route.params.categorie}}:</h5>
+						<span class="p-input-icon-left">
+							<i class="pi pi-folder-open" />
+							<InputText type="file" multiple @change="changeFile"/>
+						</span>
+			 </div>
+			</div>
+             <div class="p-fluid formgrid grid" >
+			<div class="field col-12 md:col-3 py-4">
+			   <Toast />
+			<Button label="Modifier" @click="updateOffre()"></Button>
+		</div>
+        <div class="field col-12 md:col-3 py-4">
+			<Button label="Annuler" @click="goBack()" class="p-button-secondary mr-2 mb-2" ></Button>
+			</div>
+             </div>
+			 </div>
+			</div>
+        </div>
 </template>
 
 <script>
@@ -25,25 +101,10 @@ export default {
     data() {
         return {
             images: [],
-            galleriaResponsiveOptions: [
-                {
-                    breakpoint: "1024px",
-                    numVisible: 5,
-                },
-                {
-                    breakpoint: "960px",
-                    numVisible: 4,
-                },
-                {
-                    breakpoint: "768px",
-                    numVisible: 3,
-                },
-                {
-                    breakpoint: "560px",
-                    numVisible: 1,
-                },
-            ],
-           
+            displayConfirmation:false,
+           id:null ,
+            layout:'grid',
+           update:false,
         };
     },
     mounted() {
@@ -97,7 +158,30 @@ export default {
             
             })
             }
-        }
+        },
+        clickupdate(id){
+            this.id=id
+            this.update=true
+        },
+        deleteImage(id){
+            axios.delete('http://localhost:8000/api/image/'+id,
+				{ headers: { Authorization: 'Bearer ' + localStorage.getItem('token') }}
+            ).then(res=>{
+                if(res.data.success=="true"){
+                this.$toast.add({severity:'success', summary: 'Excellent', detail:'les information a été soumise avec succès', life: 3000});
+			}else{
+				this.$toast.add({severity:'error', summary: "Message d'erreur", detail:'quelque chose est mal passé', life: 3000});
+						
+			  }
+            })
+        },
+         openConfirmation() {
+				this.displayConfirmation = true;
+			},
+			
+			closeConfirmation() {
+        this.displayConfirmation = false;
+      },
     }
 };
 </script>
