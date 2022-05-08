@@ -27,15 +27,15 @@
                             <span style="margin-left: .5em; vertical-align: middle" class="image-text">{{data.intitule}}</span>
                         </template>
                     </Column>
-                     <Column  header=""  bodyClass="text-center" style="min-width:8rem" >
+                     <Column  header=""  bodyClass="text-center" style="min-width:3rem" >
 									<template #body="{data}" >
-			               	<Button @click="Updatetype(data.id)"  label="Modifier" class="p-button-rounded p-button-info mr-2 mb-2" />
+			               	<Button @click="Updatetype(data.id)"  icon="pi pi-pencil" class="p-button-rounded p-button-info p-button-outlined mr-2 mb-2" />
 										
 									</template>
 								</Column>
-                    <Column  header=""  bodyClass="text-center" style="min-width:8rem">
+                    <Column  header=""  bodyClass="text-center" style="min-width:3rem">
                         <template #body="{data}">
-		                      		<Button :value="data.id"  @click="openConfirmation" label="Supprimer" style="width: auto" class="p-button-rounded p-button-danger mr-2 mb-2" />
+		                      		<Button :value="data.id"  @click="openConfirmation" icon="pi pi-times" class="p-button-rounded p-button-danger p-button-outlined mr-2 mb-2" />
                               <Dialog header="Confirmation" v-model:visible="displayConfirmation" :style="{width: '350px'}" :modal="true">
                                   <div class="flex align-items-center justify-content-center">
                                     <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />

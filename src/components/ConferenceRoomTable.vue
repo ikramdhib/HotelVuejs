@@ -49,18 +49,27 @@
                         <template #body="{data}">
                        	<Button @click="goUpdateRoom(data.id)" icon="pi pi-pencil" class="p-button-rounded p-button-info p-button-outlined mr-2 mb-2"/>
 
-                        </template>
+                        </template>,
                     </Column>
-                    <Column header="" :filterMenuStyle="{'width':'14rem'}" style="min-width:12rem">
+                    <Column header="" style="min-width:8rem">
                         <template #body="{data}">
-                     		<Button @click="deleteConferenceRoom(data.id)" icon="pi pi-times" class="p-button-rounded p-button-danger p-button-outlined mr-2 mb-2"  />
-
+                     		<Button @click="openConfirmationRoom()" icon="pi pi-times" class="p-button-rounded p-button-danger p-button-outlined mr-2 mb-2"  />
+							 <Dialog header="Confirmation" v-model:visible="displayConfirmation" :style="{width: '350px'}" :modal="true">
+                                  <div class="flex align-items-center justify-content-center">
+                                    <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
+                                    <span>Êtes-vous sûr de vouloir le supprimer</span>
+                                  </div>
+                                  <template #footer>
+                                    <Button label="NON" icon="pi pi-times" @click="closeConfirmationRoom" class="p-button-text"/>
+                                    <Button label="OUI" icon="pi pi-check" @click="deleteConferenceRoom(data.id);closeConfirmationRoom();" class="p-button-text" autofocus />
+                                  </template>
+                                </Dialog>
                         </template>
                     </Column>
 				</DataTable>
 			</div>
 		</div>
-
+<div class="col-12">
       <div class="card">
         <h4>Les type des salles de conferences</h4>
         <DataTable :value="table2" v-model:expandedRows="expandedRows1" dataKey="id" responsiveLayout="scroll">
@@ -88,7 +97,7 @@
 						</template>
 					</Column>
 					<template  #expansion="{data}">
-						<div class="p-3">
+						<div class="p-3" v-if="data.types">
 							<h5> Les Types pour cette Salle</h5>
 							<DataTable :value="data.types" responsiveLayout="scroll" >
 								
@@ -117,8 +126,17 @@
 								
 								<Column headerStyle="width:4rem">
 									<template #body="{data}">
-		                      		<Button @click="deleteType(data.id)" icon="pi pi-times" class="p-button-rounded p-button-danger p-button-outlined mr-2 mb-2" />
-									
+		                      		<Button @click="openConfirmationType" icon="pi pi-times" class="p-button-rounded p-button-danger p-button-outlined mr-2 mb-2" />
+									<Dialog header="Confirmation" v-model:visible="displayConfirmation" :style="{width: '350px'}" :modal="true">
+                                  <div class="flex align-items-center justify-content-center">
+                                    <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
+                                    <span>Êtes-vous sûr de vouloir le supprimer</span>
+                                  </div>
+                                  <template #footer>
+                                    <Button label="NON" icon="pi pi-times" @click="closeConfirmationRoom" class="p-button-text"/>
+                                    <Button label="OUI" icon="pi pi-check" @click="deleteType(data.id);closeConfirmationType();" class="p-button-text" autofocus />
+                                  </template>
+                                </Dialog>
 									</template>
 								</Column>
 							</DataTable>
@@ -126,7 +144,8 @@
 					</template>
 				</DataTable>
       </div>
-
+</div>
+<div class="col-12">
       <div class="card">
         <h4 >Les equipements disponibles pour chaque salle</h4>
         <DataTable :value="table3" v-model:expandedRows="expandedRows2" dataKey="id" responsiveLayout="scroll">
@@ -154,7 +173,7 @@
 						</template>
 					</Column>
 					<template  #expansion="{data}">
-						<div class="p-3">
+						<div class="p-3" v-if="data.equipements">
 							<h5> Les Equipements pour cette Salle</h5>
 							<DataTable :value="data.equipements" responsiveLayout="scroll" >
 								
@@ -183,8 +202,17 @@
 								
 								<Column headerStyle="width:4rem">
 									<template #body={data}>
-		                      		<Button @click="deleteEquipement(data.id)" icon="pi pi-times" class="p-button-rounded p-button-danger p-button-outlined mr-2 mb-2"/>
-									
+		                      		<Button @click="openConfirmationOption" icon="pi pi-times" class="p-button-rounded p-button-danger p-button-outlined mr-2 mb-2"/>
+									<Dialog header="Confirmation" v-model:visible="displayConfirmation" :style="{width: '350px'}" :modal="true">
+                                  <div class="flex align-items-center justify-content-center">
+                                    <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
+                                    <span>Êtes-vous sûr de vouloir le supprimer</span>
+                                  </div>
+                                  <template #footer>
+                                    <Button label="NON" icon="pi pi-times" @click="closeConfirmationOption" class="p-button-text"/>
+                                    <Button label="OUI" icon="pi pi-check" @click="deleteEquipement(data.id);closeConfirmationOption();" class="p-button-text" autofocus />
+                                  </template>
+                                </Dialog>
 									</template>
 								</Column>
 							</DataTable>
@@ -192,6 +220,7 @@
 					</template>
 				</DataTable>
       </div>
+	</div>
 	</div>
 </template>
 
@@ -207,22 +236,19 @@ import axios from 'axios';
         table3:[],
         rooms:[],
         types:[],
-        equipements:[],
+		equipements:[],
+		
+        displayConfirmation: false,
 				expandedRows1: [],
 				expandedRows2: [],
 			}
 		},
-		customerService: null,
-		productService: null,
 	
 		mounted() {
      
       this.getAllRooms();
-      console.log("rooms",this.table1);
       this.getAllRoomsTypes();
-      console.log("type",this.table2);
       this.getAllRommsEquipement();
-      console.log("equi",this.table3);
 		},
 		methods: {
       
@@ -295,7 +321,28 @@ import axios from 'axios';
 	  },
 	  goImages(id){
          this.$router.push({name:'images', params:{id:id , categorie:'conferenceroom'}})
-       }
+	   },
+	    openConfirmationRoom() {
+				this.displayConfirmation = true;
+			},
+			
+			closeConfirmationRoom() {
+        this.displayConfirmation = false;
+	  },
+	   openConfirmationType() {
+				this.displayConfirmation = true;
+			},
+			
+			closeConfirmationType() {
+        this.displayConfirmation = false;
+	  },
+	   openConfirmationOption() {
+				this.displayConfirmation = true;
+			},
+			
+			closeConfirmationOption() {
+        this.displayConfirmation = false;
+      },
 		}
 	}
 </script>

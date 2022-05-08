@@ -78,28 +78,47 @@
 					</div></div>
 						</template>
 					</Column>
+				 <Column header="Image"  style="min-width:8rem">
+                      <template #body="{data}">
+                       		<Button  @click="goImages(data.id)" icon="pi pi-image" class="p-button-rounded p-button-help p-button-outlined mr-2 mb-2"/>
+                     
+                      </template>
+                   </Column>
 					  <Column  header="" >
 									<template #body="{data}" >
-			               	<Button @click="updateRoom(data.id)"  label="Modifier" class="p-button-rounded p-button-info mr-2 mb-2" />
+			               	<Button @click="updateRoom(data.id)"  icon="pi pi-pencil" class="p-button-rounded p-button-info p-button-outlined mr-2 mb-2" />
 										
 									</template>
 								</Column>
 					<Column  header="" >
+<<<<<<< HEAD
 					 <template #body="{data}">
 		                      		<Button :value="data.id"  @click="openConfirmation" label="Supprimer" style="width: auto" class="p-button-rounded p-button-danger mr-2 mb-2" />
                               <Dialog header="Confirmation" v-model:visible="displayConfirmation" :style="{width: '350px'}" :modal="true">
                                   <div class="flex align-items-center justify-content-center">
                                     <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
                                     <span>Vous avez vraiment supprimer?</span>
+=======
+						<template #body="{data}">
+							<Button  @click="openConfirmation" icon="pi pi-times" class="p-button-rounded p-button-danger p-button-outlined mr-2 mb-2"  />
+							<Dialog header="Confirmation" v-model:visible="displayConfirmation" :style="{width: '350px'}" :modal="true">
+                                  <div class="flex align-items-center justify-content-center">
+                                    <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
+                                    <span>Are you sure you want to proceed?</span>
+>>>>>>> 7d18569f898ef6c26c6f007564bebca5d4df72b9
                                   </div>
                                   <template #footer>
                                     <Button label="No" icon="pi pi-times" @click="closeConfirmation" class="p-button-text"/>
                                     <Button label="Yes" icon="pi pi-check" @click="delete_room(data.id);closeConfirmation();" class="p-button-text" autofocus />
                                   </template>
                                 </Dialog>
+<<<<<<< HEAD
 			                  
                         </template>
 						
+=======
+						</template>
+>>>>>>> 7d18569f898ef6c26c6f007564bebca5d4df72b9
 					</Column>
 		</DataTable>
 	  </div></div>
@@ -174,6 +193,7 @@
 					</div></div>
 						</template>
 					</Column>
+<<<<<<< HEAD
 				 <Column header="Image"  style="min-width:8rem">
                       <template #body="{data}">
                        		<Button  @click="goImages(data.id)" icon="pi pi-image" class="p-button-rounded p-button-help p-button-outlined mr-2 mb-2"/>
@@ -193,6 +213,8 @@
 						</template>
                    
 					</Column>
+=======
+>>>>>>> 7d18569f898ef6c26c6f007564bebca5d4df72b9
 					<template #expansion="{data}">
 						<div class="p-3">
 							<h5>Option</h5>
@@ -223,8 +245,17 @@
 								</Column>
 								<Column headerStyle="width:4rem">
 									<template #body="{data}">
-		                      		<Button   @click="deleteOption(data.id)"  icon="pi pi-times" class="p-button-rounded p-button-danger p-button-outlined mr-2 mb-2" />
-									
+		                      		<Button   @click="openConfirmation"  icon="pi pi-times" class="p-button-rounded p-button-danger p-button-outlined mr-2 mb-2" />
+									<Dialog header="Confirmation" v-model:visible="displayConfirmation" :style="{width: '350px'}" :modal="true">
+                                  <div class="flex align-items-center justify-content-center">
+                                    <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
+                                    <span>Are you sure you want to proceed?</span>
+                                  </div>
+                                  <template #footer>
+                                    <Button label="No" icon="pi pi-times" @click="closeConfirmation" class="p-button-text"/>
+                                    <Button label="Yes" icon="pi pi-check" @click="deleteOption(data.id);closeConfirmation();" class="p-button-text" autofocus />
+                                  </template>
+                                </Dialog>
 									</template>
 								</Column>
 							</DataTable>
@@ -245,8 +276,13 @@
         table2:[],
         options:[],
          rooms:[],
+<<<<<<< HEAD
      	expandedRows: [],
 		   displayConfirmation: false,
+=======
+		 expandedRows: [],
+		 displayConfirmation: false,
+>>>>>>> 7d18569f898ef6c26c6f007564bebca5d4df72b9
 			}
 		},
 		mounted() {
@@ -347,7 +383,14 @@
 		},
 		goImages(id){
          this.$router.push({name:'images', params:{id:id , categorie:'chambre'}})
-       }
+	   },
+	    openConfirmation() {
+				this.displayConfirmation = true;
+			},
+			
+			closeConfirmation() {
+        this.displayConfirmation = false;
+      },
       
 		},
 		
