@@ -32,6 +32,8 @@
 						<span class="text-700">fait une reservation sur la chambre <span class="text-900 line-height-3"> {{ m.data.booking_status.num_room }} </span> l'Etage  <span class="text-900 line-height-3">{{ m.data.booking_status.numEtage }}</span> de <span class="text-blue-500"> {{ m.data.room.start}} </span>  à <span class="text-blue-500"> {{ m.data.room.end}}</span></span>
 					</span>
 				</li>
+				
+
 			</ul>
 		</div>
 </template>
@@ -62,6 +64,7 @@ export default {
 				}
 			})
 		}
+		
 	}
 }
 </script>

@@ -29,10 +29,15 @@
               </label>
   
         </div>  </div></div>
-		<Toast/>
-	<Button label="ajouter" @click="addOption()" />
+	
+			<div class="p-fluid formgrid grid">
+				<div class="field col-10 md:col-3"> 
+						<Toast/>
+	<Button label="ajouter" @click="addOption()" /></div></div>
+<div class="p-fluid formgrid grid">
+				<div class="field col-12 md:col-3"> 
     <router-link :to="{ path: 'RoomTable'}"> <Button label="Annuler" class="p-button-secondary "  />
-	</router-link>
+	</router-link></div></div>
 </div>
 
 </div>	

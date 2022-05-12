@@ -32,12 +32,7 @@
 						<Textarea id="desc" rows="4" v-model="pool.description"/>
 			</div>
 		</div>
-
-					
-					
-					
-
-						<div class="field col-12 md:col-6">
+<div class="field col-12 md:col-6">
 						<label for="prix4">Choisir des image :</label>
 						<span class="p-input-icon-left">
 							<i class="pi pi-folder-open" />

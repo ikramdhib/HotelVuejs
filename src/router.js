@@ -370,7 +370,18 @@ const routes = [
       }
     }
 },
-
+{
+  path: '/TableContact',
+  name: 'TableContact.vue',
+ component: () => import('./components/TableContact.vue'),
+  beforeEnter: (to, from, next) => {
+      if (!localStorage.getItem("token")) {
+        next("login");
+      } else {
+        next();
+      }
+    }
+},
 {
   path: '/updaterooftop:id',
   name: 'updaterooftop',

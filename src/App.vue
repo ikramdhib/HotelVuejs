@@ -143,6 +143,16 @@ export default {
                                     to:'offres'
                                 }
                             ]
+                        },
+                         {
+                            label: 'Contact', 
+                            items: [
+                                {
+                                    label: 'Les Contacts ', icon: 'pi pi-plus',
+                                    to:'TableContact'
+                                },
+                               
+                            ]
                         }
                     ]
                 },
