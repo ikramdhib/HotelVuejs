@@ -142,6 +142,7 @@ export default {
                                 }
                             ]
                         },
+<<<<<<< HEAD
                         {
                             label: 'Réservations', 
                             items: [
@@ -158,6 +159,17 @@ export default {
                          {
                             label: 'Message Contacts', 
                            
+=======
+                         {
+                            label: 'Contact', 
+                            items: [
+                                {
+                                    label: 'Les Contacts ', icon: 'pi pi-plus',
+                                    to:'TableContact'
+                                },
+                               
+                            ]
+>>>>>>> 5e7374efd21c2e99fa66ddf20d1b8b59a3640fb4
                         }
                     ]
                 },

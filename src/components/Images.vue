@@ -95,11 +95,14 @@
         </div>
 </template>
 
+
 <script>
 import axios from 'axios';
+
 export default {
     data() {
         return {
+          
             images: [],
             displayConfirmation:false,
            id:null ,
@@ -118,31 +121,36 @@ export default {
             if(categorie=="rooftop"){
             axios.get('http://localhost:8000/api/allroofs/'+id).then(res=>{
                 this.images=res.data.roofs.images
+           
+              
             
             })
             }
             if(categorie=="conferenceroom"){
                 axios.get('http://localhost:8000/api/allimages/'+id).then(res=>{
                 this.images=res.data.room.images
-                console.log(this.images);
+              
+               
             
             })
             }
             if(categorie=="pool"){
                 axios.get('http://localhost:8000/api/allpool/'+id).then(res=>{
                 this.images=res.data.pool.images
+          
             
             })
             }
             if(categorie=="restaurant"){
                 axios.get('http://localhost:8000/api/getallrestaurantimg/'+id).then(res=>{
                 this.images=res.data.restaurant.images
-            
+         
             })
             }
             if(categorie=="spa"){
                 axios.get('http://localhost:8000/api/allimagesofspa/'+id).then(res=>{
                 this.images=res.data.spa.images
+             
             
             })
             }
@@ -150,11 +158,13 @@ export default {
                 axios.get('http://localhost:8000/api/allplat/'+id).then(res=>{
                 this.images=res.data.plat.images
             
+            
             })
             }
             if(categorie=="chambre"){
                 axios.get('http://localhost:8000/api/allrooms/'+id).then(res=>{
                 this.images=res.data.room.images
+            
             
             })
             }

@@ -178,6 +178,25 @@
 					</div></div>
 						</template>
 					</Column>
+				 <Column header="Image"  style="min-width:8rem">
+                      <template #body="{data}">
+                       		<Button  @click="goImages(data.id)" icon="pi pi-image" class="p-button-rounded p-button-help p-button-outlined mr-2 mb-2"/>
+                     
+                      </template>
+                   </Column>
+					  <Column  header="" >
+									<template #body="{data}" >
+			               	<Button @click="updateRoom(data.id)"   icon="pi pi-pencil" class="p-button-rounded p-button-info p-button-outlined mr-2 mb-2" />
+										
+									</template>
+								</Column>
+					
+					  <Column  header=""  bodyClass="text-center" style="min-width:8rem">
+                       <template #body="{data}">
+							<Button  @click="delete_room(data.id)" label="Supprimer" class="p-button-rounded p-button-danger mr-2 mb-2" />
+						</template>
+                   
+					</Column>
 					<template #expansion="{data}">
 						<div class="p-3">
 							<h5>Option</h5>
@@ -239,8 +258,8 @@
         table2:[],
         options:[],
          rooms:[],
-		 expandedRows: [],
-		 displayConfirmation: false,
+     	expandedRows: [],
+		   displayConfirmation: false,
 			}
 		},
 		mounted() {
@@ -328,6 +347,12 @@
            console.log(res.data);
 
       })},
+	   openConfirmation() {
+				this.displayConfirmation = true;
+			},
+				closeConfirmation() {
+        this.displayConfirmation = false;
+      },
 		async deleteOption(id){
 			await axios.delete('http://localhost:8000/api/option/'+id,
 			{ headers: { Authorization: 'Bearer ' + localStorage.getItem('token') }}
@@ -336,13 +361,7 @@
 		goImages(id){
          this.$router.push({name:'images', params:{id:id , categorie:'chambre'}})
 	   },
-	    openConfirmation() {
-				this.displayConfirmation = true;
-			},
-			
-			closeConfirmation() {
-        this.displayConfirmation = false;
-      },
+	   
       
 		},
 		

@@ -16,6 +16,7 @@
 					</div>
 					</div>
 					 <div class="field col-12 md:col-3">
+						 <Toast/>
 					<Button label="Modifier"  @click="update()" ></Button>
 		
 	</div>
@@ -63,7 +64,7 @@ export default {
 
 					if(res){
 						 this.$router.push('TypeTable');
-							this.$toast.add({severity:'success', summary: 'Excellent', detail:'les information a été soumise avec succès', life: 3000});
+							this.$toast.add({severity:'success', summary: 'Excellent', detail:'les information a été modifier avec succès', life: 3000});
 						}else{
 							this.$toast.add({severity:'error', summary: "Message d'erreur", detail:'quelque chose est mal passé', life: 3000});
 						}

@@ -19,18 +19,13 @@
 					<div class="field col-12 md:col-4">
                         
          <span class="text-black-700">Disponibilité</span>           
-                   <div class="mt-2">
-						  <label class="inline-flex items-center ml-4">
-		
-            	 <input type="radio"  value="oui"  v-model="room.avaibility">
-                <span class="ml-2">Oui</span>
-                 </label>
-               <label class="inline-flex items-center ml-4">
-                        	 <input type="radio"  value="non"  v-model="room.avaibility">
-                <span class="ml-2">Non</span>
-              </label>      
+                   
+            	      
+                   <div class="mt-2 py-2 px-4">
+				<InputSwitch  v-model="room.avaibility"/>
+				</div>    
          
-			</div></div>
+			</div>
 			<div class="field col-12">
 						<label for="desc">description</label>
 						<Textarea id="desc" rows="4" v-model="room.description"/>
@@ -74,6 +69,7 @@
 						<InputText id="prix4" type="text" v-model="price.price_booking3"/>
 					</div>
 	               <div class="field col-12 md:col-3">
+					      <Toast />
 					<Button label="Modifier"  @click="updateprice();updateRoom()" ></Button>
 		</div>
 		</div>
@@ -134,7 +130,11 @@ import axios from 'axios';
           this.room.numEtage=res.data.room.numEtage;
           this.room.nbAdult=res.data.room.nbAdult;
           this.room.nbEnfant=res.data.room.nbEnfant;
-          this.room.avaibility=res.data.room.avaibility;
+      	if(res.data.room.avaibility==1){
+						this.room.avaibility=true;
+					}else{
+						this.room.avaibility=false;
+					}
           this.room.nbbebe=res.data.room.nbbebe;
 
 		 this.room.type_id=res.data.room.type_id;
@@ -211,12 +211,17 @@ import axios from 'axios';
 				},{ headers: { Authorization: 'Bearer ' + localStorage.getItem('token')}}
 				).then(res=>{
 					
-					 //localStorage.setItem("room_id", id);
+					 
 				     let response = res.data.data.id;
 			
 					 console.log(response);
                      
 					 localStorage.setItem("room_id", id);
+					 if(res){
+							this.$toast.add({severity:'success', summary: 'Excellent', detail:'les information a été modifier avec succès', life: 3000});
+						}else{
+							this.$toast.add({severity:'error', summary: "Message d'erreur", detail:'quelque chose est mal passé', life: 3000});
+						}
 					 this.$router.push('RoomTable');
 			      
 					 

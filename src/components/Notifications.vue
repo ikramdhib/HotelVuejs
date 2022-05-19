@@ -40,6 +40,8 @@
 
 					</span>
 				</li>
+				
+
 			</ul>
 			<ul class="p-0 mx-0 mt-0 mb-4 list-none" v-if="readNotificationTag.length > 0">
 				<li class="flex align-items-center py-2 border-bottom-1 surface-border" v-for="p in readNotificationTag" :key="p.id">
@@ -105,7 +107,12 @@ export default {
 				console.log(res);
 				location.reload();
 			})
+<<<<<<< HEAD
 		},
+=======
+		}
+		
+>>>>>>> 5e7374efd21c2e99fa66ddf20d1b8b59a3640fb4
 	}
 }
 </script>

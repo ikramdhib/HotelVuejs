@@ -37,7 +37,12 @@
                           <i class="pi" :class="{'text-green-500 pi-check-circle': data.avaibility=='1' , 'text-pink-500 pi-times-circle': data.avaibility=='0'}"></i>
                         </template>
                     </Column>
-                     <Column header="Image"  style="min-width:8rem">
+                      <Column header="prix reservation" filterField="country.name" style="min-width:12rem">
+                        <template #body="{data}">
+                            <span style="margin-left: .5em; vertical-align: middle" class="image-text">{{data.prix_reservation}}</span>
+                        </template>
+                    </Column>
+                    <Column header="Image"  style="min-width:8rem">
                       <template #body="{data}">
                        		<Button  @click="goImages(data.id)" icon="pi pi-image" class="p-button-rounded p-button-help p-button-outlined mr-2 mb-2"/>
                      

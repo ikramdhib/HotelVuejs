@@ -29,10 +29,15 @@
               </label>
   
         </div>  </div></div>
-		
-	<Button label="ajouter" @click="addOption()" />
+	
+			<div class="p-fluid formgrid grid">
+				<div class="field col-10 md:col-3"> 
+						<Toast/>
+	<Button label="ajouter" @click="addOption()" /></div></div>
+<div class="p-fluid formgrid grid">
+				<div class="field col-12 md:col-3"> 
     <router-link :to="{ path: 'RoomTable'}"> <Button label="Annuler" class="p-button-secondary "  />
-	</router-link>
+	</router-link></div></div>
 </div>
 
 </div>	
@@ -70,9 +75,13 @@ export default {
 				{ headers: { Authorization: 'Bearer ' + localStorage.getItem('token')}}
 				).then(res=>{
 		
-					console.log(this.headers);
-				     let response = res.data.data;
-					 console.log(response);
+					
+				
+					if(res){
+							this.$toast.add({severity:'success', summary: 'Excellent', detail:'les information a été soumis avec succès', life: 3000});
+						}else{
+							this.$toast.add({severity:'error', summary: "Message d'erreur", detail:'quelque chose est mal passé', life: 3000});
+						}
 					 
 			         
 					 

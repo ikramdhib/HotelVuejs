@@ -370,7 +370,18 @@ const routes = [
       }
     }
 },
-
+{
+  path: '/TableContact',
+  name: 'TableContact.vue',
+ component: () => import('./components/TableContact.vue'),
+  beforeEnter: (to, from, next) => {
+      if (!localStorage.getItem("token")) {
+        next("login");
+      } else {
+        next();
+      }
+    }
+},
 {
   path: '/updaterooftop:id',
   name: 'updaterooftop',
@@ -480,33 +491,9 @@ const routes = [
     }
 },
 {
-  path: '/images/:id/:categorie',
+  path: '/images :id :categorie',
   name: 'images',
  component: () => import('./components/Images.vue'),
-  beforeEnter: (to, from, next) => {
-      if (!localStorage.getItem("token")) {
-        next("login");
-      } else {
-        next();
-      }
-    }
-},
-{
-  path: '/offres',
-  name: 'offres',
- component: () => import('./components/OffresTables.vue'),
-  beforeEnter: (to, from, next) => {
-      if (!localStorage.getItem("token")) {
-        next("login");
-      } else {
-        next();
-      }
-    }
-},
-{
-  path: '/offresupdate/:id',
-  name: 'offresupdate',
- component: () => import('./components/OffresUpdate.vue'),
   beforeEnter: (to, from, next) => {
       if (!localStorage.getItem("token")) {
         next("login");
