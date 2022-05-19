@@ -12,7 +12,6 @@
             <AppFooter />
         </div>
 
-		<AppConfig :layoutMode="layoutMode" @layout-change="onLayoutChange" @change-theme="changeTheme" />
         <transition name="layout-mask">
             <div class="layout-mask p-component-overlay" v-if="mobileMenuActive"></div>
         </transition>
@@ -23,7 +22,6 @@
 
 import AppTopBar from './AppTopbar.vue';
 import AppMenu from './AppMenu.vue';
-import AppConfig from './AppConfig.vue';
 import AppFooter from './AppFooter.vue';
 
 export default {
@@ -143,6 +141,23 @@ export default {
                                     to:'offres'
                                 }
                             ]
+                        },
+                        {
+                            label: 'Réservations', 
+                            items: [
+                                {
+                                    label: 'Réservation des chambre ', icon: 'pi pi-plus',
+                                    to:'addoffres'
+                                },
+                                {
+                                    label: 'Réservations', icon: 'pi pi-list',
+                                    to:'offres'
+                                }
+                            ]
+                        },
+                         {
+                            label: 'Message Contacts', 
+                           
                         }
                     ]
                 },
@@ -254,7 +269,6 @@ export default {
     components: {
         'AppTopBar': AppTopBar,
         'AppMenu': AppMenu,
-        'AppConfig': AppConfig,
         'AppFooter': AppFooter,
     }
 }

@@ -11,13 +11,13 @@
       <div class="mt-3 flex items-center font-sans" style="cursor: auto;">
                 
         <div class="shrink-0">          
-            <img id="img" class="h-10 w-10 rounded-full" v-bind:src="user.img" alt="Admin" style="cursor: auto;">
+            <img id="img" class="h-10 w-10 rounded-full" src="layout/images/image.png" alt="Admin" style="cursor: auto;">
         </div>
         <div class="ml-3">
                     
           <div class="text-sm font-medium text-skin-inverted">
                         
-            <h5 class="hover:underline" style="cursor: auto;">
+            <h5 class="hover:underline" style="cursor: auto; font-size: 30px;">
                {{ user.firstname }} {{ user.lastname }}
             </h5>
                     
@@ -26,13 +26,11 @@
           <div class="flex space-x-1 text-sm text-skin-muted" style="cursor: auto;">
                         
                         
-            <span aria-hidden="true"> <i class='pi pi-tags'></i></span>
                         
-            <span style="cursor: auto;"> {{ user.role }} </span>
+            <span style="cursor: auto; font-size: 22px;"> <Tag class="mr-2" icon="pi pi-user" severity="success" :value="user.role"></Tag> </span>
           </div>
         </div> 
         </div> 
-				<Button id="btn" label="Changer" class="p-button-rounded mr-2 mb-2" />
       </div>
       </div>
 			</div>
@@ -100,6 +98,7 @@ export default {
     data(){
         return{
            user:{},
+           statuses:'new',
         }
     },
             mounted () {

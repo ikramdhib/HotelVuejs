@@ -38,17 +38,14 @@
 				<div id="mdp" class="font-medium no-underline ml-2 cursor-pointer" style="color: var(--primary-color)" v-on:click="passModify()" > <a >Vous devez modifier votre mot de passe ?</a></div>
 					</div>
           	<div  class="field col-12 md:col-6">
-              	<FileUpload mode="basic" id="img" name="demo[]"  :maxFileSize="1000000"  />
 					</div>
           	<div class="field col-12 md:col-6">
 					</div>
-           <div class="field col-12 md:col-4">
+           <div class="field col-12 md:col-4 w-4 p-2">
 					<Button @click="updateProfile()" label="Modifer"></Button>
 					</div>
-          <div class="field col-12 md:col-4">
-            <Toast />
-					 <Button id="btn" label="Annuler" class="p-button-secondary mr-2 mb-2" @click="backProfile()"></button>
-					</div>
+          <div   class=" w-4 p-2">
+                           <Button label="Annuler" class="p-button-secondary mr-2 mb-2" @click="backProfile()"></button></div>
 				</div>
 			</div>
 	</div>
@@ -67,9 +64,10 @@
                 
                         <div class="flex align-items-lef justify-content-left">
                             <div class="mx-2 w-4 p-2 ">
-                           <Button label="Rechercher"  v-on:click="updateProfile()"></button></div>
+                              <Toast/>
+                           <Button label="Modifier"  v-on:click="updatePassword()"></button></div>
                            <div   class=" w-4 p-2">
-                           <Button label="Annuler" class="p-button-secondary mr-2 mb-2" @click="backForgetPassword()"></button></div>
+                           <Button label="Annuler" class="p-button-secondary mr-2 mb-2" @click="backProfile()"></button></div>
                         </div>
                     </div>
                 </form>
@@ -110,7 +108,6 @@ export default {
                 this.$router.push("profile")
               },
                 async updateProfile(){
-                  console.log("user to update",this.userInfo);
                   if(this.userInfo.firstname){
                await axios.post('http://localhost:8000/api/user/update-profile',{
                   firstname:this.userInfo.firstname,
@@ -119,9 +116,11 @@ export default {
                { headers: { Authorization: 'Bearer ' + localStorage.getItem('token') }
                }).then((response)=>{
                 let res = response.data;
-                 localStorage.setItem("user",JSON.stringify(res));
-                  this.$router.push("profile")
-                  console.log(res)
+                if(res.update==true){
+			            	this.$toast.add({severity:'success', summary: 'Excellent', detail:'La modifications de votre mot de pass est soumise par SUCCES', life: 3000});
+							}else{
+							this.$toast.add({severity:'error', summary: "Message d'erreur", detail:'quelque chose est mal passé', life: 3000});
+						}
               })
                   }
 
@@ -133,9 +132,11 @@ export default {
                { headers: { Authorization: 'Bearer ' + localStorage.getItem('token') }
                }).then((response)=>{
                 let res = response.data;
-                 localStorage.setItem("user",JSON.stringify(res));
-                  this.$router.push("profile")
-                  console.log(res)
+                if(res.update==true){
+			            	this.$toast.add({severity:'success', summary: 'Excellent', detail:'La modifications de votre mot de pass est soumise par SUCCES', life: 3000});
+							}else{
+							this.$toast.add({severity:'error', summary: "Message d'erreur", detail:'quelque chose est mal passé', life: 3000});
+						}
               })
               }
 
@@ -147,9 +148,11 @@ export default {
                { headers: { Authorization: 'Bearer ' + localStorage.getItem('token') }
                }).then((response)=>{
                 let res = response.data;
-                 localStorage.setItem("user",JSON.stringify(res));
-                  this.$router.push("profile")
-                  console.log(res)
+                 if(res.update==true){
+			            	this.$toast.add({severity:'success', summary: 'Excellent', detail:'La modifications de votre mot de pass est soumise par SUCCES', life: 3000});
+							}else{
+							this.$toast.add({severity:'error', summary: "Message d'erreur", detail:'quelque chose est mal passé', life: 3000});
+						}
               })
                }
                 if(this.userInfo.country){
@@ -160,9 +163,11 @@ export default {
                { headers: { Authorization: 'Bearer ' + localStorage.getItem('token') }
                }).then((response)=>{
                 let res = response.data;
-                 localStorage.setItem("user",JSON.stringify(res));
-                  this.$router.push("profile")
-                  console.log(res)
+                 if(res.update==true){
+			            	this.$toast.add({severity:'success', summary: 'Excellent', detail:'La modifications de votre mot de pass est soumise par SUCCES', life: 3000});
+							}else{
+							this.$toast.add({severity:'error', summary: "Message d'erreur", detail:'quelque chose est mal passé', life: 3000});
+						}
               })
                 }
                  if(this.userInfo.zipcode){
@@ -173,9 +178,11 @@ export default {
                { headers: { Authorization: 'Bearer ' + localStorage.getItem('token') }
                }).then((response)=>{
                 let res = response.data;
-                 localStorage.setItem("user",JSON.stringify(res));
-                  this.$router.push("profile")
-                  console.log(res)
+                if(res.update==true){
+			            	this.$toast.add({severity:'success', summary: 'Excellent', detail:'La modifications de votre mot de pass est soumise par SUCCES', life: 3000});
+							}else{
+							this.$toast.add({severity:'error', summary: "Message d'erreur", detail:'quelque chose est mal passé', life: 3000});
+						}
               })
                  }
                   if(this.userInfo.firstname && this.userInfo.lastname && this.user.phone &&
@@ -191,8 +198,11 @@ export default {
                { headers: { Authorization: 'Bearer ' + localStorage.getItem('token') }
                }).then((response)=>{
                 let res = response.data;
-                  this.$router.push("profile")
-                  console.log(res)
+                if(res.update==true){
+			            	this.$toast.add({severity:'success', summary: 'Excellent', detail:'La modifications de vos informations est soumise par SUCCES', life: 3000});
+							}else{
+							this.$toast.add({severity:'error', summary: "Message d'erreur", detail:'quelque chose est mal passé', life: 3000});
+						}
               })
                   }
                    if (!this.userInfo.firstname && !this.userInfo.lastname && !this.userInfo.phone && !this.userInfo.country
@@ -201,23 +211,22 @@ export default {
 			
                  }
                 },
-                 async updatepass(){
-            if(this.password_confirmation && this.password){
-          await axios.post('http://localhost:8000/api/user/update-password',
-         {
-             email:this.user.email,
-             password:this.password,
-             password_confirmation:this.password_confirmation,
-             token:localStorage.getItem('token'),
-              
-         } ).then(response=>{
-             let res = response.data;
-            console.log(res)
-	       	}).catch(error=>{
-             console.log(error);
-        })
-        }
-        },
+                 
+        updatePassword(){
+                  axios.put('http://localhost:8000/api/user/updatPass/'+this.user.id,
+                  {
+                    password:this.password,
+                    password_confirmation:this.password_confirmation
+                  },
+                  { headers: { Authorization: 'Bearer ' + localStorage.getItem('token') }}
+                  ).then(res=>{
+                    if(res.data.update==true){
+			            	this.$toast.add({severity:'success', summary: 'Excellent', detail:'La modifications de votre mot de pass est soumise par SUCCES', life: 3000});
+							}else{
+							this.$toast.add({severity:'error', summary: "Message d'erreur", detail:'quelque chose est mal passé', life: 3000});
+						}
+                  })
+                }
             }
             
         

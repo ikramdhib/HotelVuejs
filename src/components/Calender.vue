@@ -69,10 +69,10 @@ export default {
                         });
     },
       getAll_rooms(){
-        axios.get('http://localhost:8000/api/user/room',
+        axios.get('http://localhost:8000/api/room',
                       { headers: { Authorization: 'Bearer ' + localStorage.getItem('token') }} 
                       ).then(res=>{
-                        this.rooms=res.data.data
+                        this.rooms=res.data.room
                         return this.rooms
                       })
                       

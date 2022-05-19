@@ -456,6 +456,18 @@ const routes = [
     }
 },
 {
+  path: '/notification:id',
+  name: 'notification',
+ component: () => import('./components/NotificationsDetails.vue'),
+  beforeEnter: (to, from, next) => {
+      if (!localStorage.getItem("token")) {
+        next("login");
+      } else {
+        next();
+      }
+    }
+},
+{
   path: '/addoffres',
   name: 'addoffres',
  component: () => import('./components/AddOffres.vue'),

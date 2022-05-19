@@ -1,8 +1,7 @@
 <template>
 	<div class="layout-topbar">
 		<router-link to="/" class="layout-topbar-logo">
-			<img alt="Logo" :src="topbarImage()" />
-			<span>SAKAI</span>
+			<span>DELUXE</span>
 		</router-link>
 		<button class="p-link layout-menu-button layout-topbar-button" @click="onMenuToggle">
 			<i class="pi pi-bars"></i>
@@ -41,10 +40,19 @@
                     </p>
                 </a>
             </div>
-            <div id="border" class="py-2">
-                <a v-for="(unread , index) in unreadnotifications" :key="index" href="#" class="flex items-center px-4 py-3 border-b hover:bg-gray-100 -mx-2">
+            <div id="border" class="py-2" v-if="unreadnotificationsRoom!=null">
+                <a v-for="(unread , index) in unreadnotificationsRoom" :key="index" href="#" class="flex items-center px-4 py-3 border-b hover:bg-gray-100 -mx-2">
                     <p class="text-gray-600 text-sm mx-2">
-                        <span class="font-bold" href="#">{{ unread.data.user_firstname }} {{ unread.data.user_lastname }}</span> fait une résérvation sur la chambre <span class="text-900 line-height-3"> {{ unread.data.booking_status.num_room }} </span> l'Etage  <span class="text-900 line-height-3">{{ unread.data.booking_status.numEtage }}</span> de <span class="text-blue-500"> {{ unread.data.room.start}} </span>  à <span class="text-blue-500"> {{ unread.data.room.end}}</span>
+                        <span class="font-bold" href="#">{{ unread.data.room.nom}} {{ unread.data.prenom }}</span> fait une résérvation sur la chambre <span class="text-900 line-height-3"> {{ unread.data.booking_status.num_room }} </span> l'Etage  <span class="text-900 line-height-3">{{ unread.data.booking_status.numEtage }}</span> de <span class="text-blue-500"> {{ unread.data.room.start}} </span>  à <span class="text-blue-500"> {{ unread.data.room.end}}</span>
+
+						{{ $moment(unread.created_at).fromNow() }}
+                    </p>
+                </a>
+            </div>
+			    <div id="border" class="py-2" v-if="unreadnotificationsBook!=null">
+                <a v-for="(unread , index) in unreadnotificationsBook" :key="index" href="#" class="flex items-center px-4 py-3 border-b hover:bg-gray-100 -mx-2">
+                    <p class="text-gray-600 text-sm mx-2">
+                        <span class="font-bold" href="#">{{ unread.data.booking.nom}} {{ unread.data.booking.prenom }}</span> fait une résérvation sur {{ unread.data.categorieBooking }} <span class="text-900 line-height-3"> pour  {{ unread.data.booking.nbPersonne}} <span v-if="unread.data.categorieBooking=='Pool' || unread.data.categorieBooking=='Spa'">Personnes</span > <span v-if="unread.data.categorieBooking== 'Salle de conference'"> salle</span> <span v-if="unread.data.categorieBooking=='Roof-Top' || unread.data.categorieBooking=='Restaurant'"> tables </span> </span>
 
 						{{ $moment(unread.created_at).fromNow() }}
                     </p>
@@ -58,7 +66,7 @@
                     </p>
                 </a>
             </div>
-            <router-link id="border" to="notifications" class="block bg-gray-800 text-white text-center font-bold py-2">See all notifications</router-link>
+            <router-link id="border" to="notifications" @click="markAsRead()" class="block bg-gray-800 text-white text-center font-bold py-2">See all notifications</router-link>
         </div>
         </div>
 </div>
@@ -122,6 +130,8 @@ data: function () {
 			isActive: false,
 			isActiv: false,
 			unreadnotifications:{},
+			unreadnotificationsRoom:{},
+			unreadnotificationsBook:{},
         }
 	},
 	mounted(){
@@ -165,6 +175,8 @@ data: function () {
 			await axios.get('http://localhost:8000/api/unreadnotifications',{ headers: { Authorization: 'Bearer ' + localStorage.getItem('token')}})
 			.then(res=>{
 				this.unreadnotifications=res.data.notifs
+				this.unreadnotificationsRoom=res.data.notifRoom
+				this.unreadnotificationsBook=res.data.notifBookig
 			})
 		},
 
