@@ -491,9 +491,33 @@ const routes = [
     }
 },
 {
+  path: '/reservationchambres',
+  name: 'reservationschambre',
+ component: () => import('./components/ReservationChambres.vue'),
+  beforeEnter: (to, from, next) => {
+      if (!localStorage.getItem("token")) {
+        next("login");
+      } else {
+        next();
+      }
+    }
+},
+{
   path: '/images :id :categorie',
   name: 'images',
  component: () => import('./components/Images.vue'),
+  beforeEnter: (to, from, next) => {
+      if (!localStorage.getItem("token")) {
+        next("login");
+      } else {
+        next();
+      }
+    }
+},
+{
+  path: '/reservation',
+  name: 'reservation',
+ component: () => import('./components/Reservation.vue'),
   beforeEnter: (to, from, next) => {
       if (!localStorage.getItem("token")) {
         next("login");

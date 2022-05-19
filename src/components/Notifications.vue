@@ -107,12 +107,7 @@ export default {
 				console.log(res);
 				location.reload();
 			})
-<<<<<<< HEAD
 		},
-=======
-		}
-		
->>>>>>> 5e7374efd21c2e99fa66ddf20d1b8b59a3640fb4
 	}
 }
 </script>
