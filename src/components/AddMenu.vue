@@ -38,7 +38,7 @@
 						<label >Choisir des image :</label>
 						<span class="p-input-icon-left">
 							<i class="pi pi-folder-open" />
-							<InputText   type="file" multiple @change="changeFile"/>
+							<InputText   type="file" @change="changeFile"/>
 						</span>
 			 </div>
 					

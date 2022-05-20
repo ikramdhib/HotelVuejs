@@ -36,7 +36,7 @@
                     </Column>
 						 <Column header="Prix  de réservation"  style="min-width:8rem">
                       <template #body="{data}">
-						  {{ data.offre }}
+						  {{ data.prix }}
                       </template>
                    </Column>
 					<Column  header="des informations  Complimentaire" >
@@ -86,7 +86,7 @@
                     </Column>
 						 <Column header="Prix  de réservation"  style="min-width:8rem">
                       <template #body="{data}">
-						  {{ data.offre }}
+						  {{ data.prix }}
                       </template>
                    </Column>
 					<Column  header="des informations complimentaire" >
@@ -131,7 +131,7 @@
                     </Column>
 						 <Column header="Prix  de réservation"  style="min-width:8rem">
                       <template #body="{data}">
-						  {{ data.ooff }}
+						  {{ data.prix }}
                       </template>
                    </Column>
 					<Column  header="les informations Complimentaire" >
@@ -177,7 +177,7 @@
                     </Column>
 						 <Column header="Prix  de réservation"  style="min-width:8rem">
                       <template #body="{data}">
-						  {{ data.offre }}
+						  {{ data.prix }}
                       </template>
                    </Column>
 					<Column  header="Les informations Complimentaire" >
@@ -224,7 +224,7 @@
                     </Column>
 						 <Column header="Prix  de réservation"  style="min-width:8rem">
                       <template #body="{data}">
-						  {{ data.offre }}
+						  {{ data.prix }}
                       </template>
                    </Column>
 					<Column  header="Les informations complimentaire" >
