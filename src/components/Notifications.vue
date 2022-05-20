@@ -49,7 +49,9 @@
 						<i class="pi pi-user text-xl text-pink-500"></i>
 					</div>
 					<span class="text-900 line-height-3">{{ p.data.booking.nom }} {{ p.data.booking.prenom }}
-						<span class="text-700">fait une reservation sur {{p.data.categorieBooking }} <span class="text-900 line-height-3">pour  {{ p.data.booking.nbPersonne}} <span v-if="p.data.categorieBooking=='Pool' || p.data.categorieBooking=='Spa'">Personnes</span > <span v-if="p.data.categorieBooking== 'Salle de conference'"> salle</span> <span v-if="p.data.categorieBooking=='Roof-Top' || p.data.categorieBooking=='Restaurant'"> tables </span> </span><Button icon="pi pi-eye" @click="clickN(p.id) ; markAsRead()" class="p-button-rounded p-button-text mr-2 mb-2" /></span>
+						<span class="text-700">fait une reservation sur {{p.data.categorieBooking }} <span class="text-900 line-height-3">pour  {{ p.data.booking.nombre}} 
+							<span v-if="p.data.categorieBooking=='Pool' || p.data.categorieBooking=='Spa'">Personnes</span > <span v-if="p.data.categorieBooking== 'Salle de conference'"> salle</span> <span v-if="p.data.categorieBooking=='Roof-Top' || p.data.categorieBooking=='Restaurant'"> tables </span> 
+							</span><Button icon="pi pi-eye" @click="clickN(p.id) ; markAsRead()" class="p-button-rounded p-button-text mr-2 mb-2" /></span>
 					</span>
 				</li>
 			</ul>

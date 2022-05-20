@@ -130,11 +130,11 @@ import axios from 'axios';
 
 							const config= {headers:{'Content-Type':'multipart/form-data',
 							Authorization: 'Bearer ' + localStorage.getItem('token') }};
-							axios.post('http://localhost:8000/api/images',this.form,config)
+							axios.post('http://localhost:8000/api/images',this.form,config).then(this.image.length=0)
 							}
 						this.idP=res.data.plat.id
 					}
-				);
+				)
 					 }
 					if(this.idM!=null & this.idP!=null){
 						 this.$toast.add({severity:'success', summary: 'Excellent', detail:'les information a été soumise avec succès', life: 3000});
@@ -167,7 +167,7 @@ import axios from 'axios';
 
 							const config= {headers:{'Content-Type':'multipart/form-data',
 							Authorization: 'Bearer ' + localStorage.getItem('token') }};
-							axios.post('http://localhost:8000/api/images',this.form,config)
+							axios.post('http://localhost:8000/api/images',this.form,config).then(this.image.length=0)
 							}
 			            	this.$toast.add({severity:'success', summary: 'Excellent', detail:'les information a été soumise avec succès', life: 3000});
 			          
@@ -211,11 +211,11 @@ import axios from 'axios';
 
 							const config= {headers:{'Content-Type':'multipart/form-data',
 							Authorization: 'Bearer ' + localStorage.getItem('token') }};
-							axios.post('http://localhost:8000/api/images',this.form,config)
+							axios.post('http://localhost:8000/api/images',this.form,config).then(this.image.length=0)
 							}
 						this.idP=res.data.plat.id
 					}
-				);
+				)
 					}
 						});
 		}
@@ -236,11 +236,11 @@ import axios from 'axios';
 
 							const config= {headers:{'Content-Type':'multipart/form-data',
 							Authorization: 'Bearer ' + localStorage.getItem('token') }};
-							axios.post('http://localhost:8000/api/images',this.form,config)
+							axios.post('http://localhost:8000/api/images',this.form,config).then(this.image.length=0)
 							}
 						this.idP=res.data.plat.id
 					}
-				);
+				)
 		}
 		this.isRegisterd=true;
 	}
