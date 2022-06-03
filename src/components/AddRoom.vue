@@ -5,15 +5,15 @@
 				<h5> Ajouter Chambre :</h5>
 			      <div class="p-fluid formgrid grid">
 					   <div class="field col-12 md:col-4">
-					     <label for="lastname2">Type_chambre</label>
+					     <label for="lastname2">Type de chambre</label>
 				     <span class="p-float-label" >
-					<Dropdown id="dropdown"  :options="types" optionLabel="nom_type" v-model="types.type_id" placeholder="Select" ></Dropdown>
+					<Dropdown id="dropdown"  :options="types" optionLabel="nom_type" v-model="types.type_id" placeholder="Selectionner type" ></Dropdown>
 					</span>
 			        </div>
 					
 					<div class="field col-12 md:col-4">
-						<label for="num_etage">Numero-Etage </label>
-						<InputText id="num_etage" type="number" v-model="room.numEtage" />
+						<label for="num_etage">Numero d'etage </label>
+						<InputText min="1" id="num_etage" type="number" v-model="room.numEtage" />
 					</div>
 					
 					<div class="field col-12 md:col-4">
@@ -30,45 +30,45 @@
 				 
 				
 			<div class="field col-9">
-						<label for="desc">description</label>
-						<Textarea id="desc" rows="4" v-model="room.description"/>
+						<label for="desc">Description</label>
+						<Textarea id="desc" placeholder="Ecrivez un paragraphe décrite la chambre" rows="4" v-model="room.description"/>
 			</div>
 			<div class="field col-12 md:col-3">
-						<label for="num-ch">numero_chambre</label>
-						<InputText id="num-ch" type="number"  min="0" v-model="room.num_room"/>
+						<label for="num-ch">numero de chambre</label>
+						<InputText  id="num-ch" type="number"  min="1" v-model="room.num_room"/>
 					</div>
 					
 						<div class="field col-12 md:col-3">
 						<label for="nb-bed">Nombre de lit</label>
-						<InputText id="nb-bed" type="number"  min="0" v-model="room.nbBed"/>
+						<InputText id="nb-bed" type="number"  min="1" v-model="room.nbBed"/>
 					</div>
 					<div class="field col-12 md:col-3">
-						<label for="nb-a">nombre-p-Adult </label>
-						<InputText id="nb-a" type="number" min="0" v-model="room.nbAdult" />
+						<label for="nb-a">Nombre d'adult </label>
+						<InputText id="nb-a" type="number" min="1" v-model="room.nbAdult" />
 					</div>
 					<div class="field col-12 md:col-3">
-						<label for="nb-E">Nombre-p-enfant</label>
-						<InputText id="nb-E" type="number" min="0" v-model="room.nbEnfant"/>
+						<label for="nb-E">Nombre d'enfant</label>
+						<InputText id="nb-E" type="number" min="1" v-model="room.nbEnfant"/>
 					</div>
 						<div class="field col-12 md:col-3">
-						<label for="nb-B">Nombre bebe</label>
-						<InputText id="nb-B" type="number" min="0" v-model="room.nbbebe"/>
+						<label for="nb-B">Nombre de bébé</label>
+						<InputText id="nb-B" type="number" min="1" v-model="room.nbbebe"/>
 					</div>
 					 <div class="field col-12 md:col-3">
-						<label for="prix1">prix_hotel</label>
-						<InputText id="prix1" type="text" v-model="price.price_hotel" />
+						<label for="prix1">Prix d'hotel</label>
+						<InputText id="prix1" type="text" placeholder="prix specifier pour l'hotel" v-model="price.price_hotel" />
 					</div>
 					<div class="field col-12 md:col-3">
-						<label for="prix2">prix_booking1</label>
-						<InputText id="prix2" type="text" v-model="price.price_booking1"/>
+						<label for="prix2">Prix réservation(1)</label>
+						<InputText id="prix2" type="text" placeholder="prix de sponsor (1)" v-model="price.price_booking1"/>
 					</div>
 					<div class="field col-12 md:col-3">
-						<label for="prix3">prix_booking2</label>
-						<InputText id="prix3" type="text" v-model="price.price_booking2"/>
+						<label for="prix3">Prix réservation (2)</label>
+						<InputText id="prix3" type="text" placeholder="prix de sponsor (2)" v-model="price.price_booking2"/>
 					</div>
 					<div class="field col-12 md:col-3">
-						<label for="prix4">prix_booking3</label>
-						<InputText id="prix4" type="text" v-model="price.price_booking3"/>
+						<label for="prix4">Prix reservation (3)</label>
+						<InputText id="prix4" type="text" placeholder="prix de sponsor (3)" v-model="price.price_booking3"/>
 					</div></div>
 						 <div class="p-fluid formgrid grid">
 					<div class="field col-12 md:col-6">

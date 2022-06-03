@@ -60,7 +60,7 @@
 						<span>Le prix de la chambre  </span>
 							</td>
 						<td> 
-						  <span class="text-900 line-height-3">{{ n.data.booking_status.price }}</span>
+						  <span class="text-900 line-height-3">{{ n.data.booking_status.price_booking }}</span>
 					  </td>
 					  </tr>
 					   <tr>
@@ -71,7 +71,7 @@
 						  <span class="text-900 line-height-3">{{ n.data.room.bookingprice}} DT</span>
 					  </td>
 					  </tr>
-					  <tr v-if="n.data.offre_pourcentage!=null">
+					  <tr v-if="n.data.booking_status.offre_pourcentage!=null">
 						<td > 
 						<span> L'Offre :  </span>
 							</td>
@@ -191,6 +191,31 @@
 				</td>
 			</tr>
 			
+				</table>
+				<table v-if="(n.type.substr(18,19))=='ContactNotification'">
+					<tr>
+						<td :style="{width: '150px'}">
+						<span class="flex align-items-center py-2surface-border" >
+						 <div class="w-3rem h-3rem flex align-items-center justify-content-center bg-pink-100 border-circle mr-3 flex-shrink-0">
+						<i class="pi pi-user text-xl text-pink-500"></i>
+					 </div>
+					 <span class="text-900 line-height-3">{{ n.data.contact.name }} </span>
+						</span>
+					 </td>
+					
+					<td>
+						<span class="text-700">vous envoyer un message sous l'objet  <span class="text-900 line-height-3"> " {{ n.data.contact.objet }} "  </span>      
+						</span>
+					 </td>
+					</tr>
+					<tr>
+						<td></td>
+						<td> " {{ n.data.contact.message }} "</td>
+						<td>
+							<tr>
+							</tr>
+						</td>
+					</tr>
 				</table>
 			</div>
 	

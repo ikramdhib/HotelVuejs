@@ -54,6 +54,14 @@
 				<h5>ROOF-TOP & RESTAURANT</h5>
 			<Chart type="line" :data="lineData1" :options="lineOptions" />
 		</div>
+		<div class="card flex flex-column align-items-center">
+				<h5 class="align-self-start">L'Evaluation pour : </h5>
+				<Chart type="doughnut" :data="pieData" :options="pieOptions" style="width: 50%" />
+			</div>
+			<div class="card flex flex-column align-items-center">
+				<h5 class="align-self-start">Pie Chart</h5>
+				<Chart type="pie" :data="pieDatass" :options="pieOptions" style="width: 50%" />
+			</div>
 	</div>
 	<div class="col-12 xl:col-6">
 		<div class="card">
@@ -63,6 +71,29 @@
 		<div class="card  flex flex-column align-items-center">
 			<h5 class="align-self-start">HOTEL </h5>
 				<Chart type="polarArea" :data="polarData" :options="polarOptions" style="width: 50%" />
+		</div>
+		
+			<div class="card flex flex-column align-items-center">
+				<h5 class="align-self-start">L'Evaluation pour :</h5>
+				<Chart type="doughnut" :data="pieDatas" :options="pieOptions" style="width: 50%" />
+			</div>
+					<div class="card">
+			<div class="flex align-items-center justify-content-between mb-4">
+				<h5>Récentes Commentaire</h5>
+				
+			</div>
+			
+			<ul class="p-0 mx-0 mt-0 mb-4 list-none">
+				<li class="flex align-items-center py-2 border-bottom-1 surface-border" v-for="rec in recent" :key="rec">
+					<div class="w-3rem h-3rem flex align-items-center justify-content-center bg-blue-100 border-circle mr-3 flex-shrink-0">
+						<i class="pi pi-user text-xl text-blue-500"></i>
+					</div>
+					<span class="text-900 line-height-3">
+						<span class="text-700"> {{ rec.commentaire }} <span class="text-blue-500"> {{ rec.rate }} Etoiles </span></span>
+					</span>
+				</li>
+			</ul>
+		
 		</div>
 		
 	</div>
@@ -76,6 +107,58 @@ export default {
 	data() {
 		return {
 			products: null,
+				pieDatass: {
+				labels: ['Réservation ','Réservation des chambres'],
+				datasets: [
+					{
+						data:"",
+						backgroundColor: [
+							"#5F6A6A",
+							"#2E4053 ",
+						],
+						hoverBackgroundColor: [
+							"#5F6A6A",
+							"#2E4053 ",
+						]
+					}
+				]
+			},
+			pieDatas: {
+				labels: ['Roof-Top', 'Pool', 'SPA'],
+				datasets: [
+					{
+						data:"",
+						backgroundColor: [
+							"#A04000",
+							"#229954",
+							"#884EA0"
+						],
+						hoverBackgroundColor: [
+							"#A04000",
+							"#229954",
+							"#884EA0"
+						]
+					}
+				]
+			},
+			pieData: {
+				labels: ['Chambres', 'Restaurants', 'Salle de conference'],
+				datasets: [
+					{
+						data:"",
+						backgroundColor: [
+							"#FF6384",
+							"#36A2EB",
+							"#FFCE56"
+						],
+						hoverBackgroundColor: [
+							"#FF6384",
+							"#36A2EB",
+							"#FFCE56"
+						]
+					}
+				]
+			},
 				polarData: {
 				datasets: [{
 					data: [],
@@ -175,6 +258,10 @@ export default {
 			users:null,
 			contacts:null,
 			bookings:null,
+			rate1:null,
+			rate2:null,
+			rate3:null,
+			recent:[],
 		}
 	},
 	themeChangeListener: null,
@@ -188,6 +275,8 @@ export default {
 	this.getbookpool();
 	this.getbookres();
 	this.getbookroof();
+	this.getRate1();
+	this.getRecent();
 		
 	},
 	methods: {
@@ -242,6 +331,23 @@ export default {
 				this.lineData1.datasets[1].data=this.datasssss
 			})
 		},
+		getRate1(){
+			axios.get('http://localhost:8000/api/rate').then(res=>{
+				this.rate1=res.data.data1;
+				this.rate2=res.data.data2;
+				this.rate3=res.data.data3;
+				console.log(this.rate1);
+				this.pieData.datasets[0].data=this.rate1;
+				this.pieDatas.datasets[0].data=this.rate2;
+				this.pieDatass.datasets[0].data=this.rate3;
+			})
+		},
+		getRecent(){
+			axios.get('http://localhost:8000/api/recent').then(res=>{
+				this.recent=res.data.data
+				console.log(this.recent);
+			})
+		}
 	}
 }
 </script>

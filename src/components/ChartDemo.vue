@@ -143,7 +143,7 @@ export default {
 				]
 			},
 			radarData: {
-				labels: ['Eating', 'Drinking', 'Sleeping', 'Designing', 'Coding', 'Cycling', 'Running'],
+				labels: ['Réservation desh chambres', 'Réservation'],
 				datasets: [
 					{
 						label: 'My First dataset',

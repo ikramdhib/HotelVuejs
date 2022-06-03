@@ -13,7 +13,7 @@
 					<div class="w-3rem h-3rem flex align-items-center justify-content-center bg-blue-100 border-circle mr-3 flex-shrink-0">
 						<i class="pi pi-user text-xl text-blue-500"></i>
 					</div>
-					<span class="text-900 line-height-3">{{ n.data.user_firstname }} {{ n.data.user_lastname }}
+					<span class="text-900 line-height-3"> Client
 						<span class="text-700">fait une reservation sur la chambre <span class="text-900 line-height-3"> {{ n.data.booking_status.num_room }} </span> l'Etage  <span class="text-900 line-height-3">{{ n.data.booking_status.numEtage }}</span> de <span class="text-blue-500"> {{ n.data.room.start}} </span>  à <span class="text-blue-500"> {{ n.data.room.end}}</span><Button icon="pi pi-eye" @click="clickN(n.id) ; markAsRead()" class="p-button-rounded p-button-text mr-2 mb-2" /></span>
 					</span>
 				</li>
@@ -55,6 +55,27 @@
 					</span>
 				</li>
 			</ul>
+			<ul class="p-0 mx-0 mt-0 mb-4 list-none" v-if="readNotificationRating.length > 0">
+				<li class="flex align-items-center py-2 border-bottom-1 surface-border" v-for="p in readNotificationRating" :key="p.id">
+					<div class="w-3rem h-3rem flex align-items-center justify-content-center bg-pink-100 border-circle mr-3 flex-shrink-0">
+						<i class="pi pi-user text-xl text-pink-500"></i>
+					</div>
+					<span class="text-900 line-height-3">{{ p.data.user.firstname }} {{ p.data.user.lastname }}
+						<span class="text-700"> a reagie a voutre {{p.data.rating.ratingable_type.substr(11 ) }} <span class="text-900 line-height-3">de  {{ p.data.rating.rate}}  ETOILE</span>
+						</span></span>
+				</li>
+			</ul>
+			<ul class="p-0 mx-0 mt-0 mb-4 list-none" v-if="readNotificationContact.length > 0">
+				<li class="flex align-items-center py-2 border-bottom-1 surface-border" v-for="p in readNotificationContact" :key="p.id">
+					<div class="w-3rem h-3rem flex align-items-center justify-content-center bg-pink-100 border-circle mr-3 flex-shrink-0">
+						<i class="pi pi-user text-xl text-pink-500"></i>
+					</div>
+					<span class="text-900 line-height-3">{{ p.data.contact.name }} 
+						<span class="text-700"> vous envoyer un messagesous l'objet <span class="text-900 line-height-3" > "  {{p.data.contact.objet }} "</span>
+						<Button icon="pi pi-eye" @click="clickN(p.id) ; markAsRead()" class="p-button-rounded p-button-text mr-2 mb-2" />
+						</span></span>
+				</li>
+			</ul>
 			
 		</div>
 </template>
@@ -66,8 +87,12 @@ export default {
 		return{
 			unreadNotificationRoom:[],
 			unreadNotificationTag:[],
+			unreadNotificationRating:[],
+			unreadNotificationContact:[],
 			readNotificationRoom:[],
 			readNotificationTag:[],
+			readNotificationRating:[],
+			readNotificationContact:[],
 		}
 	},
 
@@ -81,7 +106,6 @@ export default {
 	},
 
 	methods :{
-
 		async getNotification(){
 		axios.get('http://localhost:8000/api/Notifications',
 		{ headers: { Authorization: 'Bearer ' + localStorage.getItem('token')}}
@@ -92,12 +116,25 @@ export default {
 			for(let i=0 ; i< response.data.readedNotifications2.length ; i++){
 				this.readNotificationTag.push(response.data.readedNotifications2[i])
 			}
+			for(let i=0 ; i< response.data.readedNotifications3.length ; i++){
+				this.readNotificationRating.push(response.data.readedNotifications3[i])
+			}
+			for(let i=0 ; i< response.data.readedNotifications4.length ; i++){
+				this.readNotificationContact.push(response.data.readedNotifications4[i])
+			}
 			for(let i=0 ; i< response.data.unreadNOtification2.length ; i++){
 				this.unreadNotificationRoom.push(response.data.unreadNOtification2[i])
 			}
 			for(let i=0 ; i< response.data.unreadNOtification1.length ; i++){
 				this.unreadNotificationTag.push(response.data.unreadNOtification1[i])
 			}
+			for(let i=0 ; i< response.data.unreadNOtification3.length ; i++){
+				this.unreadNotificationRating.push(response.data.unreadNOtification3[i])
+			}
+			for(let i=0 ; i< response.data.unreadNOtification4.length ; i++){
+				this.unreadNotificationContact.push(response.data.unreadNOtification4[i])
+			}
+			
 		})
 		},
 		clickN(id){

@@ -7,7 +7,7 @@
 					<div class="field col-12 md:col-3">
 					     <label for="lastname2">Catégorie :</label>
 				     <span class="p-float-label" >
-					<Dropdown id="dropdown"  :options="dropdownValues" @change="categorieClick"  placeholder="Selectionner" v-model="categorie"></Dropdown>
+					<Dropdown id="dropdown"  :options="dropdownValues" @change="categorieClick"  placeholder="Selectionner un categorie" v-model="categorie"></Dropdown>
 					</span>
 			        </div>
 					<div class="field col-12 md:col-3"  v-if="isRooftop">
@@ -48,15 +48,15 @@
 			        </div>
 					<div class="field col-12 md:col-4">
 						<label for="num_etage">Titre d'Offre :</label>
-						<InputText id="num_etage" type="text" v-model="offre.titre"  />
+						<InputText id="num_etage" type="text" placeholder="Ajouter un titre attirent pour un offre" v-model="offre.titre"  />
 					</div>
 					<div class="field col-12 md:col-4">
 						<label for="num-ch">Pourcentage :</label>
-						<InputText id="num-ch" type="number" v-model="offre.pourcentage" />
+						<InputText id="num-ch" type="number" placeholder="Ajouter un pourcentage de réduction" v-model="offre.pourcentage"  />
 					</div>
 			        <div class="field col-6">
 						<label for="desc">Description</label>
-						<Textarea id="desc" rows="4" v-model="offre.description" />
+						<Textarea id="desc" rows="4" placeholder="Ddecrivez brièvement" v-model="offre.description" />
 						</div>
 					</div>
 			  <div class="p-fluid formgrid grid">
