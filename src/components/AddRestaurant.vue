@@ -77,7 +77,7 @@ import axios from 'axios'
 		},
 
 		methods :{
-					changeFile(e){
+			changeFile(e){
 
               let selectedFiles=e.target.files
               if(!selectedFiles.length){

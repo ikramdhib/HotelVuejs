@@ -1,14 +1,13 @@
 <template>
-	
-
 	<div class="card">
 			<div class="flex align-items-center justify-content-between mb-4">
-				<h5>Notifications</h5>
+				<h5>Notifications   </h5>
 			</div>
 			<div class="p-fluid formgrid grid" v-for="n in notife" :key="n">
-				<table v-if="(n.type.substr(18,19))=='BookingRoomNotification'">
+				
+				<table responsiveLayout="scroll" v-if="(n.type.substr(18,23))=='BookingRoomNotification'">
 					<tr>
-						<td :style="{width: '150px'}">
+						<td  :style="{width: '150px'}">
 						<span class="flex align-items-center py-2surface-border" >
 						 <div class="w-3rem h-3rem flex align-items-center justify-content-center bg-pink-100 border-circle mr-3 flex-shrink-0">
 						<i class="pi pi-user text-xl text-pink-500"></i>
@@ -113,7 +112,7 @@
 					<Button label="Confirmer" @click="updateConfirmation(n.data.booking_id)" class="mr-2 mb-2"/></td>
 			</tr>
 				</table>
-							<table v-if="(n.type.substr(18,19))=='BookingNotification'">
+				<table v-if="(n.type.substr(18,19))=='BookingNotification'">
 					<tr>
 						<td :style="{width: '150px'}">
 						<span class="flex align-items-center py-2surface-border" >
@@ -125,7 +124,8 @@
 					 </td>
 					
 					<td>
-						<span class="text-700">fait une reservation sur {{ n.data.categorieBooking }} <span class="text-900 line-height-3"> pour {{ n.data.booking.nbPersonne }}  </span></span>
+						<span class="text-700">fait une reservation sur {{ n.data.categorieBooking }} <span class="text-900 line-height-3"> pour {{ n.data.booking.nombre }}_  </span>      
+						<span v-if="n.data.categorieBooking=='Pool' || n.data.categorieBooking=='Spa'">Personnes</span > <span v-if="n.data.categorieBooking== 'Salle de conference'"> salle</span> <span v-if="n.data.categorieBooking=='Roof-Top' || n.data.categorieBooking=='Restaurant'"> tables </span> </span>
 					 </td>
 					</tr>
 					<tr>
@@ -153,15 +153,17 @@
 						<span>Le prix de booking :  </span>
 							</td>
 						<td> 
-						  <span class="text-900 line-height-3">{{ n.data.booking.user_id}}DT</span>
+						  <span class="text-900 line-height-3">{{ n.data.booking.prix}}DT</span>
 					  </td>
 					  </tr>
 					  <tr v-if="n.data.objet.offres!=null">
 						<td > 
 						<span> L'Offre :  </span>
 							</td>
-						<td> 
-						  <span class="text-900 line-height-3">{{ n.data.objet.offres.titre}} de {{ n.data.objet.offres.pourcentage}} % </span>
+						<td > 
+							<div v-for="offre in n.data.objet.offres" :key="offre">
+						  <span class="text-900 line-height-3">{{ offre.titre}} de {{ offre.pourcentage}} % </span>
+							</div>
 					  </td>
 					  </tr>
 						</table>
@@ -178,29 +180,25 @@
 				<td>
 					<table>
 						<tr>
-							<td>{{ n.data.room.nom }} {{ n.data.room.prenom }} </td>
+							<td>{{ n.data.booking.nom }} {{ n.data.booking.prenom }} </td>
 						</tr>
 						<tr>
-							<td>{{ n.data.room.email }}</td>
+							<td>{{ n.data.booking.email }}</td>
 						</tr>
 						<tr>
-							<td> DE :</td>
-							<td>{{ n.data.room.pay_residence }}</td>
+							<td>{{ n.data.booking.phone }}</td>
 						</tr>
 					</table>
 				</td>
 			</tr>
-			<tr>
-				<td></td><td></td><td>
-					<Toast/>
-					<Button label="Confirmer" @click="updateConfirmation(n.data.booking_id)" class="mr-2 mb-2"/></td>
-			</tr>
+			
 				</table>
+				</div>
 			</div>
 	
 
 			
-	</div>
+	
 </template>
 
 <script>

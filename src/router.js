@@ -491,6 +491,42 @@ const routes = [
     }
 },
 {
+  path: '/offres',
+  name: 'offres',
+ component: () => import('./components/OffresTables.vue'),
+  beforeEnter: (to, from, next) => {
+      if (!localStorage.getItem("token")) {
+        next("login");
+      } else {
+        next();
+      }
+    }
+},
+{
+  path: '/offresupdate:id',
+  name: 'offresupdate',
+ component: () => import('./components/OffresUpdate.vue'),
+  beforeEnter: (to, from, next) => {
+      if (!localStorage.getItem("token")) {
+        next("login");
+      } else {
+        next();
+      }
+    }
+},
+{
+  path: '/reservationchambres',
+  name: 'reservationschambre',
+ component: () => import('./components/ReservationChambres.vue'),
+  beforeEnter: (to, from, next) => {
+      if (!localStorage.getItem("token")) {
+        next("login");
+      } else {
+        next();
+      }
+    }
+},
+{
   path: '/images :id :categorie',
   name: 'images',
  component: () => import('./components/Images.vue'),
@@ -502,6 +538,25 @@ const routes = [
       }
     }
 },
+{
+  path: '/reservation',
+  name: 'reservation',
+ component: () => import('./components/Reservation.vue'),
+  beforeEnter: (to, from, next) => {
+      if (!localStorage.getItem("token")) {
+        next("login");
+      } else {
+        next();
+      }
+    }
+},
+{
+  path: '/cal',
+  name: 'cal',
+ component: () => import('./components/calendrier.vue'),
+ 
+},
+
 ];
 
 const router = createRouter({

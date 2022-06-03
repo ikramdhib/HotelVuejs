@@ -146,12 +146,12 @@ export default {
                             label: 'Réservations', 
                             items: [
                                 {
-                                    label: 'Réservation des chambre ', icon: 'pi pi-plus',
-                                    to:'addoffres'
+                                    label: 'Réservation des chambre ', icon: 'pi pi-list',
+                                    to:'reservationchambres'
                                 },
                                 {
                                     label: 'Réservations', icon: 'pi pi-list',
-                                    to:'offres'
+                                    to:'reservation'
                                 }
                             ]
                         },

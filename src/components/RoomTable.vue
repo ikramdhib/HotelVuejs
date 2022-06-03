@@ -66,16 +66,17 @@
 					</Column>
                     <Column  header="disponibilité" >
 						<template #body="{data}">
-              {{ data.avaibility}} 
+              
+						  <i class="pi" :class="{'text-green-500 pi-check-circle': data.avaibility=='1' , 'text-pink-500 pi-times-circle': data.avaibility=='0'}"></i>
+						
 						</template>
 					</Column>
 					 <Column  header="prix chambre" >
 						<template #body="{data}">
-            <div v-for="price in prices" :key="price.id">
-                    <div v-if="price.id == data.price_id">
-						{{ price.price_hotel }}DT
+           
+						{{ data.price_booking}}DT
                    
-					</div></div>
+					
 						</template>
 					</Column>
 				 <Column header="Image"  style="min-width:8rem">
@@ -166,16 +167,17 @@
 					</Column>
                     <Column  header="Disponibilité" >
 						<template #body="{data}">
-              {{ data.avaibility}} 
+        
+						  <i class="pi" :class="{'text-green-500 pi-check-circle': data.avaibility=='1' , 'text-pink-500 pi-times-circle': data.avaibility=='0'}"></i>
 						</template>
+					
 					</Column>
 					 <Column  header="Prix chambre" >
 						<template #body="{data}">
-            <div v-for="price in prices" :key="price.id">
-                    <div v-if="price.id == data.price_id">
-						{{ price.price_hotel }} DT
+           
+						{{ data.price_booking }} DT
                    
-					</div></div>
+					
 						</template>
 					</Column>
 				 <Column header="Image"  style="min-width:8rem">
