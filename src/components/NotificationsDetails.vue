@@ -61,7 +61,7 @@
 						<span>Le prix de la chambre  </span>
 							</td>
 						<td> 
-						  <span class="text-900 line-height-3">{{ n.data.booking_status.price }}</span>
+						  <span class="text-900 line-height-3">{{ n.data.booking_status.price_booking }}</span>
 					  </td>
 					  </tr>
 					   <tr>
@@ -72,7 +72,7 @@
 						  <span class="text-900 line-height-3">{{ n.data.room.bookingprice}} DT</span>
 					  </td>
 					  </tr>
-					  <tr v-if="n.data.offre_pourcentage!=null">
+					  <tr v-if="n.data.booking_status.offre_pourcentage!=null">
 						<td > 
 						<span> L'Offre :  </span>
 							</td>

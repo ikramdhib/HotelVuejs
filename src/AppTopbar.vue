@@ -44,8 +44,8 @@
                 <a v-for="(unread , index) in unreadnotificationsRoom" :key="index" href="#" class="flex items-center px-4 py-3 border-b hover:bg-gray-100 -mx-2">
                     <p class="text-gray-600 text-sm mx-2">
                         <span class="font-bold" href="#">{{ unread.data.room.nom}} {{ unread.data.prenom }}</span> fait une résérvation sur la chambre <span class="text-900 line-height-3"> {{ unread.data.booking_status.num_room }} </span> l'Etage  <span class="text-900 line-height-3">{{ unread.data.booking_status.numEtage }}</span> de <span class="text-blue-500"> {{ unread.data.room.start}} </span>  à <span class="text-blue-500"> {{ unread.data.room.end}}</span>
-
-						{{ $moment(unread.created_at).fromNow() }}
+						<br/>
+						{{ $moment(unread.created_at).locale('fr').fromNow() }}
                     </p>
                 </a>
             </div>
@@ -54,8 +54,28 @@
                     <p class="text-gray-600 text-sm mx-2">
                         <span class="font-bold" href="#">{{ unread.data.booking.nom}} {{ unread.data.booking.prenom }}</span> fait une résérvation sur {{ unread.data.categorieBooking }} 
 						<span class="text-900 line-height-3"> pour  {{ unread.data.booking.nombre}} <span v-if="unread.data.categorieBooking=='Pool' || unread.data.categorieBooking=='Spa'">Personnes</span > <span v-if="unread.data.categorieBooking== 'Salle de conference'"> salle</span> <span v-if="unread.data.categorieBooking=='Roof-Top' || unread.data.categorieBooking=='Restaurant'"> tables </span> </span>
-
-						{{ $moment(unread.created_at).fromNow() }}
+						<br/>
+						{{ $moment(unread.created_at).locale('fr').fromNow() }}
+                    </p>
+                </a>
+            </div>
+			 <div id="border" class="py-2" v-if="unreadnotificationsRating!=null">
+                <a v-for="(unread , index) in unreadnotificationsRating" :key="index" href="#" class="flex items-center px-4 py-3 border-b hover:bg-gray-100 -mx-2">
+                    <p class="text-gray-600 text-sm mx-2">
+                        <span class="font-bold" href="#">Quelq'un </span> a reagie à votre {{ (unread.data.rating.ratingable_type).substr(11) }} 
+						<span class="text-900 line-height-3"> de  {{ unread.data.rating.rate}} ETOILE </span>
+						<br/>
+						{{ $moment(unread.created_at).locale('fr').fromNow() }}
+                    </p>
+                </a>
+            </div>
+			 <div id="border" class="py-2" v-if="unreadnotificationsContact!=null">
+                <a v-for="(unread , index) in unreadnotificationsContact" :key="index" href="#" class="flex items-center px-4 py-3 border-b hover:bg-gray-100 -mx-2">
+                    <p class="text-gray-600 text-sm mx-2">
+                        <span class="font-bold" href="#">{{ unread.data.contact.name}}</span>  a vous envoyez un message sous l'objet
+						<span class="text-900 line-height-3">  " {{ unread.data.contact.objet}} "</span>
+						<br/>
+						{{ $moment(unread.created_at).locale('fr').fromNow() }}
                     </p>
                 </a>
             </div>
@@ -67,7 +87,7 @@
                     </p>
                 </a>
             </div>
-            <router-link id="border" to="notifications" @click="markAsRead()" class="block bg-gray-800 text-white text-center font-bold py-2">See all notifications</router-link>
+            <router-link id="border" to="notifications"  class="block bg-gray-800 text-white text-center font-bold py-2">Voir tous les notifications</router-link>
         </div>
         </div>
 </div>
@@ -133,6 +153,8 @@ data: function () {
 			unreadnotifications:{},
 			unreadnotificationsRoom:{},
 			unreadnotificationsBook:{},
+			unreadnotificationsRating:{},
+			unreadnotificationsContact:{},
         }
 	},
 	mounted(){
@@ -178,6 +200,8 @@ data: function () {
 				this.unreadnotifications=res.data.notifs
 				this.unreadnotificationsRoom=res.data.notifRoom
 				this.unreadnotificationsBook=res.data.notifBooking
+				this.unreadnotificationsRating=res.data.notifRating,
+				this.unreadnotificationsContact=res.data.notifContact
 			})
 		},
 

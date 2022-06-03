@@ -550,12 +550,7 @@ const routes = [
       }
     }
 },
-{
-  path: '/cal',
-  name: 'cal',
- component: () => import('./components/calendrier.vue'),
- 
-},
+
 
 ];
 

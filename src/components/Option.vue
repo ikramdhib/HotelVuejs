@@ -5,11 +5,11 @@
 				<h4> Ajouter Option</h4>
 				<div class="p-fluid formgrid grid"> 
 		<div class="field col-12 md:col-4">
-						<label for="nomop">nom_Option</label>
-						<InputText id="nomop" type="text" v-model="option.nom_option" />
+						<label for="nomop">Nom d'option </label>
+						<InputText id="nomop" placeholder="Exp : Petit déj - Jacuzzi - Full cinema TV " type="text" v-model="option.nom_option" />
 					</div>
 					<div class="field col-12 md:col-4">
-						<label for="prixop">prix_Option</label>
+						<label for="prixop">Prix</label>
 						<InputText id="prixop" type="text" v-model="option.price_option"/>
 					</div>
          
@@ -33,11 +33,11 @@
 			<div class="p-fluid formgrid grid">
 				<div class="field col-10 md:col-3"> 
 						<Toast/>
-	<Button label="ajouter" @click="addOption()" /></div></div>
-<div class="p-fluid formgrid grid">
+	<Button label="ajouter" @click="addOption()" /></div>
 				<div class="field col-12 md:col-3"> 
     <router-link :to="{ path: 'RoomTable'}"> <Button label="Annuler" class="p-button-secondary "  />
 	</router-link></div></div>
+
 </div>
 
 </div>	

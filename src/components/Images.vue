@@ -84,7 +84,7 @@
              <div class="p-fluid formgrid grid" >
 			<div class="field col-12 md:col-3 py-4">
 			   <Toast />
-			<Button label="Modifier" @click="updateOffre()"></Button>
+			<Button label="Modifier" @click="updateImg()"></Button>
 		</div>
         <div class="field col-12 md:col-3 py-4">
 			<Button label="Annuler" @click="goBack()" class="p-button-secondary mr-2 mb-2" ></Button>
@@ -105,9 +105,11 @@ export default {
           
             images: [],
             displayConfirmation:false,
-           id:null ,
+            id:null ,
+            image:[],
             layout:'grid',
            update:false,
+           form : new FormData,
         };
     },
     mounted() {
@@ -115,6 +117,42 @@ export default {
     },
 
     methods:{
+        	changeFile(e){
+
+              let selectedFiles=e.target.files
+              if(!selectedFiles.length){
+                  return false
+              }
+
+              for(let i=0 ;i<selectedFiles.length ;i++ ){
+                  this.image.push(selectedFiles[i])
+              }
+              console.log("tt",this.image);
+              
+           },
+
+        updateImg(){
+           for(let i=0 ;i<this.image.length;i++){
+					this.form.append('path',this.image[i])
+                    this.form.append('id',this.id)
+           }
+			const config= {headers:{'Content-Type':'multipart/form-data',
+			Authorization: 'Bearer ' + localStorage.getItem('token') }};
+                  axios.post('http://localhost:8000/api/image' ,
+                  this.form, config
+           
+            ).then(res=>{
+                if(res.data.update==true){
+                    this.$toast.add({severity:'success', summary: 'Excellent', detail:'les information a été soumise avec succès', life: 3000});
+							
+					}else{
+							this.$toast.add({severity:'error', summary: "Message d'erreur", detail:'quelque chose est mal passé', life: 3000});
+					}
+            })
+            
+  
+          
+        },
         getImages(){
             const id = this.$route.params.id
             const categorie =this.$route.params.categorie
@@ -177,7 +215,9 @@ export default {
             axios.delete('http://localhost:8000/api/image/'+id,
 				{ headers: { Authorization: 'Bearer ' + localStorage.getItem('token') }}
             ).then(res=>{
-                if(res.data.success=="true"){
+                if(res.data.success==true
+                
+                ){
                 this.$toast.add({severity:'success', summary: 'Excellent', detail:'les information a été soumise avec succès', life: 3000});
 			}else{
 				this.$toast.add({severity:'error', summary: "Message d'erreur", detail:'quelque chose est mal passé', life: 3000});

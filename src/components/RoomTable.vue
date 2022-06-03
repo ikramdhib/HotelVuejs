@@ -1,7 +1,7 @@
 <template>
 <div class="col-12">
       <div class="card">
-        <h4 id="title"> les chambre</h4>
+        <h4 id="title"> Les Chambres</h4>
     	<DataTable :value="table" :paginator="true" class="p-datatable-gridlines" :rows="10" dataKey="id" 
 						 responsiveLayout="scroll"
 							 >
@@ -18,7 +18,7 @@
                        Aucun chambre trouver
                     </template>
 				
-					<Column  header="type chambre" >
+					<Column  header="Type" >
                     
 						<template #body="{data}">
                   
@@ -35,43 +35,43 @@
 							{{data.nbBed}}
 						</template>
 					</Column>
-					<Column  header="description" >
+					<Column  header="Description"  style="min-width:18rem">
 					<template #body="{data}">
 							{{ data.description}} 
 						</template></Column>
-					<Column  header="numero room" >
+					<Column  header="Numero chambre" >
 						<template #body="{data}">
                    {{ data.num_room}} 
 						</template>
 					</Column>
-					<Column  header="numero etage" >
+					<Column  header="Numero d'etage" >
 						<template #body="{data}">
               {{ data.numEtage}} 
 						</template>
 					</Column>
-                    	<Column  header="nombre d'adult" >
+                    	<Column  header="Nombre d'adult" >
 						<template #body="{data}">
               {{ data.nbAdult}} Adult
 						</template>
 					</Column>
-                    	<Column  header="nombre enfant" >
+                    	<Column  header="Nombre d'enfant" >
 						<template #body="{data}">
               {{ data.nbEnfant}} Enfant
 						</template>
 					</Column>
-                    <Column  header="nombre bebe" >
+                    <Column  header="Nombre de bebe" >
 						<template #body="{data}">
               {{ data.nbbebe}} Bebe
 						</template>
 					</Column>
-                    <Column  header="disponibilité" >
+                    <Column  header="Disponibilité" >
 						<template #body="{data}">
               
 						  <i class="pi" :class="{'text-green-500 pi-check-circle': data.avaibility=='1' , 'text-pink-500 pi-times-circle': data.avaibility=='0'}"></i>
 						
 						</template>
 					</Column>
-					 <Column  header="prix chambre" >
+					 <Column  header="Prix de réservation" >
 						<template #body="{data}">
            
 						{{ data.price_booking}}DT
@@ -79,7 +79,7 @@
 					
 						</template>
 					</Column>
-				 <Column header="Image"  style="min-width:8rem">
+				 <Column header="Image" >
                       <template #body="{data}">
                        		<Button  @click="goImages(data.id)" icon="pi pi-image" class="p-button-rounded p-button-help p-button-outlined mr-2 mb-2"/>
                      
@@ -119,7 +119,7 @@
 						</div>
 					</template>
 					<Column :expander="true" headerStyle="width: 3rem" />
-					<Column  header="Type du chambre" >
+					<Column  header="Type" >
                     
 						<template #body="{data}">
                   
@@ -136,7 +136,7 @@
 							{{data.nbBed}}
 						</template>
 					</Column>
-					<Column  header="Description" >
+					<Column  header="Description"  style="min-width:18rem" >
 					<template #body="{data}">
 							{{ data.description}} 
 						</template></Column>
@@ -145,7 +145,7 @@
                    {{ data.num_room}} 
 						</template>
 					</Column>
-					<Column  header="Numero etage" >
+					<Column  header="Numero d'etage" >
 						<template #body="{data}">
               {{ data.numEtage}} 
 						</template>
@@ -155,12 +155,12 @@
               {{ data.nbAdult}} Adult
 						</template>
 					</Column>
-                    	<Column  header="Nombre enfant" >
+                    	<Column  header="Nombre d'enfant" >
 						<template #body="{data}">
               {{ data.nbEnfant}} Enfant
 						</template>
 					</Column>
-                    <Column  header="Nombre bebe" >
+                    <Column  header="Nombre de bebe" >
 						<template #body="{data}">
               {{ data.nbbebe}} Bébé
 						</template>

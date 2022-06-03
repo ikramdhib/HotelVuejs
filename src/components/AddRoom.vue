@@ -7,7 +7,7 @@
 					   <div class="field col-12 md:col-4">
 					     <label for="lastname2">Type de chambre</label>
 				     <span class="p-float-label" >
-					<Dropdown id="dropdown"  :options="types" optionLabel="nom_type" v-model="types.type_id" placeholder="Select" ></Dropdown>
+					<Dropdown id="dropdown"  :options="types" optionLabel="nom_type" v-model="types.type_id" placeholder="Selectionner type" ></Dropdown>
 					</span>
 			        </div>
 					
@@ -30,8 +30,8 @@
 				 
 				
 			<div class="field col-9">
-						<label for="desc">description</label>
-						<Textarea id="desc" rows="4" v-model="room.description"/>
+						<label for="desc">Description</label>
+						<Textarea id="desc" placeholder="Ecrivez un paragraphe décrite la chambre" rows="4" v-model="room.description"/>
 			</div>
 			<div class="field col-12 md:col-3">
 						<label for="num-ch">Numero chambre</label>
@@ -40,7 +40,7 @@
 					
 						<div class="field col-12 md:col-3">
 						<label for="nb-bed">Nombre de lit</label>
-						<InputText id="nb-bed" type="number"  min="0" v-model="room.nbBed"/>
+						<InputText id="nb-bed" type="number"  min="1" v-model="room.nbBed"/>
 					</div>
 					<div class="field col-12 md:col-3">
 						<label for="nb-a">Nombre adult </label>
@@ -51,8 +51,8 @@
 						<InputText id="nb-E" type="number" min="0" v-model="room.nbEnfant"/>
 					</div>
 						<div class="field col-12 md:col-3">
-						<label for="nb-B">Nombre bebe</label>
-						<InputText id="nb-B" type="number" min="0" v-model="room.nbbebe"/>
+						<label for="nb-B">Nombre de bébé</label>
+						<InputText id="nb-B" type="number" min="1" v-model="room.nbbebe"/>
 					</div>
 					 <div class="field col-12 md:col-3">
 						<label for="prix1">Prix de Reservation</label>
