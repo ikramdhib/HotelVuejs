@@ -66,16 +66,17 @@
 					</Column>
                     <Column  header="Disponibilité" >
 						<template #body="{data}">
-              <i class="pi" :class="{'text-green-500 pi-check-circle': data.avaibility=='1' , 'text-pink-500 pi-times-circle': data.avaibility=='0'}"></i>
+              
+						  <i class="pi" :class="{'text-green-500 pi-check-circle': data.avaibility=='1' , 'text-pink-500 pi-times-circle': data.avaibility=='0'}"></i>
+						
 						</template>
 					</Column>
 					 <Column  header="Prix de réservation" >
 						<template #body="{data}">
-            <div v-for="price in prices" :key="price.id">
-                    <div v-if="price.id == data.price_id">
-						{{ price.price_hotel }}DT
+           
+						{{ data.price_booking}}DT
                    
-					</div></div>
+					
 						</template>
 					</Column>
 				 <Column header="Image" >
@@ -166,17 +167,47 @@
 					</Column>
                     <Column  header="Disponibilité" >
 						<template #body="{data}">
-              {{ data.avaibility}} 
+        
+						  <i class="pi" :class="{'text-green-500 pi-check-circle': data.avaibility=='1' , 'text-pink-500 pi-times-circle': data.avaibility=='0'}"></i>
 						</template>
+					
 					</Column>
 					 <Column  header="Prix chambre" >
 						<template #body="{data}">
-            <div v-for="price in prices" :key="price.id">
-                    <div v-if="price.id == data.price_id">
-						{{ price.price_hotel }} DT
+           
+						{{ data.price_booking }} DT
                    
-					</div></div>
+					
 						</template>
+					</Column>
+				 <Column header="Image"  style="min-width:8rem">
+                      <template #body="{data}">
+                       		<Button  @click="goImages(data.id)" icon="pi pi-image" class="p-button-rounded p-button-help p-button-outlined mr-2 mb-2"/>
+                     
+                      </template>
+                   </Column>
+					  <Column  header="" >
+									<template #body="{data}" >
+			               	<Button @click="updateRoom(data.id)"   icon="pi pi-pencil" class="p-button-rounded p-button-info p-button-outlined mr-2 mb-2" />
+										
+									</template>
+								</Column>
+					
+					  <Column  header=""  bodyClass="text-center" style="min-width:8rem">
+                       <template #body="{data}">
+							<Button  @click="openConfirmation" icon="pi pi-times" class="p-button-rounded p-button-danger p-button-outlined mr-2 mb-2"  />
+							<Dialog header="Confirmation" v-model:visible="displayConfirmation" :style="{width: '350px'}" :modal="true">
+                                  <div class="flex align-items-center justify-content-center">
+                                    <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
+                                    <span>Are you sure you want to proceed?</span>
+                                  </div>
+                                  <template #footer>
+                                    <Button label="No" icon="pi pi-times" @click="closeConfirmation" class="p-button-text"/>
+                                    <Button label="Yes" icon="pi pi-check" @click="delete_room(data.id);closeConfirmation();" class="p-button-text" autofocus />
+                                  </template>
+                                </Dialog>
+						</template>
+                   
 					</Column>
 					<template #expansion="{data}">
 						<div class="p-3">

@@ -34,6 +34,8 @@ import axios from 'axios';
 export default {
  data() {
             return {
+					 user_id:0,
+			
                 type: {
 					nom_type:"",
 					
@@ -45,17 +47,20 @@ export default {
 		
         methods: {	
 			 async addType() {
+				  this.user=JSON.parse(localStorage.getItem('user'));
 			 await axios
 			    .post('http://localhost:8000/api/type',{nom_type:this.type.nom_type,
-				intitule:this.type.intitule},
+				intitule:this.type.intitule,
+				user_id:this.user.id,},
 				{ headers: {Authorization: 'Bearer ' + localStorage.getItem('token')}}
 				).then(res=>{
 				
 						if(res){
 							this.$toast.add({severity:'success', summary: 'Excellent', detail:'les information a été soumise avec succès', life: 3000});
+						
 						}else{
 							this.$toast.add({severity:'error', summary: "Message d'erreur", detail:'quelque chose est mal passé', life: 3000});
-						}
+						}	this.$router.push('TypeTable');
 			       
 					 
 			})}}}

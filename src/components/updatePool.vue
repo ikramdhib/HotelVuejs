@@ -28,19 +28,12 @@
 				</div>    
          
 			</div>
-			<div class="field col-10">
+			<div class="field col-6">
 						<label for="desc">Description :</label>
 						<Textarea id="desc" rows="4" v-model="pool.description"/>
-			</div>
+			  </div>
 		</div>
-
-					
-					
-					
-
-					
-		
-	      <div class="field col-12 md:col-3">
+    <div class="field col-12 md:col-3">
 			     <Toast />
 					<Button label="Ajouter" @click="updatePool()"  ></Button>
 		</div>

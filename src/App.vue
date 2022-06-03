@@ -156,11 +156,9 @@ export default {
                             ]
                         },
                          {
-                            label: 'Message Contacts',
-                             to:'TableContact'
-                            
-                         },
-                        
+                            label: 'Message Contacts', 
+                           
+                         }
                     ]
                 },
                 

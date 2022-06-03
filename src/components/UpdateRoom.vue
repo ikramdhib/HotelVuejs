@@ -8,7 +8,7 @@
 					     <label for="lastname2">Type_chambre</label>
 				     <span class="p-float-label" >
 					<Dropdown id="dropdown"  :options="types" optionLabel="nom_type" v-model="types.type_id" placeholder="Select" ></Dropdown>
-					</span>
+					</span> 
 			        </div>
 					
 					<div class="field col-12 md:col-4">
@@ -26,7 +26,7 @@
 				</div>    
          
 			</div>
-			<div class="field col-12">
+			<div class="field col-9">
 						<label for="desc">description</label>
 						<Textarea id="desc" rows="4" v-model="room.description"/>
 			</div>
@@ -52,27 +52,17 @@
 						<InputText id="nb-B" type="number" min="0" v-model="room.nbbebe"/>
 					</div>
 					 <div class="field col-12 md:col-3">
-						<label for="prix1">prix_hotel</label>
-						<InputText id="prix1" type="text" v-model="price.price_hotel" />
+						<label for="prix1">prix reservation</label>
+						<InputText id="prix1" type="text" v-model="room.price_booking" />
 					</div>
-					
-					<div class="field col-12 md:col-3">
-						<label for="prix2">prix_booking1</label>
-						<InputText id="prix2" type="text" v-model="price.price_booking1"/>
-					</div>
-					<div class="field col-12 md:col-3">
-						<label for="prix3">prix_booking2</label>
-						<InputText id="prix3" type="text" v-model="price.price_booking2"/>
-					</div>
-					<div class="field col-12 md:col-3">
-						<label for="prix4">prix_booking3</label>
-						<InputText id="prix4" type="text" v-model="price.price_booking3"/>
-					</div>
-	               <div class="field col-12 md:col-3">
-					      <Toast />
-					<Button label="Modifier"  @click="updateprice();updateRoom()" ></Button>
-		</div>
-		</div>
+				  
+				
+	               <div class="Field col-12 md:col-3 py-4">
+					   
+					<Button label="Editer"  @click="updateRoom()" ></Button>
+					<Toast/>
+		       </div>
+				  </div>
 			</div>
 		</div>
 		</div>
@@ -87,12 +77,7 @@ import axios from 'axios';
 			return {
 				
 			 user_id:0,	
-			price:{
-				price_hotel:"",
-				price_booking1:"",
-				price_booking2:"",
-                price_booking3:"",
-			},
+		
 				types:[],
 				type:{type_id:0},
 				room:{ 
@@ -104,7 +89,8 @@ import axios from 'axios';
 				nbAdult:0,
                 nbEnfant: 0,
 				type_id:0,
-				price_id:0,
+				price_booking:0,
+				
              
               
 				},
@@ -119,7 +105,21 @@ import axios from 'axios';
 	
 		
 			mounted(){
-                this.gettype();
+					
+             axios.get('http://localhost:8000/api/type'
+           
+        ).then(res=>{
+
+           this.types = res.data.type;
+		    this.types.nom_type=res.data.type.nom_type;
+		  this.idtype=res.data.type.id;
+		   console.log(this.idtype);
+
+          
+        })
+			
+		
+              
 	const id=this.$route.params.id;
      axios.get("http://127.0.0.1:8000/api/room/"+id)
       .then((res) => {
@@ -138,56 +138,14 @@ import axios from 'axios';
           this.room.nbbebe=res.data.room.nbbebe;
 
 		 this.room.type_id=res.data.room.type_id;
-           let pric=  this.room.price_id=res.data.room.price_id;
-		  
+         this.room.price_booking=res.data.room.price_booking;
+		 
 
-      localStorage.setItem("r",pric);
-               
-	
-       axios.get("http://127.0.0.1:8000/api/price/"+pric)
-      .then((res) => {
-       
-          this.price.price_hotel=res.data.price.price_hotel;
-          this.price.price_booking1=res.data.price.price_booking1;
-          this.price.price_booking2=res.data.price.price_booking2;
-          this.price.price_booking3=res.data.price.price_booking3;
-       })
-      
-	  })
+      })
 		 },
 		 methods: {	
 		 
-			 async gettype(){
-            await axios.get('http://localhost:8000/api/type'
-           
-        ).then(res=>{
-
-           this.types = res.data.type;
-		    this.types.nom_type=res.data.type.nom_type;
-		   let type_id=sessionStorage.getItem(type_id);
-		
-		   console.log(res);
-
-          
-        })
-			
-		} ,  async updateprice() {
 		 
-		 
-			 await axios
-			  
-			    .put('http://localhost:8000/api/price/'+localStorage.getItem('r'),
-			{price_booking1:parseFloat(this.price.price_booking1),
-                price_booking2:parseFloat(this.price.price_booking2),
-                price_booking3:parseFloat(this.price.price_booking3),
-				price_hotel:parseFloat(this.price.price_hotel),},
-				{ headers: { Authorization: 'Bearer ' + localStorage.getItem('token')}}
-				).then(res=>{
-					 	
-				     
-					  
-					 console.log(res)})
-		},
 			    async updateRoom(){
 					  this.user=JSON.parse(localStorage.getItem('user'));
 					 const id=this.$route.params.id;
@@ -203,7 +161,7 @@ import axios from 'axios';
                 avaibility:this.room.avaibility,
 				 nbbebe:this.room.nbbebe,
 				type_id:this.types.type_id.id,
-				price_id:(localStorage.getItem('r')),
+				price_booking:this.room.price_booking,
 				user_id:this.user.id,
 			 
 			 

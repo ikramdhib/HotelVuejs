@@ -62,7 +62,7 @@
 			 <div id="border" class="py-2" v-if="unreadnotificationsRating!=null">
                 <a v-for="(unread , index) in unreadnotificationsRating" :key="index" href="#" class="flex items-center px-4 py-3 border-b hover:bg-gray-100 -mx-2">
                     <p class="text-gray-600 text-sm mx-2">
-                        <span class="font-bold" href="#">{{ unread.data.user.firstname}} {{ unread.data.user.lastname }}</span> a reagie à votre {{ unread.data.rating.ratingable_type.substr(11 )}} 
+                        <span class="font-bold" href="#">Quelq'un </span> a reagie à votre {{ (unread.data.rating.ratingable_type).substr(11) }} 
 						<span class="text-900 line-height-3"> de  {{ unread.data.rating.rate}} ETOILE </span>
 						<br/>
 						{{ $moment(unread.created_at).locale('fr').fromNow() }}

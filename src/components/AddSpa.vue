@@ -24,24 +24,26 @@
 				</div>
 				 
 				</div>
-			                <div class="field col-10">
+			                <div class="field col-6">
 						<label for="desc">Description :</label>
 						<Textarea id="desc" rows="4"  v-model="spa.description"/>
 			           </div>
-		                </div>
-						<div class="field col-12 md:col-6">
+					   <div class="field col-12 md:col-6">
 						<label for="prix4">Choisir des image :</label>
 						<span class="p-input-icon-left">
 							<i class="pi pi-folder-open" />
 							<InputText  type="file" multiple @change="changeFile"/>
 						</span>
 					</div>
-		    <div class="p-fluid formgrid grid">
+					
 	      <div class="field col-12 md:col-3">
 			   <Toast />
 					<Button label="Ajouter" @click="addSpa()" ></Button>
+		
 		</div>
-		</div></div>
+		                </div>
+					
+		    </div>
 			</div>
 		</div>
 		

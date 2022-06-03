@@ -17,38 +17,32 @@
 						<label for="num_etage">capacité:</label>
 						<InputText id="num_etage" type="number"  min="1" v-model="pool.capacite"/>
 					</div>
-                    	          
-                 <div class="field col-12 md:col-3">
+                   <div class="field col-12 md:col-3">
                         
-                        <span class="text-black-700">Disponibilité :</span>           
-                   <div class="mt-2 py-2 px-4">
+               <span class="text-black-700">Disponibilité :</span>           
+                <div class="mt-2 py-2 px-4">
 				<InputSwitch  v-model="pool.avaibility"/>
 				</div>
-				 
-				
+				 </div>
+			<div class="field col-6">
+			<label for="desc">Description :</label>
+			<Textarea id="desc" rows="4" v-model="pool.description"/>
 			</div>
-			<div class="field col-10">
-						<label for="desc">Description :</label>
-						<Textarea id="desc" rows="4" v-model="pool.description"/>
-			</div>
-		</div>
-<div class="field col-12 md:col-6">
-						<label for="prix4">Choisir des image :</label>
-						<span class="p-input-icon-left">
-							<i class="pi pi-folder-open" />
-							<InputText  type="file" multiple @change="changeFile"/>
-						</span>
-					</div>
-					    <div class="p-fluid formgrid grid">
-		
-	      <div class="field col-12 md:col-3">
+		    <div class="field col-12 md:col-6">
+			<label for="prix4">Choisir des image :</label>
+			<span class="p-input-icon-left">
+			<i class="pi pi-folder-open" />
+			<InputText  type="file" multiple @change="changeFile"/>
+			</span>
+		    </div>
+			<div class="field col-12 md:col-3">
 			   <Toast />
-					<Button label="Ajouter" @click="addPool()"  ></Button>
+			<Button label="Ajouter" @click="addPool()"  ></Button>
 		</div>
-		</div></div>
-			</div>
 		</div>
-		
+		</div>
+		</div>
+		</div>
 </template>
 <script>
 import axios from 'axios';
