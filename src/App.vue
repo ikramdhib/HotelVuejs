@@ -157,7 +157,7 @@ export default {
                         },
                          {
                             label: 'Message Contacts', 
-                           
+                            to:'/TableContact'
                          }
                     ]
                 },

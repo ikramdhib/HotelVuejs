@@ -3,16 +3,19 @@
 		<div class="col-12">
 			<div class="card">
 				<h5> Editer Chambre</h5>
+				 <ul style="list-style-type:none;">
+                                <li class="li" style="color:red" v-for="error in errors" :key="error"><InlineMessage>{{ error }}</InlineMessage> </li>
+                            </ul>
 			      <div class="p-fluid formgrid grid">
 					   <div class="field col-12 md:col-4">
 					     <label for="lastname2">Type_chambre</label>
 				     <span class="p-float-label" >
-					<Dropdown id="dropdown"  :options="types" optionLabel="nom_type" v-model="types.type_id" placeholder="Select" ></Dropdown>
+					<Dropdown id="dropdown"  :options="types" optionLabel="nom_type" v-model="types.type_id" :placeholder="nomtt" ></Dropdown>
 					</span> 
 			        </div>
 					
 					<div class="field col-12 md:col-4">
-						<label for="num_etage">Numero-Etage </label>
+						<label for="num_etage">Numero Etage </label>
 						<InputText id="num_etage" type="number" v-model="room.numEtage" />
 					</div>
 					
@@ -27,32 +30,32 @@
          
 			</div>
 			<div class="field col-9">
-						<label for="desc">description</label>
+						<label for="desc">Description</label>
 						<Textarea id="desc" rows="4" v-model="room.description"/>
 			</div>
 			<div class="field col-12 md:col-3">
-						<label for="num-ch">numero_chambre</label>
-						<InputText id="num-ch" type="number" v-model="room.num_room"/>
+						<label for="num-ch">Numero chambre</label>
+						<InputText id="num-ch" type="number" min="1" v-model="room.num_room"/>
 					</div>
 					
 						<div class="field col-12 md:col-3">
 						<label for="nb-bed">Nombre de lit</label>
-						<InputText id="nb-bed" type="number" v-model="room.nbBed"/>
+						<InputText id="nb-bed" type="number" min="1" v-model="room.nbBed"/>
 					</div>
 					<div class="field col-12 md:col-3">
-						<label for="nb-a">nombre-p-Adult </label>
-						<InputText id="nb-a" type="number" v-model="room.nbAdult" />
+						<label for="nb-a">Nombre adult </label>
+						<InputText id="nb-a" type="number" min="1" v-model="room.nbAdult" />
 					</div>
 					<div class="field col-12 md:col-3">
-						<label for="nb-E">Nombre-p-enfant</label>
-						<InputText id="nb-E" type="number" v-model="room.nbEnfant"/>
+						<label for="nb-E">Nombre enfant</label>
+						<InputText id="nb-E" type="number" min="0" v-model="room.nbEnfant"/>
 					</div>
 					<div class="field col-12 md:col-3">
-						<label for="nb-B">Nombre bebe</label>
+						<label for="nb-B">Nombre de bébé</label>
 						<InputText id="nb-B" type="number" min="0" v-model="room.nbbebe"/>
 					</div>
 					 <div class="field col-12 md:col-3">
-						<label for="prix1">prix reservation</label>
+						<label for="prix1">Prix reservation</label>
 						<InputText id="prix1" type="text" v-model="room.price_booking" />
 					</div>
 				  
@@ -77,11 +80,12 @@ import axios from 'axios';
 			return {
 				
 			 user_id:0,	
-		
+		errors:[],
 				types:[],
 				type:{type_id:0},
 				room:{ 
 					nbBed:0,
+					nbbebe:0,
 			    avaibility:"",
 				description:"",
 				num_room:0,
@@ -89,33 +93,24 @@ import axios from 'axios';
 				nbAdult:0,
                 nbEnfant: 0,
 				type_id:0,
-				price_booking:0,
-				
-             
-              
-				},
-				
-
-		};  
-          
-		
-			},
-		
-			
-	
-		
-			mounted(){
-					
-             axios.get('http://localhost:8000/api/type'
+				price_booking:0,},
+				idtype:0,
+                type1:0,
+				nomtt:""};  },
+		mounted(){
+			axios.get('http://localhost:8000/api/type'
            
         ).then(res=>{
 
            this.types = res.data.type;
 		    this.types.nom_type=res.data.type.nom_type;
-		  this.idtype=res.data.type.id;
-		   console.log(this.idtype);
-
-          
+		 
+		  for(let i=0 ; i<this.types.length ; i++){
+		 if(this.types[i].id==this.type1)
+ this.nomtt= this.types[i].nom_type;
+   console.log("eeeeeeeeeh", this.nomtt);
+		  }
+		     let type_id=sessionStorage.getItem(type_id);
         })
 			
 		
@@ -137,7 +132,7 @@ import axios from 'axios';
 					}
           this.room.nbbebe=res.data.room.nbbebe;
 
-		 this.room.type_id=res.data.room.type_id;
+		 this.type1=res.data.room.type_id;
          this.room.price_booking=res.data.room.price_booking;
 		 
 
@@ -149,6 +144,30 @@ import axios from 'axios';
 			    async updateRoom(){
 					  this.user=JSON.parse(localStorage.getItem('user'));
 					 const id=this.$route.params.id;
+						if(this.room.nbBed==0){
+				this.errors.push("le nombre de lit doit étre saisie")
+	}
+if(this.room.num_room==0){
+				this.errors.push("le numero de chambre doit étre saisie")
+	}
+	if(this.room.nbAdult==0){
+				this.errors.push("le nombre d'adult doit étre saisie")
+
+	}if(this.room.numEtage==0){
+				this.errors.push("le numero d'etage  doit étre saisie")
+	}
+	if(this.room.description==''){
+				this.errors.push("la description de lit doit étre remplir")
+	}
+    if(this.room.nbbebe==''){
+				this.errors.push("le nombre de bebe doit étre saisie")
+	}if(this.room.nbEnfant==''){
+				this.errors.push("le nombre d'enfant doit étre saisie")
+	}	if(isNaN(this.room.price_booking)){
+				this.errors.push("la prix de reservation doit étre nombre")
+	}else if(this.room.price_booking==""){
+		this.errors.push("la prix de reservation doit étre saisie")
+	}
 			 await axios
 			
 			    .put('http://localhost:8000/api/room/'+id,

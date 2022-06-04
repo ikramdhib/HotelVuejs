@@ -3,6 +3,9 @@
 		<div class="col-12">
 			<div class="card">
 				<h4 id="titre">Modifier la salle de conference :</h4>
+				 <ul style="list-style-type:none;">
+                                <li class="li" style="color:red" v-for="error in errors" :key="error"><InlineMessage>{{ error }}</InlineMessage> </li>
+                            </ul>
 			      <div class="p-fluid formgrid grid">
 					<div class="field col-12 md:col-4">
 					     <label for="lastname2">Décoration</label>
@@ -26,11 +29,8 @@
 						<label for="desc">Description</label>
 						<Textarea id="desc" rows="4"  v-model="room.description"/>
 						</div>
-					<div class="field col-12 md:col-12">
-						<label for="prix4">Choisir des image :</label>
-						<FileUpload name="file" url="" ref="file" @upload="onUpload" @change="selectFile" :multiple="true" accept="image/png, image/jpeg" :maxFileSize="1000000"/>
-					</div>
-		
+				  </div>
+		 <div class="p-fluid formgrid grid">
 	      <div class="field col-12 md:col-3 py-4">
 			   <Toast />
 			<Button label="Modifier"  @click="updateRoom()"></Button>
@@ -51,7 +51,7 @@ import axios from 'axios'
 		data() {
 			return {
 				
-				
+				errors:[],
 				room:{
 					prix:"",
 					description:"",
@@ -87,7 +87,18 @@ import axios from 'axios'
 					});
 				},
 				async updateRoom(){
-					const id=this.$route.params.id;
+          const id=this.$route.params.id;
+		  	if(this.room.description==""){
+				this.errors.push("la description de salle de conference  doit étre remplir")
+	               }
+				   	if(this.room.decoration==""){
+				this.errors.push("la decoration de salle de conference  doit étre saisie")
+	               }
+				    	if(isNaN(this.room.prix)){
+				this.errors.push("le prix de salle de conference  doit étre nombre")
+	               }else if(this.room.prix==""){
+				this.errors.push("le prix de salle de conference  doit étre saisie")
+	               }
 					await axios.put('http://localhost:8000/api/update-conference-room/'+id,
 					{
 						prix:this.room.prix,

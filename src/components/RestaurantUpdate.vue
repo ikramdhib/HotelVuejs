@@ -3,6 +3,9 @@
 		<div class="col-12">
 			<div class="card">
 				<h4 id="titre"> Modifier  le Restaurant : {{ restaurant.nom }}  </h4>
+				<ul style="list-style-type:none;">
+                                <li class="li" style="color:red" v-for="error in errors" :key="error"><InlineMessage>{{ error }}</InlineMessage> </li>
+                            </ul>
 			      <div class="p-fluid formgrid grid">
 					<div class="field col-12 md:col-3">
 						<label for="num_etage">Non du restaurant :</label>
@@ -14,7 +17,7 @@
 					</div>
 					<div class="field col-12 md:col-3">
 						<label for="num_etage">Nombres des tables :</label>
-						<InputText id="num_etage" type="number" v-model="restaurant.nbtable"/>
+						<InputText id="num_etage" type="number" min="1" v-model="restaurant.nbtable"/>
 					</div>
 					<div class="field col-12 md:col-3">
 						<label for="num_etage">Prix de la résérvation :</label>
@@ -34,10 +37,7 @@
 			</div>
 					
 					
-					<div class="field col-12 md:col-12">
-						<label for="prix4">Choisir des image :</label>
-						<FileUpload name="file" url="" ref="file" @upload="onUpload" @change="selectFile" :multiple="true" accept="image/png, image/jpeg" :maxFileSize="1000000"/>
-					</div>
+					
 	               <div class="field col-12 md:col-3 py-4">
 					   <Toast />
 					<Button label="Modifier"  @click="updateRestaurant()" ></Button>
@@ -57,7 +57,7 @@ import axios from 'axios'
 	export default {
 		data() {
 			return {
-				
+				errors:[],
 				restaurant:{
 					nom:"",
 					description:"",
@@ -92,6 +92,19 @@ import axios from 'axios'
 
 			async updateRestaurant(){
 				const id=this.$route.params.id;
+					if(this.restaurant.nom==""){
+				this.errors.push("le nom de restaurant doit étre remplir")
+	               }if(this.restaurant.description==""){
+				this.errors.push("la description de restaurant doit étre remplir")
+	               }
+				   if(this.restaurant.nbtable==""){
+				this.errors.push("le nombre de table de restaurant  doit étre remplir")
+	               }
+				   if(isNaN(this.restaurant.prix_reservation)){
+				this.errors.push("le prix de reservation de restaurant doit étre nombre")
+	               }else if (this.restaurant.prix_reservation==""){
+					   	this.errors.push("le prix de reservation de restaurant doit étre remplir")
+				   }
 				await axios.put('http://localhost:8000/api/update-Restaurant/'+id,
 				{
 					nom:this.restaurant.nom,

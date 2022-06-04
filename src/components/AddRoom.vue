@@ -3,6 +3,11 @@
 		<div class="col-12">
 			<div class="card">
 				<h5> Ajouter Chambre :</h5>
+				  
+                            <ul style="list-style-type:none;">
+                                <li class="li" style="color:red" v-for="error in errors" :key="error"><InlineMessage>{{ error }}</InlineMessage> </li>
+                            </ul>
+                     
 			      <div class="p-fluid formgrid grid">
 					   <div class="field col-12 md:col-4">
 					     <label for="lastname2">Type de chambre</label>
@@ -35,16 +40,16 @@
 			</div>
 			<div class="field col-12 md:col-3">
 						<label for="num-ch">Numero chambre</label>
-						<InputText id="num-ch" type="number"  min="0" v-model="room.num_room"/>
+						<InputText id="num-ch" type="number"  min="1" v-model="room.num_room"/>
 					</div>
 					
 						<div class="field col-12 md:col-3">
 						<label for="nb-bed">Nombre de lit</label>
-						<InputText id="nb-bed" type="number"  min="1" v-model="room.nbBed"/>
+						<InputText id="nb-bed" type="number"  min="0" v-model="room.nbBed"/>
 					</div>
 					<div class="field col-12 md:col-3">
 						<label for="nb-a">Nombre adult </label>
-						<InputText id="nb-a" type="number" min="0" v-model="room.nbAdult" />
+						<InputText id="nb-a" type="number" min="1" v-model="room.nbAdult" />
 					</div>
 					<div class="field col-12 md:col-3">
 						<label for="nb-E">Nombre enfant</label>
@@ -52,7 +57,7 @@
 					</div>
 						<div class="field col-12 md:col-3">
 						<label for="nb-B">Nombre de bébé</label>
-						<InputText id="nb-B" type="number" min="1" v-model="room.nbbebe"/>
+						<InputText id="nb-B" type="number" min="0" v-model="room.nbbebe"/>
 					</div>
 					 <div class="field col-12 md:col-3">
 						<label for="prix1">Prix de Reservation</label>
@@ -92,7 +97,7 @@ import axios from 'axios';
 			
 				
 				
-			
+			errors:[],
 				types:[],
 				type:{type_id:0},
 				room:{ 
@@ -127,7 +132,32 @@ import axios from 'axios';
 					 
 			   async addroom(){
 				     this.user=JSON.parse(localStorage.getItem('user'));
-		
+			if(this.room.nbBed==0){
+				this.errors.push("le nombre de lit doit étre saisie")
+	}
+     if(this.room.num_room==0){
+				this.errors.push("le numero de chambre doit étre saisie et unique")
+	}
+	if(this.room.nbAdult==0){
+				this.errors.push("le nombre d'adult doit étre saisie")
+
+	}if(this.room.numEtage==0){
+				this.errors.push("le numero d'etage  doit étre saisie")
+	}
+	if(this.room.description==''){
+				this.errors.push("la description de lit doit étre remplir")
+	}
+	if(this.room.nbbebe==''){
+				this.errors.push("le nombre de bebe doit étre saisie")
+	}if(this.room.nbEnfant==''){
+				this.errors.push("le nombre d'enfant doit étre saisie")
+	}
+	if(isNaN(this.room.price_booking==0)){
+				this.errors.push("la prix de reservation doit étre nombre")
+	}else if (this.room.price_booking==""){
+			this.errors.push("la prix de reservation doit étre saisie")
+	}
+	
 			 await axios
 			
 			    .post('http://localhost:8000/api/room',
@@ -170,6 +200,7 @@ import axios from 'axios';
 						}
 					  this.$router.push('option');
 				})
+				
 				}
 		 }
 				

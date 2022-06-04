@@ -3,6 +3,9 @@
 		<div class="col-12">
 			<div class="card">
 				<h4 id="titre">Modifier L' Offres :  {{ offre.titre }}</h4>
+				 <ul style="list-style-type:none;">
+                                <li class="li" style="color:red" v-for="error in errors" :key="error"><InlineMessage>{{ error }}</InlineMessage> </li>
+                            </ul>
 			      <div class="p-fluid formgrid grid">
 					<div class="field col-12 md:col-4">
 						<label for="num_etage">Titre d'Offre :</label>
@@ -10,7 +13,7 @@
 					</div>
 					<div class="field col-12 md:col-4">
 						<label for="num-ch">Pourcentage :</label>
-						<InputText id="num-ch" type="number" v-model="offre.pourcentage" />
+						<InputText id="num-ch" type="number"  min="1" v-model="offre.pourcentage" />
 					</div>
 						<div class="field col-12 md:col-4">
                         
@@ -41,6 +44,7 @@ import axios from 'axios'
 	export default {
 		data() {
 			return {
+				errors:[],
 				offre:{
 					titre:"",
 					pourcentage:"",
@@ -75,6 +79,15 @@ import axios from 'axios'
 				},
 				updateOffre(){
 					const id=this.$route.params.id;
+					if(this.offre.description==""){
+				this.errors.push("la description de l'offre doit étre remplir")
+	               }
+				   	if(this.offre.titre==""){
+				this.errors.push("le titre de l'offre doit étre remplir")
+	               }
+				     	if(this.offre.pourcentage==""){
+				this.errors.push("le pourcentage de l'offre doit étre remplir")
+	               }
 					axios.put('http://localhost:8000/api/updateoffre/'+id,
 					{
 						titre:this.offre.titre,

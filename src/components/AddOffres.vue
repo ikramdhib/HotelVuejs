@@ -3,6 +3,9 @@
 		<div class="col-12">
 			<div class="card">
 				<h4 id="titre">Ajouter un Offres :</h4>
+				<ul style="list-style-type:none;">
+                                <li class="li" style="color:red" v-for="error in errors" :key="error"><InlineMessage>{{ error }}</InlineMessage> </li>
+                  </ul>
 			      <div class="p-fluid formgrid grid">
 					<div class="field col-12 md:col-3">
 					     <label for="lastname2">Catégorie :</label>
@@ -52,7 +55,7 @@
 					</div>
 					<div class="field col-12 md:col-4">
 						<label for="num-ch">Pourcentage :</label>
-						<InputText id="num-ch" type="number" placeholder="Ajouter un pourcentage de réduction" v-model="offre.pourcentage"  />
+						<InputText id="num-ch" type="number" min="1" placeholder="Ajouter un pourcentage de réduction" v-model="offre.pourcentage"  />
 					</div>
 			        <div class="field col-6">
 						<label for="desc">Description</label>
@@ -98,6 +101,7 @@ import axios from 'axios'
 				pools:[],
 				spas:[],
 				rooms:[],
+				errors:[],
 
 				offre:{
 					titre:"",
@@ -191,7 +195,16 @@ import axios from 'axios'
 					})
 				}, 
 				async addOffre(){
+							if(this.offre.titre==""){
+				this.errors.push("le titre de offre doit étre saisie")
+	               }
+				   if(this.offre.description==""){
+				this.errors.push("la description de offre doit étre remplir")
+	               }  if(this.offre.pourcentage==""){
+				this.errors.push("le pourcentage  de offre doit étre saisie")
+	               }
 					if(this.idRooftop!=null){
+				
 					await axios.post('http://localhost:8000/api/addoffres',{
 						titre:this.offre.titre,
 						disponibilite:this.offre.disponibilite,

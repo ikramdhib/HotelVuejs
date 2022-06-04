@@ -2,6 +2,9 @@
 	<div id="card" class="grid">
 		<div class="col-9">
 			<div class="card">
+				<ul style="list-style-type:none;">
+                <li class="li" style="color:red" v-for="error in errors" :key="error"><InlineMessage>{{ error }}</InlineMessage> </li>
+                 </ul>
 				<h4 id="titre">Modifier ce type : {{ type.label }} </h4>
 			    
 		 <div  class="p-fluid formgrid grid">
@@ -44,7 +47,7 @@ import axios from 'axios';
 		data() {
 			return {
 				dropdownValue:null,
-				
+				errors:[],
 				type:{
 					label:"",
 					capacite:"",
@@ -67,6 +70,11 @@ import axios from 'axios';
 			methods:{
 				async updateType(){
 					const id=this.$route.params.id;
+					  if(this.type.label==""){
+				this.errors.push("le label de type doit étre remplir")
+	               }  if(this.type.capacite==""){
+				this.errors.push("la capacité de type doit étre remplir")
+	               }
 					await axios.put('http://localhost:8000/api/update-Type/'+id,
 					{
 						label:this.type.label,

@@ -310,7 +310,7 @@
         await axios.get('http://localhost:8000/api/getAllRoom')
         .then(res=>{
           this.options=res.data.rooms;
-          for(let i=0 ; i<this.options.length ; i++){
+          for(let i=0 ; i<this.options.length;i++){
             this.table2.push(this.options[i]);
           }
         })

@@ -2,6 +2,9 @@
 	<div id="card" class="grid">
 		<div class="col-9">
 			<div class="card ">
+				<ul style="list-style-type:none;">
+                <li class="li" style="color:red" v-for="error in errors" :key="error"><InlineMessage>{{ error }}</InlineMessage> </li>
+                 </ul>
 				<h4 id="titre">Modifier L'equipement de la salle : </h4>
 			 
 			
@@ -42,7 +45,7 @@ import axios from 'axios';
 	export default {
 		data() {
 			return {
-			
+			errors:[],
 				equipement:{
 					label:"",
 					prix:"",
@@ -75,6 +78,13 @@ import axios from 'axios';
 				},
 				async updateEquipement(){
 					const id=this.$route.params.id;
+					if(this.equipement.label==""){
+				this.errors.push("le label de type doit étre remplir")
+	               }	if(isNaN(this.equipement.prix)){
+				this.errors.push("le label de type doit étre nombre")
+	               }	else if(this.equipement.prix==""){
+				this.errors.push("le label de type doit étre remplir")
+	               }
 					await axios.put('http://localhost:8000/api/update-equipement/'+id,
 					{
 						prix:this.equipement.prix,

@@ -3,6 +3,9 @@
 		<div class="col-12">
 			<div class="card">
 				<h4 id="titre">Ajouter Menu pour le restaurant :</h4>
+				 <ul style="list-style-type:none;">
+                                <li class="li" style="color:red" v-for="error in errors" :key="error"><InlineMessage>{{ error }}</InlineMessage> </li>
+                            </ul>
 			      <div class="p-fluid formgrid grid">
 					<div class="field col-12 md:col-3">
 						<label for="num_etage">Titre du menu:</label>
@@ -66,6 +69,7 @@ import axios from 'axios';
 	export default {
 		data() {
 			return {
+				errors:[],
 				dropdownValue:null,
 				pluss:1,
 				idM:null,
@@ -113,6 +117,17 @@ import axios from 'axios';
            },
 			 addMenu(){
 				 if(this.isRegisterd){
+					 	if(this.plat.nom==""){
+				this.errors.push("le nom de menu  doit étre saisie")
+	               }
+				   	 	if(this.plat.intitule==""){
+				this.errors.push("la description de menu  doit étre saisie")
+	               }
+				     	 	if(isNaN(this.plat.prix_plat)){
+				this.errors.push("le prix de menu  doit étre nombre")
+	               }else if(this.plat.prix_plat==""){
+				this.errors.push("le prix de menu  doit étre saisie")}
+				
 					 if(this.idM!=null ){
 					 axios.post('http://localhost:8000/api/addPlat',
 				{

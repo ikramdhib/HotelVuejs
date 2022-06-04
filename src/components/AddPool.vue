@@ -3,6 +3,9 @@
 		<div class="col-12">
 			<div class="card">
 				<h4 id="titre">Ajouter Pool:</h4>
+				 <ul style="list-style-type:none;">
+                                <li class="li" style="color:red" v-for="error in errors" :key="error"><InlineMessage>{{ error }}</InlineMessage> </li>
+                            </ul>
 			      <div class="p-fluid formgrid grid">
 					<div class="field col-12 md:col-3">
 						<label for="title">Titre :</label>
@@ -60,6 +63,7 @@ export default {
 					
 				},
 					image:[],
+					errors:[],
                 form: new FormData,
             }
         },
@@ -81,6 +85,18 @@ export default {
            },
 			 async addPool() {
 			   this.user=JSON.parse(localStorage.getItem('user'));
+			   	if(this.pool.description==""){
+				this.errors.push("la description de pool doit étre saisie")
+	               }if(this.pool.title==""){
+				this.errors.push("le titre de pool doit étre saisie")
+	               }if(this.pool.capacite==""){
+				this.errors.push("la capacité de pool doit étre saisie")
+	               }
+				   if(this.pool.prix_reservation==""){
+				this.errors.push("le prix de reservation de pool doit étre saisie")
+	               }else if(isNaN(this.pool.prix_reservation)){
+	this.errors.push("le prix de reservation de pool doit étre nombre")
+				   }
 			 await axios
 			    .post('http://localhost:8000/api/pool',
 				{avaibility:this.pool.avaibility,

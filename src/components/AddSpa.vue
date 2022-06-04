@@ -3,6 +3,9 @@
 		<div class="col-12">
 			<div class="card">
 				<h4 id="titre">Ajouter Spa:</h4>
+				 <ul style="list-style-type:none;">
+                                <li class="li" style="color:red" v-for="error in errors" :key="error"><InlineMessage>{{ error }}</InlineMessage> </li>
+                            </ul>
 			      <div class="p-fluid formgrid grid">
 					<div class="field col-12 md:col-3">
 						<label for="titre">Titre :</label>
@@ -63,6 +66,7 @@ export default {
 			capacite:0
 					
 				},image:[],
+				errors:[],
                 form: new FormData,
             }
         },
@@ -84,6 +88,22 @@ export default {
 	
 			 async addSpa() {
 			   this.user=JSON.parse(localStorage.getItem('user'));
+			   if(this.spa.description==""){
+				this.errors.push("la description de spa doit étre remplir")
+	               }
+				    if(this.spa.title==""){
+				this.errors.push("le titre de spa doit étre saisie")
+	               }
+				    if(this.spa.capacite==""){
+				this.errors.push("la capacité de spa doit étre saisie")
+	               }
+				    if(this.spa.prix_reservation==""){
+				this.errors.push("le prix de reservation de spa doit étre saisie")
+	               }
+				   else if(isNaN(this.spa.prix_reservation)){
+					   	this.errors.push("le prix de reservation de spa doit étre nombre")
+				   }
+				  
 			 await axios
 			    .post('http://localhost:8000/api/spa',
 				{avaibility:this.spa.avaibility,
