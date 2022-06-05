@@ -28,7 +28,7 @@
                         </template>
 					</Column>
 					
-					<Column field="nbBed" header="Nombre de lit" >
+					<Column  header="Nombre de lit" >
 						<template #body="{data}">
 							{{data.nbBed}}
 						</template>
@@ -38,7 +38,7 @@
 					<template #body="{data}">
 							{{ data.description}} 
 						</template></Column>
-					<Column  header="Numero chambre" >
+					<Column  header="Numero chambre" field="num_room">
 						<template #body="{data}">
                    {{ data.num_room}} 
 						</template>
