@@ -163,7 +163,9 @@ import axios from 'axios';
 							 }
 							else if(this.room.prix==""){
 				this.errors.push("le prix de reservation doit etre saisie ")
-                     	}
+                     	}if(this.image.length==0){
+				this.errors.push("les images doit etre saisie")
+            	}
 						 
 					if(this.isRegistred){
 

@@ -100,7 +100,9 @@ import axios from 'axios'
 				this.errors.push("le prix de rooftop doit étre saisie")
 	               }else if(isNaN(this.rooftop.prix)){
 					   this.errors.push("le prix de rooftop doit étre nombre")
-				   }
+				   }if(this.image.length==0){
+				this.errors.push("les images doit etre saisie")
+            	}
 				 
 					console.log("ggg",this.rooftop);
 					await axios.post('http://localhost:8000/api/addRoof-Top',

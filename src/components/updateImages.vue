@@ -43,6 +43,9 @@ export default {
                  },
               
             async  updateimage(){
+                if(this.image.length==0){
+				this.errors.push("les images doit etre saisie")
+            	}
                   const id=this.$route.params.id;
 			for(let i=0 ;i<this.image.length;i++){
 							this.form.append('path',this.image[i])

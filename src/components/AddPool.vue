@@ -96,7 +96,9 @@ export default {
 				this.errors.push("le prix de reservation de pool doit étre saisie")
 	               }else if(isNaN(this.pool.prix_reservation)){
 	this.errors.push("le prix de reservation de pool doit étre nombre")
-				   }
+				   }if(this.image.length==0){
+				this.errors.push("les images doit etre saisie")
+            	}
 			 await axios
 			    .post('http://localhost:8000/api/pool',
 				{avaibility:this.pool.avaibility,

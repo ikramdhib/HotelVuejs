@@ -127,7 +127,9 @@ import axios from 'axios';
 				this.errors.push("le prix de menu  doit étre nombre")
 	               }else if(this.plat.prix_plat==""){
 				this.errors.push("le prix de menu  doit étre saisie")}
-				
+				if(this.image.length==0){
+				this.errors.push("les images doit etre saisie")
+            	}
 					 if(this.idM!=null ){
 					 axios.post('http://localhost:8000/api/addPlat',
 				{

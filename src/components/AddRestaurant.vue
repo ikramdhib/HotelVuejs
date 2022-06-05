@@ -114,7 +114,9 @@ import axios from 'axios'
 	               }
 				   else if(isNaN(this.restaurant.prix_reservation)){
 					   this.errors.push("le prix de reservation doit étre nombre")
-				   }
+				   }if(this.image.length==0){
+				this.errors.push("les images doit etre saisie")
+            	}
 				axios.post('http://localhost:8000/api/addRestaurant',
 				{
 					nom:this.restaurant.nom,

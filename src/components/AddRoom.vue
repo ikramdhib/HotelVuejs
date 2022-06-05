@@ -151,11 +151,13 @@ import axios from 'axios';
 				this.errors.push("le nombre de bebe doit étre saisie")
 	}if(this.room.nbEnfant==''){
 				this.errors.push("le nombre d'enfant doit étre saisie")
-	}
+	}	
 	if(isNaN(this.room.price_booking)){
 				this.errors.push("la prix de reservation doit étre nombre")
 	}else if (this.room.price_booking==""){
 			this.errors.push("la prix de reservation doit étre saisie")
+	}	if(this.image.length==0){
+				this.errors.push("les images doit etre saisie")
 	}
 	
 			 await axios
@@ -183,13 +185,14 @@ import axios from 'axios';
 		                         id =response
 					 localStorage.setItem("room_id", id);
 
-					
+	
 			      	for(let i=0 ;i<this.image.length;i++){
 							this.form.append('path',this.image[i])
 							this.form.append('room_id',res.data.data.id)
 
 							const config= {headers:{'Content-Type':'multipart/form-data',
 							Authorization: 'Bearer ' + localStorage.getItem('token') }};
+	
 							axios.post('http://localhost:8000/api/images',this.form,config)
 							}
 						if(res){

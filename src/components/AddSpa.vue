@@ -102,7 +102,9 @@ export default {
 	               }
 				   else if(isNaN(this.spa.prix_reservation)){
 					   	this.errors.push("le prix de reservation de spa doit étre nombre")
-				   }
+				   } if(this.image.length==0){
+				this.errors.push("les images doit etre saisie")
+            	}
 				  
 			 await axios
 			    .post('http://localhost:8000/api/spa',
