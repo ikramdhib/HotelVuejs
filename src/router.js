@@ -538,6 +538,7 @@ const routes = [
       }
     }
 },
+
 {
   path: '/reservation',
   name: 'reservation',

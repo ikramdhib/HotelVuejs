@@ -152,7 +152,7 @@ import axios from 'axios';
 	}if(this.room.nbEnfant==''){
 				this.errors.push("le nombre d'enfant doit étre saisie")
 	}
-	if(isNaN(this.room.price_booking==0)){
+	if(isNaN(this.room.price_booking)){
 				this.errors.push("la prix de reservation doit étre nombre")
 	}else if (this.room.price_booking==""){
 			this.errors.push("la prix de reservation doit étre saisie")

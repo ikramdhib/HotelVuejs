@@ -3,21 +3,22 @@
       <div class="card">
         <h4 id="title">SPA</h4>
    	<DataTable :value="table" :paginator="true" class="p-datatable-gridlines" :rows="10" dataKey="id" 
-						 responsiveLayout="scroll"
+						 responsiveLayout="scroll" :filters="filters1"   v-model:filters="filters1"
 							 >
 					
 					<template #header>
                         <div class="flex justify-content-between flex-column sm:flex-row">
                             <span class="p-input-icon-left mb-2">
                                 <i class="pi pi-search" />
-                                <InputText  placeholder="Chercher" style="width: 100%" v-model=" search"/>
+             <InputText  placeholder="Keyword Search" style="width: 100%" v-model="filters1['global'].value"/>
+                  
                             </span>
                         </div>
                     </template>
                     <template #empty>
                         Pas de SPA trouvé.
                     </template>
-                    <Column  header="Titre" style="min-width:12rem">
+                    <Column  header="Titre" field="title" style="min-width:12rem">
                         <template   #body="{data}">
          
                             {{data.title }}
@@ -88,7 +89,7 @@
 				filters1: null,
         loading1: true,
         spas:[],
-     
+     	 data:[],
         table:[],
         displayConfirmation: false,
           search:""
@@ -96,11 +97,18 @@
 		},
    
 		mounted() {
-      this.getSpas();
+      this.getSpas().then(res=> {
+		this.table = res; });
    
-		},
+		},created(){
+			this.initFilters1();
+		}
+		,
 		methods: {
-
+	initFilters1() 	{	this.filters1 = {
+					'global': {value: null}}
+		},
+			
        
       async getSpas(){
       await axios.get('http://localhost:8000/api/spa',
@@ -117,7 +125,7 @@
           }
           console.log(res.data);
         }
-      })
+      }).then(d => d.data)
     },
     openConfirmation() {
 				this.displayConfirmation = true;

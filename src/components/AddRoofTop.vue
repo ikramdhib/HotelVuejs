@@ -98,7 +98,7 @@ import axios from 'axios'
 	               }
 				    if(this.rooftop.prix=="") {
 				this.errors.push("le prix de rooftop doit étre saisie")
-	               }else if(isNaN(this.rooftop.prix_reservation)){
+	               }else if(isNaN(this.rooftop.prix)){
 					   this.errors.push("le prix de rooftop doit étre nombre")
 				   }
 				 

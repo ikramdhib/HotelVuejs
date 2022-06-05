@@ -155,6 +155,9 @@ import axios from 'axios';
 		if(isNaN(this.equipement.prix)){
 				this.errors.push("le prix d'equipement doit etre saisie et  de type nombre")
                      	}
+						else if(this.equipement.prix==""){
+				this.errors.push("le prix d'equipement doit etre saisie et  de type ")
+                     	}
 						 	if(isNaN(this.room.prix)){
 								 	this.errors.push("le prix de reservation doit etre nombre")
 							 }

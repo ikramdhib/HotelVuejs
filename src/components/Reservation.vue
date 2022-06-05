@@ -10,14 +10,13 @@
         <h4 class="px-4 py-4">LES RESERVATION POUR LES POOL</h4>
 		
     		<DataTable :value="table3" :paginator="true" class="p-datatable-gridlines" :rows="5" dataKey="id"  
-						    responsiveLayout="scroll"
-							>
+						    responsiveLayout="scroll" :filters="filters1"   v-model:filters="filters1">
 					
 					<template #header>
                         <div class="flex justify-content-between flex-column sm:flex-row">
                             <span class="p-input-icon-left mb-2">
                                 <i class="pi pi-search" />
-                                <InputText  placeholder="Keyword Search" style="width: 100%"/>
+            <InputText  placeholder="Keyword Search" style="width: 100%" v-model="filters1['global'].value"/>
                             </span>
                         </div>
                     </template>
@@ -34,7 +33,7 @@
                             <span style="margin-left: .5em; vertical-align: middle" class="image-text"> {{ data.catname }} </span>
                         </template>
                     </Column>
-						 <Column header="Prix  de réservation"  style="min-width:8rem">
+						 <Column header="Prix  de réservation" field="prix"  style="min-width:8rem">
                       <template #body="{data}">
 						  {{ data.prix }}
                       </template>
@@ -55,7 +54,7 @@
 				<div v-if="option=='Restaurant'">
         <h4 class="px-4 py-4">LES RESERVATIONS DES RESTAURANTS</h4>
 		<DataTable :value="table2" :paginator="true" class="p-datatable-gridlines" :rows="5" dataKey="id"  
-						    responsiveLayout="scroll"
+						    responsiveLayout="scroll" :filters="filters1"   v-model:filters="filters1"
 							>
 					
 					<template #header>
@@ -79,12 +78,12 @@
                             <span style="margin-left: .5em; vertical-align: middle" class="image-text"> Du  {{data.start }}  Au {{ data.ens }} </span>
                         </template>
                     </Column>
-                    <Column header="Restaurant"  :showFilterMatchModes="false" :filterMenuStyle="{'width':'14rem'}" style="min-width:14rem">
+                    <Column header="Restaurant"  :showFilterMatchModes="false" :filterMenuStyle="{'width':'14rem'}" field="catname" style="min-width:14rem">
                         <template #body="{data}">
                             <span style="margin-left: .5em; vertical-align: middle" class="image-text"> {{ data.catname }} </span>
                         </template>
                     </Column>
-						 <Column header="Prix  de réservation"  style="min-width:8rem">
+						 <Column header="Prix  de réservation" field="catname" style="min-width:8rem">
                       <template #body="{data}">
 						  {{ data.prix }}
                       </template>
@@ -105,14 +104,13 @@
 				<div v-if="option=='Spa'">
         <h4 class="px-4 py-4">LES RESERVATION DES SPA</h4>
 		<DataTable :value="table1" :paginator="true" class="p-datatable-gridlines" :rows="5" dataKey="id"  
-						    responsiveLayout="scroll"
-							>
+			 responsiveLayout="scroll"  :filters="filters1"   v-model:filters="filters1">
 					
 					<template #header>
                         <div class="flex justify-content-between flex-column sm:flex-row">
                             <span class="p-input-icon-left mb-2">
                                 <i class="pi pi-search" />
-                                <InputText  placeholder="Keyword Search" style="width: 100%"/>
+                                <InputText  placeholder="Keyword Search" style="width: 100%" v-model="filters1['global'].value"/>
                             </span>
                         </div>
                     </template>
@@ -124,12 +122,12 @@
                             {{data.nom}} {{ data.prenom }}
                         </template>
                     </Column>
-                    <Column header="Spa"  :showFilterMatchModes="false" :filterMenuStyle="{'width':'14rem'}" style="min-width:14rem">
+                    <Column header="Spa"  :showFilterMatchModes="false" :filterMenuStyle="{'width':'14rem'}"   style="min-width:14rem">
                         <template #body="{data}">
                             <span style="margin-left: .5em; vertical-align: middle" class="image-text"> {{ data.catname}} </span>
                         </template>
                     </Column>
-						 <Column header="Prix  de réservation"  style="min-width:8rem">
+						 <Column header="Prix  de réservation" field="prix" style="min-width:8rem">
                       <template #body="{data}">
 						  {{ data.prix }}
                       </template>
@@ -150,14 +148,14 @@
 				<div v-if="option=='Roof-Top'">
         <h4 class="px-4 py-4">LES RESERVATIONS DES ROOF-TOP</h4>
        		<DataTable :value="table5" :paginator="true" class="p-datatable-gridlines" :rows="5" dataKey="id"  
-						    responsiveLayout="scroll"
+						    responsiveLayout="scroll"  :filters="filters1"   v-model:filters="filters1"
 							>
 					
 					<template #header>
                         <div class="flex justify-content-between flex-column sm:flex-row">
                             <span class="p-input-icon-left mb-2">
                                 <i class="pi pi-search" />
-                                <InputText  placeholder="Keyword Search" style="width: 100%"/>
+                               <InputText  placeholder="Keyword Search" style="width: 100%" v-model="filters1['global'].value"/>
                             </span>
                         </div>
                     </template>
@@ -170,12 +168,12 @@
                         </template>
                     </Column>
                     
-                    <Column header="Roof-Top"  :showFilterMatchModes="false" :filterMenuStyle="{'width':'14rem'}" style="min-width:14rem">
+                    <Column header="Roof-Top"  :showFilterMatchModes="false" :filterMenuStyle="{'width':'14rem'}" field="catname" style="min-width:14rem">
                         <template #body="{data}">
                             <span style="margin-left: .5em; vertical-align: middle" class="image-text"> {{ data.catname }} </span>
                         </template>
                     </Column>
-						 <Column header="Prix  de réservation"  style="min-width:8rem">
+						 <Column header="Prix  de réservation" field="prix"  style="min-width:8rem">
                       <template #body="{data}">
 						  {{ data.prix }}
                       </template>
@@ -197,14 +195,14 @@
         <h4 class="px-4 py-4">LES RESERVATION DES SALLE DE CONFERENCE</h4>
         		
           		<DataTable :value="table4" :paginator="true" class="p-datatable-gridlines" :rows="5" dataKey="id"  
-						    responsiveLayout="scroll"
+						    responsiveLayout="scroll" :filters="filters1"   v-model:filters="filters1"
 							>
 					
 					<template #header>
                         <div class="flex justify-content-between flex-column sm:flex-row">
                             <span class="p-input-icon-left mb-2">
                                 <i class="pi pi-search" />
-                                <InputText  placeholder="Keyword Search" style="width: 100%"/>
+                               <InputText  placeholder="Keyword Search" style="width: 100%" v-model="filters1['global'].value"/>
                             </span>
                         </div>
                     </template>
@@ -217,12 +215,12 @@
                         </template>
                     </Column>
                    
-                    <Column header="Salle de Conference"  :showFilterMatchModes="false" :filterMenuStyle="{'width':'14rem'}" style="min-width:14rem">
+                    <Column header="Salle de Conference"  :showFilterMatchModes="false" :filterMenuStyle="{'width':'14rem'}" field="catname" style="min-width:14rem">
                         <template #body="{data}">
                             <span style="margin-left: .5em; vertical-align: middle" class="image-text"> {{ data.catname }} </span>
                         </template>
                     </Column>
-						 <Column header="Prix  de réservation"  style="min-width:8rem">
+						 <Column header="Prix  de réservation" field="prix"  style="min-width:8rem">
                       <template #body="{data}">
 						  {{ data.prix }}
                       </template>
@@ -258,20 +256,26 @@ import axios from 'axios';
 		table4:[],
 		table5:[],
 		table6:[],
+        filters1: null,
+        data:[],
       bookings:[],
 		buttons : ['Salle de conference','Roof-Top',
 						'Pool', 'Spa' , 'Restaurant' ],
 		option:'Salle de conference',
 			}
 		},
-
+         created(){
+			this.initFilters1();
+	     	},
 		mounted() {
      
 	  this.getAllRooms();
+		
 	  console.log(this.option);
 		},
 		methods: {
-      
+         initFilters1() 
+    {this.filters1 = {'global': {value: null}}},
       
       async getAllRooms(){
 		await axios.get('http://localhost:8000/api/book',
@@ -292,7 +296,7 @@ import axios from 'axios';
 		   }
 		  }
 		  console.log(this.table1);
-        })
+        }).then(d => d.data)
       },
       
 		}

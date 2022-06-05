@@ -5,14 +5,15 @@
 			<div class="card">
 				<h5>Les Réservations des chambres</h5>
 				<DataTable :value="table1" :paginator="true" class="p-datatable-gridlines" :rows="5" dataKey="id"  
-						    responsiveLayout="scroll"
+						    responsiveLayout="scroll" :filters="filters1"   v-model:filters="filters1"
 							>
 					
 					<template #header>
                         <div class="flex justify-content-between flex-column sm:flex-row">
                             <span class="p-input-icon-left mb-2">
                                 <i class="pi pi-search" />
-                                <InputText  placeholder="Keyword Search" style="width: 100%"/>
+<InputText  placeholder="Keyword Search" style="width: 100%" v-model="filters1['global'].value"/>
+
                             </span>
                         </div>
                     </template>
@@ -29,7 +30,7 @@
                             <span style="margin-left: .5em; vertical-align: middle" class="image-text"> Du  {{data.start }}  Au {{ data.ens }} </span>
                         </template>
                     </Column>
-                    <Column header="Chambre"  :showFilterMatchModes="false" :filterMenuStyle="{'width':'14rem'}" style="min-width:14rem">
+                    <Column header="Chambre" field="numRoom" :showFilterMatchModes="false" :filterMenuStyle="{'width':'14rem'}" style="min-width:14rem">
                         <template #body="{data}">
                             <span style="margin-left: .5em; vertical-align: middle" class="image-text">N°{{ data.numRoom }}  de l'etage N°{{ data.numEtage }} </span>
                         </template>
@@ -65,17 +66,22 @@ import axios from 'axios';
 			return {
         table1:[],
         reserv:[],
-		
-       
+		filters1: null,
+        data:[],
 			}
 		},
-	
+	 created(){
+			this.initFilters1();
+		},
 		mounted() {
      
-      this.getAllRooms();
+      this.getAllRooms().then(res=> {
+		this.table = res; });
 		},
 		methods: {
-     
+      initFilters1() 	{	this.filters1 = {
+					'global': {value: null}}
+		},
       
       async getAllRooms(){
 		await axios.get('http://localhost:8000/api/All-Bookings-rooms',
@@ -85,7 +91,7 @@ import axios from 'axios';
           for(let i=0; i<this.reserv.length ; i++){
             this.table1.push(this.reserv[i]);
 		  }
-        })
+        }).then(d => d.data)
       },
    
 	
