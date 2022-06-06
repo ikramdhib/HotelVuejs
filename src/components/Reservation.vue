@@ -1,5 +1,5 @@
 <template>
-<h4 id="title">RESERVATIONS</h4>
+<h4 id="title">Réservation</h4>
 	<div class="grid">
 		<div class="col-12">
       <div class="card">
@@ -7,7 +7,7 @@
 		  <SelectButton v-model="option" :options="buttons"  />
 		  </div>
 		  <div v-if="option=='Pool'">
-        <h4 class="px-4 py-4">LES RESERVATION POUR LES POOL</h4>
+        <h4 class="px-4 py-4">les reservation pour les pool</h4>
 		
     		<DataTable :value="table3" :paginator="true" class="p-datatable-gridlines" :rows="5" dataKey="id"  
 						    responsiveLayout="scroll" :filters="filters1"   v-model:filters="filters1">
@@ -52,7 +52,7 @@
 				</DataTable>
 				</div>
 				<div v-if="option=='Restaurant'">
-        <h4 class="px-4 py-4">LES RESERVATIONS DES RESTAURANTS</h4>
+        <h4 class="px-4 py-4">les reservations pour les restaurants</h4>
 		<DataTable :value="table2" :paginator="true" class="p-datatable-gridlines" :rows="5" dataKey="id"  
 						    responsiveLayout="scroll" :filters="filters1"   v-model:filters="filters1"
 							>
@@ -102,7 +102,7 @@
 				</DataTable>
 				</div>
 				<div v-if="option=='Spa'">
-        <h4 class="px-4 py-4">LES RESERVATION DES SPA</h4>
+        <h4 class="px-4 py-4">Les Réservations pour les Spas</h4>
 		<DataTable :value="table1" :paginator="true" class="p-datatable-gridlines" :rows="5" dataKey="id"  
 			 responsiveLayout="scroll"  :filters="filters1"   v-model:filters="filters1">
 					
@@ -146,7 +146,7 @@
 				</DataTable>
 				</div>
 				<div v-if="option=='Roof-Top'">
-        <h4 class="px-4 py-4">LES RESERVATIONS DES ROOF-TOP</h4>
+        <h4 class="px-4 py-4">Les Réservations pour les Roof-Top</h4>
        		<DataTable :value="table5" :paginator="true" class="p-datatable-gridlines" :rows="5" dataKey="id"  
 						    responsiveLayout="scroll"  :filters="filters1"   v-model:filters="filters1"
 							>
@@ -192,7 +192,7 @@
 				</DataTable>
 				</div>
 				<div v-if="option=='Salle de conference'">
-        <h4 class="px-4 py-4">LES RESERVATION DES SALLE DE CONFERENCE</h4>
+        <h4 class="px-4 py-4">Les Réservations pour Salle des conférence</h4>
         		
           		<DataTable :value="table4" :paginator="true" class="p-datatable-gridlines" :rows="5" dataKey="id"  
 						    responsiveLayout="scroll" :filters="filters1"   v-model:filters="filters1"

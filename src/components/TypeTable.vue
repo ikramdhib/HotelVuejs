@@ -3,21 +3,22 @@
       <div class="card">
         <h4 id="title">Type-chambre</h4>
    	<DataTable :value="table" :paginator="true" class="p-datatable-gridlines" :rows="10" dataKey="id" 
-						 responsiveLayout="scroll"
+						 responsiveLayout="scroll" :filters="filters1"   v-model:filters="filters1"
 							 >
 					
 					<template #header>
                         <div class="flex justify-content-between flex-column sm:flex-row">
                             <span class="p-input-icon-left mb-2">
                                 <i class="pi pi-search" />
-                                <InputText  placeholder="Chercher" style="width: 100%"/>
+             <InputText  placeholder="Keyword Search" style="width: 100%" v-model="filters1['global'].value"/>
+                                
                             </span>
                         </div>
                     </template>
                     <template #empty>
                         Pas de type trouvé.
                     </template>
-                    <Column  header="Intitule" style="min-width:12rem">
+                    <Column  header="Intitule" field="nom_type"  style="min-width:12rem">
                         <template #body="{data}">
                             {{ data.nom_type }}
                         </template>
@@ -64,13 +65,26 @@
         loading1: true,
         types:[],
         table:[],
+         data:[],
         displayConfirmation: false,
 			}
 		},
 		mounted() {
-      this.getTypes();
+      this.getTypes().then(res=> {
+		this.table = res; });
 		},
+    	created(){
+			this.initFilters1();
+		}
+		,
 		methods: {
+      	initFilters1() 	{	this.filters1 = {
+					'global': {value: null}}
+		},
+			
+			clearFilter1() {
+				this.initFilters1();
+			},
       async getTypes(){
       await axios.get('http://localhost:8000/api/type',
       
@@ -86,7 +100,7 @@
           }
           console.log(res.data);
         }
-      })
+      }).then(d => d.data)
     },
     openConfirmation() {
 				this.displayConfirmation = true;
