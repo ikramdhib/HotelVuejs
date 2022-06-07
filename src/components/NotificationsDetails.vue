@@ -207,6 +207,7 @@ export default {
 	data(){
 		return{
 		notife:[],	
+		bk:null,
 		}
 	},
 
@@ -235,11 +236,30 @@ export default {
 			},
 			{ headers: { Authorization: 'Bearer ' + localStorage.getItem('token') }}
 			).then(res=>{
+				console.log(res.data.updated);
 				if(res.data.updated==true){
+					
+					for(let i=0 ; i <this.notife.length ; i++){
+						this.bk=this.notife[i];
+					}
+				
+				
+				}
+			}).then(()=>{
+				console.log(this.bk.data.booking_status.id);
+					axios.put("http://localhost:8000/api/room/"+this.bk.data.booking_status.id,
+					{
+				avaibility:true
+			},
+			{ headers: { Authorization: 'Bearer ' + localStorage.getItem('token') }}
+			).then(res=>{
+						if(res.data.success==true){
 					this.$toast.add({severity:'success', summary: 'Excellent', detail:'Cette reservation est confirmé', life: 3000});
 					}else{
 					this.$toast.add({severity:'error', summary: "Message d'erreur", detail:'quelque chose est mal passé', life: 3000});
 					}
+			})
+		
 			})
 		}
 	}
