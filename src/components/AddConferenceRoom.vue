@@ -3,6 +3,11 @@
 		<div class="col-12">
 			<div class="card">
 				<h4 id="titre">Ajouter Un salle de conference :</h4>
+				
+				 <ul style="list-style-type:none;">
+                                <li class="li" style="color:red" v-for="error in errors" :key="error"><InlineMessage>{{ error }}</InlineMessage> </li>
+                            </ul>
+                     
 			      <div class="p-fluid formgrid grid">
 					<div class="field col-12 md:col-3">
 					     <label for="lastname2">Décoration</label>
@@ -28,7 +33,7 @@
 			        </div>
 					<div class="field col-12 md:col-4">
 						<label for="num-ch">Capacité :</label>
-						<InputText id="num-ch" type="number"  v-model="type.capacite"/>
+						<InputText id="num-ch" type="number" min="4" v-model="type.capacite"/>
 					</div>
 					<div class="field col-12 md:col-4">
 							<Button id="btn" icon="pi pi-plus" @click="addWithPluss()" class="mr-2 mb-2" />
@@ -86,7 +91,7 @@ import axios from 'axios';
 				idT:null,
 				idE:null,
 				room:{
-					prix:"",
+					prix:0,
 					description:"",
 					decoration:"",
 					disponibilite:true
@@ -98,7 +103,7 @@ import axios from 'axios';
 				},
 				equipement:{
 					label:"",
-					prix:"",
+					prix:0,
 					disponibilite:true,
 				},
 				dropdownValues: [
@@ -106,6 +111,7 @@ import axios from 'axios';
 				'OVAL',
 				     'NORMALE'
 				],
+							errors:[],
 				 image:[],
                 form: new FormData,
 		}
@@ -132,6 +138,35 @@ import axios from 'axios';
               
            },
 				addConferenceRoom(){
+					if(this.equipement.label==""){
+				this.errors.push("le label  d'equipement doit étre saisie")
+	               }if(this.type.capacite==""){
+				this.errors.push("le nombre de capacité doit étre saisie")
+	               }
+				   if(this.room.description==""){
+				this.errors.push("la description doit étre remplir")
+	               }
+				     if(this.room.decoration==""){
+				this.errors.push("il faut choisir le type de decoration")
+	               }
+				   if(this.type.label==""){
+				this.errors.push("le label de type doit étre saisie")
+	                }
+		if(isNaN(this.equipement.prix)){
+				this.errors.push("le prix d'equipement doit etre saisie et  de type nombre")
+                     	}
+						else if(this.equipement.prix==""){
+				this.errors.push("le prix d'equipement doit etre saisie et  de type ")
+                     	}
+						 	if(isNaN(this.room.prix)){
+								 	this.errors.push("le prix de reservation doit etre nombre")
+							 }
+							else if(this.room.prix==""){
+				this.errors.push("le prix de reservation doit etre saisie ")
+                     	}if(this.image.length==0){
+				this.errors.push("les images doit etre saisie")
+            	}
+						 
 					if(this.isRegistred){
 
 						if(this.idc!=null && this.idT!=null){
@@ -146,10 +181,11 @@ import axios from 'axios';
 								this.typeRegistred=true
 							}
 						});
+							
 						axios.post('http://localhost:8000/api/addEquipement',
 							{
 								label:this.equipement.label,
-								prix:this.equipement.prix,
+								prix:parseFloat(this.equipement.prix),
 								disponibilite:this.equipement.disponibilite,
 								conference_room_id:this.idc
 							},
@@ -224,7 +260,7 @@ import axios from 'axios';
 							axios.post('http://localhost:8000/api/addEquipement',
 							{
 								label:this.equipement.label,
-								prix:this.equipement.prix,
+								prix:parseFloat(this.equipement.prix),
 								disponibilite:this.equipement.disponibilite,
 								conference_room_id:res.data.conference_room.id
 							},
@@ -309,6 +345,7 @@ import axios from 'axios';
 					this.isRegistred=true
 				},
 				addWithPlussEq(){
+					
 					if(this.isRegistred==false){
 						
 						axios.post('http://localhost:8000/api/addConferenceRoom',

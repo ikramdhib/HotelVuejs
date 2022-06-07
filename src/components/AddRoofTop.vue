@@ -3,6 +3,9 @@
 		<div class="col-12">
 			<div class="card">
 				<h4 id="titre"> Ajouter Roof-Top</h4>
+				 <ul style="list-style-type:none;">
+                                <li class="li" style="color:red" v-for="error in errors" :key="error"><InlineMessage>{{ error }}</InlineMessage> </li>
+                            </ul>
 			      <div class="p-fluid formgrid grid">
 					<div class="field col-12 md:col-3">
 						<label for="num_etage">Intitulé :</label>
@@ -62,6 +65,7 @@ import axios from 'axios'
 					disponibilite:"",
 				},
 				image:[],
+				errors:[],
                 form: new FormData,
 			}
 			},
@@ -83,6 +87,23 @@ import axios from 'axios'
               
            },
 				async addRooftop(){
+					if(this.rooftop.intitule==""){
+				this.errors.push("la nom de rooftop doit étre saisie")
+	               }
+				   if(this.rooftop.description==""){
+				this.errors.push("la description de rooftop doit étre remplir")
+	               }
+				    if(this.rooftop.capacite==""){
+				this.errors.push("la capacité de rooftop doit étre saisie")
+	               }
+				    if(this.rooftop.prix=="") {
+				this.errors.push("le prix de rooftop doit étre saisie")
+	               }else if(isNaN(this.rooftop.prix)){
+					   this.errors.push("le prix de rooftop doit étre nombre")
+				   }if(this.image.length==0){
+				this.errors.push("les images doit etre saisie")
+            	}
+				 
 					console.log("ggg",this.rooftop);
 					await axios.post('http://localhost:8000/api/addRoof-Top',
 					{

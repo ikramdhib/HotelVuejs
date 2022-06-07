@@ -3,6 +3,9 @@
 		<div class="col-12">
 			<div class="card">
 				<h4 id="titre">Editer Pool:</h4>
+				<ul style="list-style-type:none;">
+                                <li class="li" style="color:red" v-for="error in errors" :key="error"><InlineMessage>{{ error }}</InlineMessage> </li>
+                            </ul>
 			      <div class="p-fluid formgrid grid">
 					<div class="field col-12 md:col-3">
 						<label for="title">Titre :</label>
@@ -28,16 +31,20 @@
 				</div>    
          
 			</div>
-			<div class="field col-6">
+			<div class="field col-10">
 						<label for="desc">Description :</label>
 						<Textarea id="desc" rows="4" v-model="pool.description"/>
 			  </div>
-		</div>
-    <div class="field col-12 md:col-3">
+		
+    <div class="field col-12 md:col-3 py-4">
 			     <Toast />
 					<Button label="Ajouter" @click="updatePool()"  ></Button>
 		</div>
+		<div class="field col-12 md:col-3 py-4">
+			<Button label="Annuler" @click="goBack()" class="p-button-secondary mr-2 mb-2" ></Button>
+			</div>
 		</div>
+			</div>
 			</div>
 		</div>
 		
@@ -49,6 +56,7 @@ export default {
  data() {
             return {
 				user:0,
+				errors:[],
             pool:  {
              avaibility:"",
 			 description:"",
@@ -87,6 +95,18 @@ export default {
 			 async updatePool() {
 			   this.user=JSON.parse(localStorage.getItem('user'));
                 const id=this.$route.params.id;
+				 	if(this.pool.description==""){
+				this.errors.push("la description de pool doit étre saisie")
+	               }if(this.pool.title==""){
+				this.errors.push("le titre de pool doit étre saisie")
+	               }if(this.pool.capacite==""){
+				this.errors.push("la capacité de pool doit étre saisie")
+	               }
+				   if(this.pool.prix_reservation==""){
+				this.errors.push("le prix de reservation de pool doit étre saisie")
+	               }else if(isNaN(this.pool.prix_reservation)){
+					 this.errors.push("le prix de reservation de pool doit étre nombre")  
+				   }
 			 await axios
 			    .put('http://localhost:8000/api/pool/'+id,
 				{avaibility:this.pool.avaibility,
@@ -108,6 +128,9 @@ export default {
 					 
 			         
 					 
-			})}}}
+			})},
+			goBack(){
+					this.$router.push('poolTable')
+				}}}
 
 </script>

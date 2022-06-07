@@ -1,15 +1,18 @@
 <template>
-	<div class="grid">
-		<div class="col-12">
-			<div class="card">
+	<div id="card" class="grid">
+		<div class="col-9">
+	    <div class="card">
 				<h4> Editer Option</h4>
-				<div class="p-fluid formgrid grid">
+				<ul style="list-style-type:none;">
+                                <li class="li" style="color:red" v-for="error in errors" :key="error"><InlineMessage>{{ error }}</InlineMessage> </li>
+                  </ul>
+				<div class="p-fluid formgrid grid"> 
 		<div class="field col-12 md:col-4">
-						<label for="nomop">nom_Option</label>
-						<InputText id="nomop" type="text" v-model="option.nom_option" />
+						<label for="nomop">Nom d'option </label>
+						<InputText id="nomop" placeholder="Exp : Petit déj - Jacuzzi - Full cinema TV " type="text" v-model="option.nom_option" />
 					</div>
 					<div class="field col-12 md:col-4">
-						<label for="prixop">prix_Option</label>
+						<label for="prixop">Prix</label>
 						<InputText id="prixop" type="text" v-model="option.price_option"/>
 					</div>
          
@@ -29,11 +32,17 @@
               </label>
   
         </div>  </div></div>
-		<Toast/>
-	<Button label="modifier" @click="updateOption()" />
+	
+			<div class="p-fluid formgrid grid">
+				<div class="field col-10 md:col-3"> 
+						<Toast/>
+	<Button label="modifier" @click="updateOption()" /></div>
+				<div class="field col-12 md:col-3"> 
     <router-link :to="{ path: 'RoomTable'}"> <Button label="Annuler" class="p-button-secondary "  />
-	</router-link>
-</div>	
+	</router-link></div></div>
+
+</div>
+
 </div>	
 </div>	
 </template>
@@ -43,7 +52,7 @@ import axios from 'axios';
 export default {
  data() {	 
             return {
-			
+			errors:[],
             option:  {
              avaibility:"",
 			 price_option:0,
@@ -55,6 +64,7 @@ export default {
         },
 		mounted(){
 			 const id=this.$route.params.id;
+			 	
      axios.get("http://127.0.0.1:8000/api/option/"+id, {
         headers: { Authorization: "Bearer " + localStorage.getItem("token") },
       })
@@ -74,6 +84,14 @@ export default {
 	
 			 async updateOption() {
 				 const id=this.$route.params.id;
+				 if(this.option.nom_option==""){
+				this.errors.push("le nom option doit étre saisie")
+	               }
+				     if(this.option.price_option==""){
+				this.errors.push("le prix option doit étre saisie")
+	               }else if(isNaN( this.option.price_option)){
+					   	this.errors.push("le prix option doit étre nombre")
+				   }
 			await axios
 			    .put('http://localhost:8000/api/option/'+id,
 				{avaibility:this.option.avaibility,

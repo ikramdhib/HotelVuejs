@@ -3,6 +3,9 @@
 		<div class="col-12">
 			<div class="card">
 				<h4 id="titre"> Ajouter un Restaurant</h4>
+				 <ul style="list-style-type:none;">
+                                <li class="li" style="color:red" v-for="error in errors" :key="error"><InlineMessage>{{ error }}</InlineMessage> </li>
+                            </ul>
 			      <div class="p-fluid formgrid grid">
 					<div class="field col-12 md:col-3">
 						<label for="num_etage">Non du restaurant :</label>
@@ -10,11 +13,11 @@
 					</div>
 						<div class="field col-12 md:col-3">
 						<label for="num-ch">Capacité :</label>
-						<InputText id="num-ch" type="number"  v-model="restaurant.capacite"/>
+						<InputText id="num-ch" type="number" min="1" v-model="restaurant.capacite"/>
 					</div>
 					<div class="field col-12 md:col-3">
 						<label for="num_etage">Nombres des tables :</label>
-						<InputText id="num_etage" type="number" v-model="restaurant.nbtable"/>
+						<InputText id="num_etage" type="number"  min="1" v-model="restaurant.nbtable"/>
 					</div>
 					<div class="field col-12 md:col-3">
 						<label for="num_etage">Prix de la résérvation :</label>
@@ -69,6 +72,7 @@ import axios from 'axios'
 					prix_reservation:"",
 				},
 					image:[],
+					errors:[],
                 form: new FormData,
 			}
 		},
@@ -93,6 +97,26 @@ import axios from 'axios'
 
 			async addRestaurant(){
 				console.log("rr",this.restaurant);
+				if(this.restaurant.nom==""){
+				this.errors.push("la nom de restaurant doit étre saisie")
+	               }
+				   	if(this.restaurant.description==""){
+				this.errors.push("la description de restaurant  doit étre remplir")
+	               }
+				   	if(this.restaurant.capacite==""){
+				this.errors.push("la capacité de restaurant  doit étre saisie")
+	               }
+				   if(this.restaurant.nbtable==""){
+				this.errors.push("la nombre de table doit étre saisie")
+	               }
+				    if(this.restaurant.prix_reservation=="") {
+				this.errors.push("le prix de reservation doit étre saisie")
+	               }
+				   else if(isNaN(this.restaurant.prix_reservation)){
+					   this.errors.push("le prix de reservation doit étre nombre")
+				   }if(this.image.length==0){
+				this.errors.push("les images doit etre saisie")
+            	}
 				axios.post('http://localhost:8000/api/addRestaurant',
 				{
 					nom:this.restaurant.nom,

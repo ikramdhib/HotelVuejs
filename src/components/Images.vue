@@ -132,6 +132,9 @@ export default {
            },
 
         updateImg(){
+            if(this.image.length==0){
+				this.errors.push("les images doit etre saisie")
+            	}
            for(let i=0 ;i<this.image.length;i++){
 					this.form.append('path',this.image[i])
                     this.form.append('id',this.id)

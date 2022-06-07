@@ -3,22 +3,20 @@
       <div class="card">
         <h4 id="title"> Les Chambres</h4>
     	<DataTable :value="table" :paginator="true" class="p-datatable-gridlines" :rows="10" dataKey="id" 
-						 responsiveLayout="scroll"
-							 >
-					
-					<template #header>
-                        <div class="flex justify-content-between flex-column sm:flex-row">
-                            <span class="p-input-icon-left mb-2">
-                                <i class="pi pi-search" />
-                                <InputText  placeholder="Chercher" style="width: 100%" v-model=" search"/>
-                            </span>
-                        </div>
+		 responsiveLayout="scroll" :filters="filters1"   v-model:filters="filters1"	>
+	   <template #header>
+         <div class="flex justify-content-between flex-column sm:flex-row">
+             <span class="p-input-icon-left mb-2">
+             <i class="pi pi-search" />
+             <InputText  placeholder="Keyword Search" style="width: 100%" v-model="filters1['global'].value"/>
+               </span>
+                </div>
                     </template>
                     <template #empty>
                        Aucun chambre trouver
                     </template>
 				
-					<Column  header="Type" >
+					<Column  header="Type" field="nom_type" >
                     
 						<template #body="{data}">
                   
@@ -34,12 +32,13 @@
 						<template #body="{data}">
 							{{data.nbBed}}
 						</template>
+						
 					</Column>
 					<Column  header="Description"  style="min-width:18rem">
 					<template #body="{data}">
 							{{ data.description}} 
 						</template></Column>
-					<Column  header="Numero chambre" >
+					<Column  header="Numero chambre" field="num_room">
 						<template #body="{data}">
                    {{ data.num_room}} 
 						</template>
@@ -260,32 +259,49 @@
 </div>
 </template>
 <script>
+
     import axios from 'axios';
 	export default {
 		data() {
 			return {
         types:[],
+	
+	  filters1: null,
        prices:[],
         table:[],
         table2:[],
+		
         options:[],
          rooms:[],
+		 data:[],
      	expandedRows: [],
 		   displayConfirmation: false,
 			}
 		},
+		
+			
+		
 		mounted() {
-      this.getRooms();
+		// this.getRooms();
+		this.getRooms().then(res=> {
+		this.table = res; });
+	 
       console.log("room",this.table);
       this.getOptions();
       console.log("options",this.table2);
-        this.getType();
-       this.getPrice();
+        this.getType()
+      
+
 		},
+		created(){
+			this.initFilters1();
+		}
+		,
 		methods: {
-			initFilters1() {
+			initFilters1() 	{	this.filters1 = {
+					'global': {value: null}}
+		},
 			
-			},
 			clearFilter1() {
 				this.initFilters1();
 			},
@@ -300,17 +316,20 @@
         await axios.get('http://localhost:8000/api/getAllRoom')
         .then(res=>{
           this.rooms=res.data.rooms;
-          for(let i=0 ; i<this.rooms.length ; i++){
+          for(let i=0 ; i<this.rooms.length; i++){
             this.table.push(this.rooms[i]);
           }
-        })
+        }).then(d => d.data)
+			
+		
       },
+	
 
       async getOptions(){
         await axios.get('http://localhost:8000/api/getAllRoom')
         .then(res=>{
           this.options=res.data.rooms;
-          for(let i=0 ; i<this.options.length ; i++){
+          for(let i=0 ; i<this.options.length;i++){
             this.table2.push(this.options[i]);
           }
         })
@@ -320,27 +339,13 @@
      
        
       .get("http://127.0.0.1:8000/api/type")
-      
-      
-      .then((res) => {
+       .then((res) => {
         this.types=res.data.type;
-        console.log("types",this.types);
-      }
-           )
+	 console.log("types",this.types);
+      })
+          
      },
-              async getPrice(){
-       await axios
-     
-       
-      .get("http://127.0.0.1:8000/api/price")
-      
-      
-      .then((res) => {
-        this.prices=res.data.price;
-        console.log("prices",this.prices);
-      }
-           )
-     },
+            
            
       
 	  updateOption(id){

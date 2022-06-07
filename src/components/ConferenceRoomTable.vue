@@ -5,26 +5,26 @@
 			<div class="card">
 				<h5>Les salles de conference</h5>
 				<DataTable :value="table1" :paginator="true" class="p-datatable-gridlines" :rows="3" dataKey="id"  
-						    responsiveLayout="scroll"
+						    responsiveLayout="scroll"  :filters="filters1"   v-model:filters="filters1"
 							>
 					
 					<template #header>
                         <div class="flex justify-content-between flex-column sm:flex-row">
                             <span class="p-input-icon-left mb-2">
                                 <i class="pi pi-search" />
-                                <InputText  placeholder="Keyword Search" style="width: 100%"/>
+                              <InputText  placeholder="Keyword Search" style="width: 100%" v-model="filters1['global'].value"/>
                             </span>
                         </div>
                     </template>
                     <template #empty>
                         No customers found.
                     </template>
-                    <Column  header="Déscription" style="min-width:12rem">
-                        <template #body="{data}">
+                    <Column  header="Déscription"  style="min-width:12rem">
+                        <template #body="{data}" >
                             {{data.description}}
                         </template>
                     </Column>
-                    <Column header="Décoration"  style="min-width:12rem">
+                    <Column header="Décoration" field="decoration"  style="min-width:12rem">
                         <template #body="{data}">
                             <span style="margin-left: .5em; vertical-align: middle" class="image-text">{{data.decoration}}</span>
                         </template>
@@ -236,22 +236,29 @@ import axios from 'axios';
         table3:[],
         rooms:[],
         types:[],
+		 data:[],
 		equipements:[],
-		
+		  filters1: null,
         displayConfirmation: false,
 				expandedRows1: [],
 				expandedRows2: [],
 			}
 		},
-	
+	created(){
+			this.initFilters1();
+		}
+		,
 		mounted() {
      
-      this.getAllRooms();
+      this.getAllRooms().then(res=> {
+		this.table1= res; });
       this.getAllRoomsTypes();
       this.getAllRommsEquipement();
 		},
 		methods: {
-      
+      	initFilters1() 	{	this.filters1 = {
+					'global': {value: null}}
+		},
 		expandAll2() {
 				this.expandedRows2 = this.table3;
 			},
@@ -273,7 +280,7 @@ import axios from 'axios';
           for(let i=0; i<this.rooms.length ; i++){
             this.table1.push(this.rooms[i]);
           }
-        })
+        }).then(d => d.data)
       },
       async getAllRoomsTypes(){
         await axios.get('http://localhost:8000/api/conferencerooms')

@@ -1,11 +1,11 @@
 <template>
-	<div class="card">
+	<div  class="card">
 			<div class="flex align-items-center justify-content-between mb-4">
-				<h5>Notifications   </h5>
+				<h5>Notifications</h5>
 			</div>
-			<div class="p-fluid formgrid grid" v-for="n in notife" :key="n">
+			<div  class="p-fluid formgrid grid" v-for="n in notife" :key="n">
 				
-				<table responsiveLayout="scroll" v-if="(n.type.substr(18,23))=='BookingRoomNotification'">
+				<table  v-if="(n.type.substr(18,23))=='BookingRoomNotification'">
 					<tr>
 						<td  :style="{width: '150px'}">
 						<span class="flex align-items-center py-2surface-border" >

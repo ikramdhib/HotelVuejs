@@ -1,8 +1,11 @@
 <template>
-	<div class="grid">
-		<div class="col-12">
-			<div class="card">
+	<div id="card" class="grid">
+		<div class="col-9">
+	    <div class="card">
 				<h4> Ajouter Option</h4>
+				<ul style="list-style-type:none;">
+                                <li class="li" style="color:red" v-for="error in errors" :key="error"><InlineMessage>{{ error }}</InlineMessage> </li>
+                  </ul>
 				<div class="p-fluid formgrid grid"> 
 		<div class="field col-12 md:col-4">
 						<label for="nomop">Nom d'option </label>
@@ -49,7 +52,7 @@ import axios from 'axios';
 export default {
  data() {
             return {
-				
+				errors:[],
             option:  {
              avaibility:"",
 			 price_option:0,
@@ -64,7 +67,14 @@ export default {
 			methods:{
 	
 			 async addOption() {
-			
+				if(this.option.nom_option==""){
+				this.errors.push("le nom option doit étre saisie")
+	               }
+				   if(this.option.price_option==""){
+				this.errors.push("le prix option doit étre saisie")
+	               }else if  (isNaN(this.option.price_option)){
+					 this.errors.push("le prix option doit étre nombre")  
+				   }
 			 await axios
 			    .post('http://localhost:8000/api/option',
 				{avaibility:this.option.avaibility,
@@ -74,10 +84,7 @@ export default {
 				},
 				{ headers: { Authorization: 'Bearer ' + localStorage.getItem('token')}}
 				).then(res=>{
-		
-					
-				
-					if(res){
+	                 if(res){
 							this.$toast.add({severity:'success', summary: 'Excellent', detail:'les information a été soumis avec succès', life: 3000});
 						}else{
 							this.$toast.add({severity:'error', summary: "Message d'erreur", detail:'quelque chose est mal passé', life: 3000});
