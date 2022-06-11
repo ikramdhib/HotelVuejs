@@ -159,11 +159,7 @@ if(this.room.num_room==0){
 	if(this.room.description==''){
 				this.errors.push("la description de lit doit étre remplir")
 	}
-    if(this.room.nbbebe==''){
-				this.errors.push("le nombre de bebe doit étre saisie")
-	}if(this.room.nbEnfant==''){
-				this.errors.push("le nombre d'enfant doit étre saisie")
-	}	if(isNaN(this.room.price_booking)){
+  	if(isNaN(this.room.price_booking)){
 				this.errors.push("la prix de reservation doit étre nombre")
 	}else if(this.room.price_booking==""){
 		this.errors.push("la prix de reservation doit étre saisie")

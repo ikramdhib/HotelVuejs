@@ -51,7 +51,7 @@
 	</div>
   <div class="col-12 md:col-12">
 
-  <div id="space" class="card" v-if="passIsToModify">
+  <div id="space" class="card" v-if="passIsToModify>0">
     	<h5 id="title">Changer votre Mot de Passe</h5>
          <form>
                     <div class="w-full md:w-10 mx-auto">
@@ -85,7 +85,7 @@ export default {
            password:"",
            password_confirmation:"",
            token:"",
-          passIsToModify:false,
+          passIsToModify:0,
            user:{},
            userInfo:{},
         }
@@ -102,7 +102,7 @@ export default {
             
             methods:{
               passModify(){
-                this.passIsToModify=true;
+                this.passIsToModify++;
               },
               backProfile(){
                 this.$router.push("profile")

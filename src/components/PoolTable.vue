@@ -57,17 +57,9 @@
 								</Column>
                     <Column  header=""  bodyClass="text-center" style="min-width:8rem">
                         <template #body="{data}">
-		                      		<Button :value="data.id"  @click="openConfirmation" icon="pi pi-times" class="p-button-rounded p-button-danger p-button-outlined mr-2 mb-2" />
-                              <Dialog header="Confirmation" v-model:visible="displayConfirmation" :style="{width: '350px'}" :modal="true">
-                                  <div class="flex align-items-center justify-content-center">
-                                    <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
-                                    <span>Vous avez vraiment supprimer?</span>
-                                  </div>
-                                  <template #footer>
-                                    <Button label="No" icon="pi pi-times" @click="closeConfirmation" class="p-button-text"/>
-                                    <Button label="Yes" icon="pi pi-check" @click="deletePool(data.id);closeConfirmation();" class="p-button-text" autofocus />
-                                  </template>
-                                </Dialog>
+		                      	
+                              <ConfirmPopup></ConfirmPopup>
+				<Button ref="popup" @click="confirm($event , data.id )" icon="pi pi-times" class="p-button-rounded p-button-danger p-button-outlined mr-2 mb-2"  ></Button>
 			                  
                         </template>
                     </Column>
@@ -99,6 +91,19 @@
 		}
 		,
 		methods: {
+      confirm(event , id) {
+				this.$confirm.require({
+					target: event.currentTarget,
+					message: 'Voulez-vous vraiment le supprimer ?',
+					icon: 'pi pi-exclamation-triangle',
+					accept: () => {
+						this.deletePool(id)
+					},
+					reject: () => {
+						this.$toast.add({severity:'error', summary:'Rejected', detail:'You have rejected', life: 3000});
+					}
+				});
+			},
       initFilters1() 	{	this.filters1 = {
 					'global': {value: null}}
 		},

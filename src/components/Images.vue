@@ -23,17 +23,8 @@
 
 									<Button label="Modifier" icon="pi pi-pencil" class="p-button-rounded p-button-info p-button-outlined mr-2 mb-2" @click="clickupdate(slotProps.data.id)"></Button>
                                     <Toast/>
-									<Button label="Supprimer" @click="openConfirmation" icon="pi pi-times" class="p-button-rounded p-button-danger p-button-outlined mr-2 mb-2"></Button>
-                                    <Dialog header="Confirmation" v-model:visible="displayConfirmation" :style="{width: '350px'}" :modal="true">
-                                  <div class="flex align-items-center justify-content-center">
-                                    <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
-                                    <span>Are you sure you want to proceed?</span>
-                                  </div>
-                                  <template #footer>
-                                    <Button label="No" icon="pi pi-times" @click="closeConfirmation" class="p-button-text"/>
-                                    <Button label="Yes" icon="pi pi-check" @click="deleteImage(slotProps.data.id);closeConfirmation();" class="p-button-text" autofocus />
-                                  </template>
-                                </Dialog>
+									<ConfirmPopup></ConfirmPopup>
+				<Button label="Supprimer" ref="popup" @click="confirm($event , slotProps.data.id )" icon="pi pi-times" class="p-button-rounded p-button-danger p-button-outlined mr-2 mb-2"  ></Button>
 								</div>
 							</div>
 						</div>
@@ -49,17 +40,8 @@
 								<div class="flex align-items-center justify-content-between">
 									<Button  icon="pi pi-pencil" class="p-button-rounded p-button-info p-button-outlined mr-2 mb-2" @click="clickupdate(slotProps.data.id)"></Button>
                                     <Toast/>
-									<Button  icon="pi pi-times" @click="openConfirmation" class="p-button-rounded p-button-danger  p-button-outlined mr-2 mb-2"></Button>
-                                     <Dialog header="Confirmation" v-model:visible="displayConfirmation" :style="{width: '350px'}" :modal="true">
-                                  <div class="flex align-items-center justify-content-center">
-                                    <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
-                                    <span>Are you sure you want to proceed?</span>
-                                  </div>
-                                  <template #footer>
-                                    <Button label="No" icon="pi pi-times" @click="closeConfirmation" class="p-button-text"/>
-                                    <Button label="Yes" icon="pi pi-check" @click="deleteImage(slotProps.data.id);closeConfirmation();" class="p-button-text" autofocus />
-                                  </template>
-                                </Dialog>
+									<ConfirmPopup></ConfirmPopup>
+				<Button ref="popup" @click="confirm($event , slotProps.data.id )" icon="pi pi-times" class="p-button-rounded p-button-danger p-button-outlined mr-2 mb-2"  ></Button>
 								</div>
 							</div>
 						</div>
@@ -117,6 +99,19 @@ export default {
     },
 
     methods:{
+         confirm(event , id) {
+				this.$confirm.require({
+					target: event.currentTarget,
+					message: 'Voulez-vous vraiment le supprimer ?',
+					icon: 'pi pi-exclamation-triangle',
+					accept: () => {
+						this.deleteImage(id)
+					},
+					reject: () => {
+						this.$toast.add({severity:'error', summary:'Rejected', detail:'You have rejected', life: 3000});
+					}
+				});
+			},
         	changeFile(e){
 
               let selectedFiles=e.target.files

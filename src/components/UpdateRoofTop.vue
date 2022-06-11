@@ -100,8 +100,8 @@ import axios from 'axios'
 	               }
 				    if((this.rooftop.prix=="")){
 				this.errors.push("le prix de rooftop doit étre saisie")
-	               }else if(isNaN(this.rooftop.prix_reservation)){
-					this.errors.push("le prix de rooftop doit étre nombre")   
+	               }  else if (isNaN(this.rooftop.prix)){
+					   this.errors.push("le prix de rooftop doit étre un nombre")
 				   }
 					await axios.put('http://localhost:8000/api/update-Roof-Top/'+id,
 					{

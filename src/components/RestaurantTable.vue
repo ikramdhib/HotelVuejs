@@ -56,17 +56,9 @@
 					</Column>
 					<Column  header="" >
 						<template #body="{data}">
-							<Button  @click="openConfirmation" icon="pi pi-times" class="p-button-rounded p-button-danger p-button-outlined mr-2 mb-2" />
-							 <Dialog header="Confirmation" v-model:visible="displayConfirmation" :style="{width: '350px'}" :modal="true">
-                                  <div class="flex align-items-center justify-content-center">
-                                    <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
-                                    <span>Are you sure you want to proceed?</span>
-                                  </div>
-                                  <template #footer>
-                                    <Button label="No" icon="pi pi-times" @click="closeConfirmation" class="p-button-text"/>
-                                    <Button label="Yes" icon="pi pi-check" @click="deleteRestaurant(data.id);closeConfirmation();" class="p-button-text" autofocus />
-                                  </template>
-                                </Dialog>
+							
+							<ConfirmPopup></ConfirmPopup>
+				<Button ref="popup" @click="confirmRes($event , data.id )" icon="pi pi-times" class="p-button-rounded p-button-danger p-button-outlined mr-2 mb-2"  ></Button>
 						</template>
 					</Column>
 					<template #expansion="{data}">
@@ -105,17 +97,9 @@
 								
 								<Column headerStyle="width:4rem">
 									<template #body="{data}">
-		                      		<Button  @click="openConfirmationPlat"  icon="pi pi-times" class="p-button-rounded p-button-danger p-button-outlined mr-2 mb-2" />
-									 <Dialog header="Confirmation" v-model:visible="displayConfirmation" :style="{width: '350px'}" :modal="true">
-                                  <div class="flex align-items-center justify-content-center">
-                                    <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
-                                    <span>Are you sure you want to proceed?</span>
-                                  </div>
-                                  <template #footer>
-                                    <Button label="No" icon="pi pi-times" @click="closeConfirmationPlat" class="p-button-text"/>
-                                    <Button label="Yes" icon="pi pi-check" @click="deletePlat(data.id);closeConfirmationPlat();" class="p-button-text" autofocus />
-                                  </template>
-                                </Dialog>
+		                      		
+									 <ConfirmPopup></ConfirmPopup>
+				<Button ref="popup" @click="confirmPlat($event , data.id )" icon="pi pi-times" class="p-button-rounded p-button-danger p-button-outlined mr-2 mb-2"  ></Button>
 									</template>
 								</Column>
 							</DataTable>
@@ -140,6 +124,32 @@
       this.getRestaurants();
 		},
 		methods: {
+			confirmRes(event , id) {
+				this.$confirm.require({
+					target: event.currentTarget,
+					message: 'Voulez-vous vraiment le supprimer ?',
+					icon: 'pi pi-exclamation-triangle',
+					accept: () => {
+						this.deleteRestaurant(id)
+					},
+					reject: () => {
+						this.$toast.add({severity:'error', summary:'Rejected', detail:'You have rejected', life: 3000});
+					}
+				});
+			},
+			confirmPlat(event , id) {
+				this.$confirm.require({
+					target: event.currentTarget,
+					message: 'Voulez-vous vraiment le supprimer ?',
+					icon: 'pi pi-exclamation-triangle',
+					accept: () => {
+						this.deletePlat(id)
+					},
+					reject: () => {
+						this.$toast.add({severity:'error', summary:'Rejected', detail:'You have rejected', life: 3000});
+					}
+				});
+			},
 			initFilters1() {
 			
 			},
