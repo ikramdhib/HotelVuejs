@@ -147,16 +147,17 @@ import axios from 'axios';
 	if(this.room.description==''){
 				this.errors.push("la description de lit doit étre remplir")
 	}
-	if(this.room.nbbebe==''){
-				this.errors.push("le nombre de bebe doit étre saisie")
-	}if(this.room.nbEnfant==''){
-				this.errors.push("le nombre d'enfant doit étre saisie")
-	}	
+	
 	if(isNaN(this.room.price_booking)){
 				this.errors.push("la prix de reservation doit étre nombre")
-	}else if (this.room.price_booking==""){
+	}
+	else if (this.room.price_booking==""){
 			this.errors.push("la prix de reservation doit étre saisie")
-	}	if(this.image.length==0){
+	}
+	else if (this.room.price_booking==0){
+			this.errors.push("la prix de reservation doit étre différent de 0")
+	}	
+	if(this.image.length==0){
 				this.errors.push("les images doit etre saisie")
 	}
 	
