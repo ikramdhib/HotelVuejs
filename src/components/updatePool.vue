@@ -38,7 +38,7 @@
 		
     <div class="field col-12 md:col-3 py-4">
 			     <Toast />
-					<Button label="Ajouter" @click="updatePool()"  ></Button>
+					<Button label="Editer" @click="updatePool()"  ></Button>
 		</div>
 		<div class="field col-12 md:col-3 py-4">
 			<Button label="Annuler" @click="goBack()" class="p-button-secondary mr-2 mb-2" ></Button>
