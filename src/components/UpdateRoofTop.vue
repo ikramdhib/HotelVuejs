@@ -2,7 +2,7 @@
 	<div class="grid">
 		<div class="col-12">
 			<div class="card">
-				<h4 id="titre"> Ajouter Roof-Top</h4>
+				<h4 id="titre"> Editer Roof-Top</h4>
 				<ul style="list-style-type:none;">
                                 <li class="li" style="color:red" v-for="error in errors" :key="error"><InlineMessage>{{ error }}</InlineMessage> </li>
                             </ul>
@@ -37,7 +37,7 @@
 					
 	               <div class="field col-12 md:col-3">
 					   <Toast />
-					<Button label="Ajouter"  @click="updateRoofTop()" ></Button>
+					<Button label="Editer"  @click="updateRoofTop()" ></Button>
 		</div>
 		<div class="field col-12 md:col-3">
 					   <Toast />
@@ -100,7 +100,7 @@ import axios from 'axios'
 	               }
 				    if((this.rooftop.prix=="")){
 				this.errors.push("le prix de rooftop doit étre saisie")
-	               }else if(isNaN(this.rooftop.prix_reservation)){
+	               }else if(isNaN(this.rooftop.prix)){
 					this.errors.push("le prix de rooftop doit étre nombre")   
 				   }
 					await axios.put('http://localhost:8000/api/update-Roof-Top/'+id,
