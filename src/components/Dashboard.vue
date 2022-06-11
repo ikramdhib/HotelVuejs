@@ -59,7 +59,7 @@
 				<Chart type="doughnut" :data="pieData" :options="pieOptions" style="width: 50%" />
 			</div>
 			<div class="card flex flex-column align-items-center">
-				<h5 class="align-self-start">Pie Chart</h5>
+				<h5 class="align-self-start"> L'Evaluation pour :</h5>
 				<Chart type="pie" :data="pieDatass" :options="pieOptions" style="width: 50%" />
 			</div>
 	</div>

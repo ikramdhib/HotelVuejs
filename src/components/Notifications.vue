@@ -35,7 +35,7 @@
 					<div class="w-3rem h-3rem flex align-items-center justify-content-center bg-pink-100 border-circle mr-3 flex-shrink-0">
 						<i class="pi pi-user text-xl text-pink-500"></i>
 					</div>
-					<span class="text-900 line-height-3">{{ m.data.booking_status.nom }} {{ m.data.booking_status.prenom }}
+					<span class="text-900 line-height-3">{{ m.data.room.nom }} {{ m.data.room.prenom }}
 						<span class="text-700">fait une reservation sur la chambre <span class="text-900 line-height-3"> {{ m.data.booking_status.num_room }} </span> l'Etage  <span class="text-900 line-height-3">{{ m.data.booking_status.numEtage }}</span> de <span class="text-blue-500"> {{ m.data.room.start}} </span>  à <span class="text-blue-500"> {{ m.data.room.end}}</span><Button icon="pi pi-eye" @click="clickN(m.id)" class="p-button-rounded p-button-text mr-2 mb-2" /></span>
 
 					</span>
