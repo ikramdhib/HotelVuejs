@@ -146,12 +146,7 @@ import axios from 'axios';
 	}
 	if(this.room.description==''){
 				this.errors.push("la description de lit doit étre remplir")
-<<<<<<< HEAD
 	}	
-=======
-	}
-	
->>>>>>> ed49d096a18fa462ca50378f1798450106fb564d
 	if(isNaN(this.room.price_booking)){
 				this.errors.push("la prix de reservation doit étre nombre")
 	}

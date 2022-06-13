@@ -28,6 +28,28 @@
 					</span>
 				</li>
 			</ul>
+			<ul class="p-0 mx-0 mt-0 mb-4 list-none" v-if="unreadNotificationRating.length > 0">
+				<li class="flex align-items-center py-2 border-bottom-1 surface-border" v-for="p in unreadNotificationRating" :key="p.id">
+					<div class="w-3rem h-3rem flex align-items-center justify-content-center bg-blue-100 border-circle mr-3 flex-shrink-0">
+						<i class="pi pi-user text-xl text-blue-500"></i>
+					</div>
+					<span class="text-900 line-height-3"> Quelqu'un
+						<span class="text-700"> a reagie a voutre {{p.data.rating.ratingable_type.substr(11) }} <span class="text-900 line-height-3">de  {{ p.data.rating.rate}}  ETOILE</span>
+						<Button icon="pi pi-eye" @click="clickN(p.id) ; markAsRead()" class="p-button-rounded p-button-text mr-2 mb-2" />
+						</span></span>
+				</li>
+			</ul>
+				<ul class="p-0 mx-0 mt-0 mb-4 list-none" v-if="unreadNotificationContact.length > 0">
+				<li class="flex align-items-center py-2 border-bottom-1 surface-border" v-for="p in unreadNotificationContact" :key="p.id">
+					<div class="w-3rem h-3rem flex align-items-center justify-content-center bg-blue-100 border-circle mr-3 flex-shrink-0">
+						<i class="pi pi-user text-xl text-blue-500"></i>
+					</div>
+					<span class="text-900 line-height-3">{{ p.data.contact.name }} 
+						<span class="text-700"> vous envoyer un messagesous l'objet <span class="text-900 line-height-3" > "  {{p.data.contact.objet }} "</span>
+						
+						</span></span>
+				</li>
+			</ul>
 
 			<span class="block text-600 font-medium mb-3">Lues notifications </span>
 			<ul class="p-0 m-0 list-none" v-if="readNotificationRoom.length >0">
@@ -61,7 +83,8 @@
 						<i class="pi pi-user text-xl text-pink-500"></i>
 					</div>
 					<span class="text-900 line-height-3"> Quelqu'un
-						<span class="text-700"> a reagie a voutre {{p.data.rating.ratingable_type }} <span class="text-900 line-height-3">de  {{ p.data.rating.rate}}  ETOILE</span>
+						<span class="text-700"> a reagie a voutre {{p.data.rating.ratingable_type.substr(11) }} <span class="text-900 line-height-3">de  {{ p.data.rating.rate}}  ETOILE</span>
+						<Button icon="pi pi-eye" @click="clickN(p.id) ; markAsRead()" class="p-button-rounded p-button-text mr-2 mb-2" />
 						</span></span>
 				</li>
 			</ul>
@@ -72,7 +95,7 @@
 					</div>
 					<span class="text-900 line-height-3">{{ p.data.contact.name }} 
 						<span class="text-700"> vous envoyer un messagesous l'objet <span class="text-900 line-height-3" > "  {{p.data.contact.objet }} "</span>
-						<Button icon="pi pi-eye" @click="clickN(p.id) ; markAsRead()" class="p-button-rounded p-button-text mr-2 mb-2" />
+						
 						</span></span>
 				</li>
 			</ul>
