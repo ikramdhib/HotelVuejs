@@ -59,7 +59,7 @@
 						<label for="prix4">Choisir des image :</label>
 						<span class="p-input-icon-left">
 							<i class="pi pi-folder-open" />
-							<InputText type="file" multiple @change="changeFile"/>
+							<InputText type="file" multiple @change="changeFile" accept=".png, .jpg, .jpeg" />
 						</span>
 					</div>
 			 </div>
