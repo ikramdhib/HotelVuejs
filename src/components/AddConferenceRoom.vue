@@ -12,7 +12,7 @@
 					<div class="field col-12 md:col-3">
 					     <label for="lastname2">Décoration</label>
 				     <span class="p-float-label" >
-					<Dropdown id="dropdown"  :options="dropdownValues"  placeholder="Select" v-model="room.decoration"></Dropdown>
+					<Dropdown id="dropdown"  :options="dropdownValuess"  placeholder="Select" v-model="room.decoration"></Dropdown>
 					</span>
 			        </div>
 					<div class="field col-12 md:col-3">
@@ -24,6 +24,15 @@
 						<Textarea id="desc" rows="4"  v-model="room.description"/>
 						</div>
 					</div>
+					 <div class="p-fluid formgrid grid">
+					<div class="field col-12 md:col-6">
+						<label for="prix4">Choisir des image :</label>
+						<span class="p-input-icon-left">
+							<i class="pi pi-folder-open" />
+							<InputText type="file" multiple @change="changeFile"/>
+						</span>
+					</div>
+			 </div>
 		 <div  class="p-fluid formgrid grid">
 					<div class="field col-12 md:col-4">
 					  <label for="lastname2">Type :</label>
@@ -54,6 +63,7 @@
 
 					</div>
 			 </div>
+<<<<<<< HEAD
 			 <div class="p-fluid formgrid grid">
 					<div class="field col-12 md:col-6">
 						<label for="prix4">Choisir des image :</label>
@@ -63,6 +73,9 @@
 						</span>
 					</div>
 			 </div>
+=======
+			
+>>>>>>> b6bf3614f40ee4306ebe3261afae9ed99d0eb939
 			  <div class="p-fluid formgrid grid">
 	      <div class="field col-12 md:col-3 py-4">
 			   <Toast />
@@ -110,6 +123,11 @@ import axios from 'axios';
 					'CAREES',
 				'OVAL',
 				     'NORMALE'
+				],
+				dropdownValuess: [
+					'Mariage',
+				'Evenement',
+				     'Réunion'
 				],
 							errors:[],
 				 image:[],

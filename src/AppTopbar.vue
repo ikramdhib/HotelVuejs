@@ -14,24 +14,25 @@
 			
 		</button>
 		<ul class="layout-topbar-menu hidden lg:flex origin-top">
-			
-					<li> 
-				<div v-on:click="isActiv = !isActiv">
+
+					
+<li> 
+	<div  v-on:click="isActiv = !isActiv" >
     <Button  class="p-button-text p-button-plain p-button-rounded " >
     <i class="pi pi-bell"  id="icon" >  <Badge v-if=" unreadnotifications.length >0" :value="unreadnotifications.length" severity="danger" class="mr-2"></Badge></i>
 	</Button>
    
   </div>
-    <div v-show="isActiv" class="origin-top-left absolute  mt-2 w-1 rounded-md shadow-lg">
+    <div v-show="isActiv" class="origin-top-left absolute  mt-2 w-1 rounded-md shadow-lg" >
     <div
       class="py-1 w-12 rounded-md bg-white shadow-xs"
       role="menu"
       aria-orientation="vertical"
       aria-labelledby="user-menu"
     >
-	
-
-        <div id="border" x-show="dropdownOpen" class="absolute right-0 mt-2 bg-white rounded-md shadow-lg overflow-hidden z-20" style="width:20rem;">
+	<div id="fr" >
+        <div    id="border" x-show="dropdownOpen" class="absolute right-0 mt-2 bg-white rounded-md shadow-lg overflow-hidden z-20" style="width:30rem;">
+				<div id="sco">
 			<div v-show="unreadnotifications.length > 0" class="py-2">
                 <a  class="flex items-center px-4 py-3 border-b hover:bg-gray-100 -mx-2">
                     <p class="text-gray-600 text-sm mx-2">
@@ -40,6 +41,7 @@
                     </p>
                 </a>
             </div>
+			
             <div id="border" class="py-2" v-if="unreadnotificationsRoom!=null">
                 <a v-for="(unread , index) in unreadnotificationsRoom" :key="index" href="#" class="flex items-center px-4 py-3 border-b hover:bg-gray-100 -mx-2">
                     <p class="text-gray-600 text-sm mx-2">
@@ -79,6 +81,7 @@
                     </p>
                 </a>
             </div>
+			
 			 <div id="border" v-show="unreadnotifications.length == 0" class="py-2">
                 <a href="#" class="flex items-center px-4 py-3 border-b hover:bg-gray-100 -mx-2">
                     <p class="text-gray-600 text-sm mx-2">
@@ -87,10 +90,13 @@
                     </p>
                 </a>
             </div>
+			</div>
             <router-link id="border" to="notifications"  class="block bg-gray-800 text-white text-center font-bold py-2">Voir tous les notifications</router-link>
-        </div>
+        
         </div>
 </div>
+    </div>
+    </div>
 			</li>
 			
 			<li>
@@ -120,17 +126,18 @@
       aria-labelledby="user-menu"
     >
       <router-link
-	  to="profile"
+	  to="#"
         href="#"
 		id="border"
-        class="block px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out"
+		@click="goProfile()"
+        class="block px-4 py-2 text-lg leading-5 text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out"
         role="menuitem"
       > Profile</router-link>
       
       <a
         href="#"
 		id="border"
-        class="block px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out"
+        class="block px-4 py-2 text-lg leading-5 text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out"
         role="menuitem"
 		v-on:click="logout()"
       >Quiter</a>
@@ -163,7 +170,11 @@ data: function () {
 		//}.bind(this), 500);
 	},
     methods: {
-        onMenuToggle(event) {
+		goProfile(){
+			this.isActive=false;
+			this.$router.push('profile');
+		},
+        onMenuToggle(event) {0
             this.$emit('menu-toggle', event);
         },
 		onTopbarMenuToggle(event) {
@@ -181,6 +192,7 @@ data: function () {
 		},
 
 	    async logout(){
+			this.isActiv=false;
 			if(localStorage.getItem('token')){
 			await axios.get('http://localhost:8000/api/user/logout',
 				{ headers: { Authorization: 'Bearer ' + localStorage.getItem('token')}})
@@ -230,6 +242,7 @@ data: function () {
 	
 }
 #border{
+	
 	border-radius: 0.5rem;
 	filter: drop-shadow(0 10px 8px rgb(0 0 0 / 0.04)) drop-shadow(0 4px 3px rgb(0 0 0 / 0.1));
 }
@@ -242,5 +255,13 @@ data: function () {
 }
 #icon{
 	font-size: 23px;
+}
+#fr{
+	width: 12px;
+}
+#sco{
+overflow-y: auto ;
+height: 350px;
+overflow-x: hidden;
 }
 </style>

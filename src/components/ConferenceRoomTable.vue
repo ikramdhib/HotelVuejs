@@ -26,7 +26,7 @@
                     </Column>
                     <Column header="Décoration" field="decoration"  style="min-width:12rem">
                         <template #body="{data}">
-                            <span style="margin-left: .5em; vertical-align: middle" class="image-text">{{data.decoration}}</span>
+                            <span style="margin-left: .5em; vertical-align: middle" class="image-text">{{data.decoration}} {{ data.id }}</span>
                         </template>
                     </Column>
                     <Column header="Prix de réséevation"  :showFilterMatchModes="false" :filterMenuStyle="{'width':'14rem'}" style="min-width:14rem">
@@ -53,17 +53,8 @@
                     </Column>
                     <Column header="" style="min-width:8rem">
                         <template #body="{data}">
-                     		<Button @click="openConfirmationRoom()" icon="pi pi-times" class="p-button-rounded p-button-danger p-button-outlined mr-2 mb-2"  />
-							 <Dialog header="Confirmation" v-model:visible="displayConfirmation" :style="{width: '350px'}" :modal="true">
-                                  <div class="flex align-items-center justify-content-center">
-                                    <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
-                                    <span>Êtes-vous sûr de vouloir le supprimer</span>
-                                  </div>
-                                  <template #footer>
-                                    <Button label="NON" icon="pi pi-times" @click="closeConfirmationRoom" class="p-button-text"/>
-                                    <Button label="OUI" icon="pi pi-check" @click="deleteConferenceRoom(data.id);closeConfirmationRoom();" class="p-button-text" autofocus />
-                                  </template>
-                                </Dialog>
+					<ConfirmPopup></ConfirmPopup>
+				<Button ref="popup" @click="confirm($event , data.id )" icon="pi pi-times" class="p-button-rounded p-button-danger p-button-outlined mr-2 mb-2"  ></Button>
                         </template>
                     </Column>
 				</DataTable>
@@ -126,17 +117,8 @@
 								
 								<Column headerStyle="width:4rem">
 									<template #body="{data}">
-		                      		<Button @click="openConfirmationType" icon="pi pi-times" class="p-button-rounded p-button-danger p-button-outlined mr-2 mb-2" />
-									<Dialog header="Confirmation" v-model:visible="displayConfirmation" :style="{width: '350px'}" :modal="true">
-                                  <div class="flex align-items-center justify-content-center">
-                                    <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
-                                    <span>Êtes-vous sûr de vouloir le supprimer</span>
-                                  </div>
-                                  <template #footer>
-                                    <Button label="NON" icon="pi pi-times" @click="closeConfirmationRoom" class="p-button-text"/>
-                                    <Button label="OUI" icon="pi pi-check" @click="deleteType(data.id);closeConfirmationType();" class="p-button-text" autofocus />
-                                  </template>
-                                </Dialog>
+		                      		<ConfirmPopup></ConfirmPopup>
+				<Button ref="popup" @click="confirmType($event , data.id )" icon="pi pi-times" class="p-button-rounded p-button-danger p-button-outlined mr-2 mb-2"  ></Button>
 									</template>
 								</Column>
 							</DataTable>
@@ -202,17 +184,8 @@
 								
 								<Column headerStyle="width:4rem">
 									<template #body={data}>
-		                      		<Button @click="openConfirmationOption" icon="pi pi-times" class="p-button-rounded p-button-danger p-button-outlined mr-2 mb-2"/>
-									<Dialog header="Confirmation" v-model:visible="displayConfirmation" :style="{width: '350px'}" :modal="true">
-                                  <div class="flex align-items-center justify-content-center">
-                                    <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
-                                    <span>Êtes-vous sûr de vouloir le supprimer</span>
-                                  </div>
-                                  <template #footer>
-                                    <Button label="NON" icon="pi pi-times" @click="closeConfirmationOption" class="p-button-text"/>
-                                    <Button label="OUI" icon="pi pi-check" @click="deleteEquipement(data.id);closeConfirmationOption();" class="p-button-text" autofocus />
-                                  </template>
-                                </Dialog>
+		                      		<ConfirmPopup></ConfirmPopup>
+				<Button ref="popup" @click="confirmEqui($event , data.id )" icon="pi pi-times" class="p-button-rounded p-button-danger p-button-outlined mr-2 mb-2"  ></Button>
 									</template>
 								</Column>
 							</DataTable>
@@ -234,7 +207,8 @@ import axios from 'axios';
         table1:[],
         table2:[],
         table3:[],
-        rooms:[],
+		rooms:[],
+		display: false,
         types:[],
 		 data:[],
 		equipements:[],
@@ -256,6 +230,45 @@ import axios from 'axios';
       this.getAllRommsEquipement();
 		},
 		methods: {
+						confirm(event , id) {
+				this.$confirm.require({
+					target: event.currentTarget,
+					message: 'Voulez-vous vraiment le supprimer ?',
+					icon: 'pi pi-exclamation-triangle',
+					accept: () => {
+						this.deleteConferenceRoom(id)
+					},
+					reject: () => {
+						this.$toast.add({severity:'error', summary:'Rejected', detail:'You have rejected', life: 3000});
+					}
+				});
+			},
+			confirmType(event , id) {
+				this.$confirm.require({
+					target: event.currentTarget,
+					message: 'Voulez-vous vraiment le supprimer ?',
+					icon: 'pi pi-exclamation-triangle',
+					accept: () => {
+						this.deleteType(id)
+					},
+					reject: () => {
+						this.$toast.add({severity:'error', summary:'Rejected', detail:'You have rejected', life: 3000});
+					}
+				});
+			},
+			confirmEqui(event , id) {
+				this.$confirm.require({
+					target: event.currentTarget,
+					message: 'Voulez-vous vraiment le supprimer ?',
+					icon: 'pi pi-exclamation-triangle',
+					accept: () => {
+						this.deleteEquipement(id)
+					},
+					reject: () => {
+						this.$toast.add({severity:'error', summary:'Rejected', detail:'You have rejected', life: 3000});
+					}
+				});
+			},
       	initFilters1() 	{	this.filters1 = {
 					'global': {value: null}}
 		},
@@ -272,6 +285,10 @@ import axios from 'axios';
 			collapseAll2() {
 				this.expandedRows2 = null;
 			},
+			open() {
+				this.display = true;
+			},
+
       
       async getAllRooms(){
         await axios.get('http://localhost:8000/api/getAllConferenceRooms')

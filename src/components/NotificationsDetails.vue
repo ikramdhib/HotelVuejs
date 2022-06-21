@@ -193,6 +193,24 @@
 			</tr>
 			
 				</table>
+				<table v-if="(n.type.substr(18,19))=='RatingNotification'">
+					<tr>
+						<td :style="{width: '150px'}">
+						<span class="flex align-items-center py-2surface-border" >
+						 <div class="w-3rem h-3rem flex align-items-center justify-content-center bg-pink-100 border-circle mr-3 flex-shrink-0">
+						<i class="pi pi-user text-xl text-pink-500"></i>
+					 </div>
+					 <span class="text-900 line-height-3">Quelqu'un </span>
+						</span>
+					 </td>
+					
+					<td>
+						<span class="text-700"> a evalué votre service : {{ n.data.rating.ratingable_type.substr(11) }} <span class="text-900 line-height-3"> et vous donne {{ n.data.rating.rate }} sur  </span>      
+						<span > 5 </span ><span> et commenter avec : " {{ n.data.rating.commentaire }} " </span> </span>
+					 </td>
+					</tr>
+			
+				</table>
 				</div>
 			</div>
 	

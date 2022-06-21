@@ -80,7 +80,7 @@ export default {
             let response = res.data;
             if(response.role=='admin'){
             localStorage.setItem("user",JSON.stringify(response));
-                this.$router.push("profile")
+                this.$router.push("/")
                 console.log(response)
             }else{
                 this.$router.push("notfound")
