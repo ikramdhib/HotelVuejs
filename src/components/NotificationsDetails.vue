@@ -145,7 +145,7 @@
 						<span>Le prix   </span>
 							</td>
 						<td> 
-						  <span class="text-900 line-height-3">{{ n.data.objet.prix }}</span>
+						  <span class="text-900 line-height-3">{{ n.data.objet.prix_reservation }} DT</span>
 					  </td>
 					  </tr>
 					   <tr>
@@ -267,10 +267,11 @@ export default {
 				console.log(this.bk.data.booking_status.id);
 					axios.put("http://localhost:8000/api/room/"+this.bk.data.booking_status.id,
 					{
-				avaibility:true
+				avaibility:false
 			},
 			{ headers: { Authorization: 'Bearer ' + localStorage.getItem('token') }}
 			).then(res=>{
+				console.log(res.data);
 						if(res.data.success==true){
 					this.$toast.add({severity:'success', summary: 'Excellent', detail:'Cette reservation est confirmé', life: 3000});
 					}else{

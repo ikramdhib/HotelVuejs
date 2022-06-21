@@ -13,7 +13,7 @@
 					<div class="w-3rem h-3rem flex align-items-center justify-content-center bg-blue-100 border-circle mr-3 flex-shrink-0">
 						<i class="pi pi-user text-xl text-blue-500"></i>
 					</div>
-					<span class="text-900 line-height-3"> Client
+					<span class="text-900 line-height-3"> {{ n.data.room.nom }} {{ n.data.room.prenom }}
 						<span class="text-700">fait une reservation sur la chambre <span class="text-900 line-height-3"> {{ n.data.booking_status.num_room }} </span> l'Etage  <span class="text-900 line-height-3">{{ n.data.booking_status.numEtage }}</span> de <span class="text-blue-500"> {{ n.data.room.start}} </span>  à <span class="text-blue-500"> {{ n.data.room.end}}</span><Button icon="pi pi-eye" @click="clickN(n.id) ; markAsRead()" class="p-button-rounded p-button-text mr-2 mb-2" /></span>
 					</span>
 				</li>

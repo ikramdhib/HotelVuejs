@@ -43,7 +43,7 @@
             </div>
 			
             <div id="border" class="py-2" v-if="unreadnotificationsRoom!=null">
-                <a v-for="(unread , index) in unreadnotificationsRoom" :key="index" href="#" class="flex items-center px-4 py-3 border-b hover:bg-gray-100 -mx-2">
+                <a v-for="(unread , index) in unreadnotificationsRoom" :key="index"  class="flex items-center px-4 py-3 border-b hover:bg-gray-100 -mx-2" @click="clickN(unread.id)">
                     <p class="text-gray-600 text-sm mx-2">
                         <span class="font-bold" href="#">{{ unread.data.room.nom}} {{ unread.data.prenom }}</span> fait une résérvation sur la chambre <span class="text-900 line-height-3"> {{ unread.data.booking_status.num_room }} </span> l'Etage  <span class="text-900 line-height-3">{{ unread.data.booking_status.numEtage }}</span> de <span class="text-blue-500"> {{ unread.data.room.start}} </span>  à <span class="text-blue-500"> {{ unread.data.room.end}}</span>
 						<br/>
@@ -52,7 +52,7 @@
                 </a>
             </div>
 			    <div id="border" class="py-2" v-if="unreadnotificationsBook!=null">
-                <a v-for="(unread , index) in unreadnotificationsBook" :key="index" href="#" class="flex items-center px-4 py-3 border-b hover:bg-gray-100 -mx-2">
+                <a v-for="(unread , index) in unreadnotificationsBook" :key="index"  class="flex items-center px-4 py-3 border-b hover:bg-gray-100 -mx-2" @click="clickN(unread.id)">
                     <p class="text-gray-600 text-sm mx-2">
                         <span class="font-bold" href="#">{{ unread.data.booking.nom}} {{ unread.data.booking.prenom }}</span> fait une résérvation sur {{ unread.data.categorieBooking }} 
 						<span class="text-900 line-height-3"> pour  {{ unread.data.booking.nombre}} <span v-if="unread.data.categorieBooking=='Pool' || unread.data.categorieBooking=='Spa'">Personnes</span > <span v-if="unread.data.categorieBooking== 'Salle de conference'"> salle</span> <span v-if="unread.data.categorieBooking=='Roof-Top' || unread.data.categorieBooking=='Restaurant'"> tables </span> </span>
@@ -62,9 +62,10 @@
                 </a>
             </div>
 			 <div id="border" class="py-2" v-if="unreadnotificationsRating!=null">
-                <a v-for="(unread , index) in unreadnotificationsRating" :key="index" href="#" class="flex items-center px-4 py-3 border-b hover:bg-gray-100 -mx-2">
+                <a v-for="(unread , index) in unreadnotificationsRating" :key="index" class="flex items-center px-4 py-3 border-b hover:bg-gray-100 -mx-2" @click="clickN(unread.id)">
                     <p class="text-gray-600 text-sm mx-2">
-                        <span class="font-bold" href="#">Quelq'un </span> a reagie à votre {{ (unread.data.rating.ratingable_type) }} 
+                        <span class="font-bold" href="#">Quelq'un  </span> a reagie à votre <span v-if="(unread.data.rating.ratingable_type).substr(11)=='BookingRoom' || (unread.data.rating.ratingable_type).substr(11)=='Booking' "> service de Réservation</span>
+						<span v-else> {{ (unread.data.rating.ratingable_type).substr(11) }} </span>
 						<span class="text-900 line-height-3"> de  {{ unread.data.rating.rate}} ETOILE </span>
 						<br/>
 						{{ $moment(unread.created_at).locale('fr').fromNow() }}
@@ -72,7 +73,7 @@
                 </a>
             </div>
 			 <div id="border" class="py-2" v-if="unreadnotificationsContact!=null">
-                <a v-for="(unread , index) in unreadnotificationsContact" :key="index" href="#" class="flex items-center px-4 py-3 border-b hover:bg-gray-100 -mx-2">
+                <a v-for="(unread , index) in unreadnotificationsContact" :key="index"  class="flex items-center px-4 py-3 border-b hover:bg-gray-100 -mx-2" @click="clickN(unread.id)">
                     <p class="text-gray-600 text-sm mx-2">
                         <span class="font-bold" href="#">{{ unread.data.contact.name}}</span>  a vous envoyez un message sous l'objet
 						<span class="text-900 line-height-3">  " {{ unread.data.contact.objet}} "</span>
@@ -170,6 +171,9 @@ data: function () {
 		//}.bind(this), 500);
 	},
     methods: {
+		clickN(id){
+			this.$router.push({name:'notification' , params:{id:id}})
+		},
 		goProfile(){
 			this.isActive=false;
 			this.$router.push('profile');
