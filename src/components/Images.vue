@@ -59,7 +59,7 @@
 						<h5 class="px-4 py-4">Modifier l'image pour le Categorie {{ this.$route.params.categorie}}:</h5>
 						<span class="p-input-icon-left">
 							<i class="pi pi-folder-open" />
-							<InputText type="file" multiple @change="changeFile"/>
+							<InputText type="file" multiple @change="changeFile" accept=".png, .jpg, .jpeg" />
 						</span>
 			 </div>
 			</div>

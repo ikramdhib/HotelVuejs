@@ -63,7 +63,19 @@
 
 					</div>
 			 </div>
+<<<<<<< HEAD
+			 <div class="p-fluid formgrid grid">
+					<div class="field col-12 md:col-6">
+						<label for="prix4">Choisir des image :</label>
+						<span class="p-input-icon-left">
+							<i class="pi pi-folder-open" />
+							<InputText type="file" multiple @change="changeFile" accept=".png, .jpg, .jpeg" />
+						</span>
+					</div>
+			 </div>
+=======
 			
+>>>>>>> b6bf3614f40ee4306ebe3261afae9ed99d0eb939
 			  <div class="p-fluid formgrid grid">
 	      <div class="field col-12 md:col-3 py-4">
 			   <Toast />

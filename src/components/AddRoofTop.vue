@@ -41,7 +41,7 @@
 					</div>
 	               <div class="field col-12 md:col-3">
 					   <Toast />
-					<Button label="Ajouter"  @click="addRooftop()" ></Button>
+					<Button label="Ajouter"  @click="addRooftop()" accept=".png, .jpg, .jpeg" ></Button>
 		</div>
 		</div>
 			</div>
