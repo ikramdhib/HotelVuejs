@@ -49,6 +49,15 @@
 
 					</div>
 		 </div>
+		  <div  class="p-fluid formgrid grid" v-for="ty in ty" :key="ty">
+					<div class="field col-12 md:col-4">
+						<InputText id="num-ch"  min="4" :value="ty.label" disabled />
+					</div>
+					<div class="field col-12 md:col-4">
+						<InputText id="num-ch" type="number" min="4" :value="ty.capacite" disabled />
+					</div>
+					
+		 </div>
 		 <div class="p-fluid formgrid grid"  >
 					<div class="field col-12 md:col-4">
 						<label for="num_etage">Equipement :</label>
@@ -63,19 +72,16 @@
 
 					</div>
 			 </div>
-<<<<<<< HEAD
-			 <div class="p-fluid formgrid grid">
-					<div class="field col-12 md:col-6">
-						<label for="prix4">Choisir des image :</label>
-						<span class="p-input-icon-left">
-							<i class="pi pi-folder-open" />
-							<InputText type="file" multiple @change="changeFile" accept=".png, .jpg, .jpeg" />
-						</span>
+			  <div class="p-fluid formgrid grid" v-for="eq in eq" :key="eq"  >
+					<div class="field col-12 md:col-4">
+						<InputText id="num_etage" type="text" :value="eq.label" disabled />
 					</div>
+					<div class="field col-12 md:col-4">
+						<InputText id="num_etage" type="text" :value="eq.prix" disabled />
+					</div>
+					
 			 </div>
-=======
 			
->>>>>>> b6bf3614f40ee4306ebe3261afae9ed99d0eb939
 			  <div class="p-fluid formgrid grid">
 	      <div class="field col-12 md:col-3 py-4">
 			   <Toast />
@@ -93,6 +99,8 @@ import axios from 'axios';
 	export default {
 		data() {
 			return {
+				eq:[],
+				ty:[],
 				switchValue: null,
 				dropdownValue:null,
 				user:null,
@@ -197,6 +205,8 @@ import axios from 'axios';
 						axios.get('http://localhost:8000/api/getType/'+this.idT).then(res=>{
 							if(res.data.message==true){
 								this.typeRegistred=true
+								this.ty.push(res.data.type)
+								console.log("kggg",this.ty);
 							}
 						});
 							
@@ -209,7 +219,11 @@ import axios from 'axios';
 							},
 							{ headers: { Authorization: 'Bearer ' + localStorage.getItem('token') }}
 							).then(res=>{
+								if(res.data!=null){
 								this.idE=res.data.equipement
+								this.eq.push(res.data.equipement)
+								console.log("ejjjj", this.eq);
+								}
 							});
 							this.$toast.add({severity:'success', summary: 'Excellent', detail:'les information a été soumise avec succès', life: 3000});
 						}
@@ -225,6 +239,8 @@ import axios from 'axios';
 							{ headers: { Authorization: 'Bearer ' + localStorage.getItem('token') }}
 							).then(resp=>{
 								this.idT=resp.data.type.id
+								this.ty.push(resp.data.type)
+								console.log("kggg",this.ty);
 							});
 							this.$toast.add({severity:'success', summary: 'Excellent', detail:'les information a été soumise avec succès', life: 3000});
 						
@@ -272,8 +288,11 @@ import axios from 'axios';
 								conference_room_id:res.data.conference_room.id
 							},
 							{ headers: { Authorization: 'Bearer ' + localStorage.getItem('token') }}
-							).then(
+							).then(res=>{
 								msg2=true
+								this.ty.push(res.data.type)
+								console.log("kggg",this.ty);
+							}
 							);
 							axios.post('http://localhost:8000/api/addEquipement',
 							{
@@ -283,8 +302,13 @@ import axios from 'axios';
 								conference_room_id:res.data.conference_room.id
 							},
 							{ headers: { Authorization: 'Bearer ' + localStorage.getItem('token') }}
-							).then(
+							).then(res=>{
+								if(res.data!=null){
 								msg1=true
+								this.eq.push(res.data.equipement)
+								console.log("ejjjj", this.eq);
+								}
+							}
 							);
 							for(let i=0 ;i<this.image.length;i++){
 							this.form.append('path',this.image[i])
@@ -329,6 +353,8 @@ import axios from 'axios';
 							},
 							{ headers: { Authorization: 'Bearer ' + localStorage.getItem('token') }}
 							).then(resp=>{
+								this.ty.push(resp.data.type)
+								console.log("kggg",this.ty);
 								this.idT=resp.data.type.id
 							});
 							for(let i=0 ;i<this.image.length;i++){
@@ -354,6 +380,8 @@ import axios from 'axios';
 							},
 							{ headers: { Authorization: 'Bearer ' + localStorage.getItem('token') }}
 							).then(res=>{
+								this.ty.push(res.data.type)
+								console.log("kggg",this.ty);
 								this.idT=res.data.type.id
 							}
 
@@ -377,6 +405,8 @@ import axios from 'axios';
 					{ headers: { Authorization: 'Bearer ' + localStorage.getItem('token') }}
 					).then(res=>{
 						this.idc=res.data.conference_room.id
+						this.eq.push(res.data.equipement)
+								console.log("ejjjj", this.eq);
 						if(res){
 							axios.post('http://localhost:8000/api/addEquipement',
 							{
@@ -387,6 +417,8 @@ import axios from 'axios';
 							},
 							{ headers: { Authorization: 'Bearer ' + localStorage.getItem('token') }}
 							).then(res=>{
+								this.eq.push(res.data.equipement)
+								console.log("ejjjj", this.eq);
 								this.idE=res.data.equipement
 							}
 							);
@@ -412,8 +444,13 @@ import axios from 'axios';
 							},
 							{ headers: { Authorization: 'Bearer ' + localStorage.getItem('token') }}
 							).then(res=>{
+								if(res.data!=null){				
+								this.eq.push(res.data.equipement)
+								console.log("ejjjj", this.eq);
 								this.idE=res.data.equipement
+								}
 							}
+					
 							);
 					}
 					this.isRegistred=true

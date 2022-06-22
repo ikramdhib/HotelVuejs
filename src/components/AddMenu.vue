@@ -52,6 +52,23 @@
 
 					</div>
 		 </div>
+		 <div class="p-fluid formgrid grid" v-for="i in menuAdded" :key="i">
+					<div class="field col-12 md:col-9">
+		 <div class="p-fluid formgrid grid">
+				   	<div class="field col-12 md:col-4">
+						<InputText id="num_etage" type="text" :value="i.intitule" disabled />
+					</div>
+					<div class="field col-12 md:col-4">
+						<InputText id="num_etage" type="text" :value="i.nom" disabled />
+					</div>
+					
+					<div class="field col-12 md:col-4">
+						<InputText id="num_etage" type="text" v-model="i.prix_plat" disabled/>
+					</div>
+		 </div>
+		 </div>
+		
+		 </div>
 		 		 <div class="p-fluid formgrid grid">
 	      <div class="field col-12 md:col-3">
 			   <Toast />
@@ -69,6 +86,7 @@ import axios from 'axios';
 	export default {
 		data() {
 			return {
+				menuAdded:[],
 				errors:[],
 				dropdownValue:null,
 				pluss:1,
@@ -222,6 +240,7 @@ import axios from 'axios';
 				{ headers: { Authorization: 'Bearer ' + localStorage.getItem('token') }}
 				).then(
 					res=>{
+						console.log(res.plat);
 						for(let i=0 ;i<this.image.length;i++){
 							this.form.append('path',this.image[i])
 							this.form.append('plat_id',res.data.plat.id)
@@ -231,6 +250,8 @@ import axios from 'axios';
 							axios.post('http://localhost:8000/api/images',this.form,config).then(this.image.length=0)
 							}
 						this.idP=res.data.plat.id
+						this.menuAdded.push(res.data.plat);
+						console.log(this.menuAdded);
 					}
 				)
 					}
@@ -247,6 +268,8 @@ import axios from 'axios';
 				{ headers: { Authorization: 'Bearer ' + localStorage.getItem('token') }}
 				).then(
 					res=>{
+						console.log(res.plat);
+
 						for(let i=0 ;i<this.image.length;i++){
 							this.form.append('path',this.image[i])
 							this.form.append('plat_id',res.data.plat.id)
@@ -256,6 +279,8 @@ import axios from 'axios';
 							axios.post('http://localhost:8000/api/images',this.form,config).then(this.image.length=0)
 							}
 						this.idP=res.data.plat.id
+						this.menuAdded.push(res.data.plat);
+						console.log(this.menuAdded);
 					}
 				)
 		}
